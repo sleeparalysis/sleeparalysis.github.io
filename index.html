@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/index.css">
+        <script src="js/index.js" defer></script>
+        <title>PokeAPI Test</title>
+    </head>
+    <body>
+        <main>
+            <header>
+                <h1>Pokedex</h1>
+                <p>Powered by PokeAPI</p>
+            </header>           
+            <div class="container">
+                <ul class="mini-menu" onchange="fetchPokemon()">
+                    <li class="color">
+                        <input type="radio" id="normal" name="color" value="front_default" autocomplete="off">
+                        <label for="normal">Normal</label>
+                    </li>
+                    <li class="color">
+                        <input type="radio" id="shiny" name="color" value="front_shiny" autocomplete="off">
+                        <label for="shiny">Shiny</label>
+                    </li>
+                </ul>
+                <ol id="pokedex" class="pokedex"></ol>
+            </div>
+            
+        </main>
+    </body>
+</html>
