@@ -1,4 +1,4 @@
-const pokedex = document.getElementById('pokedex');
+const grid = document.getElementById('grid');
 
 const fetchPokemon = () => {
     const promises = [];
@@ -30,9 +30,16 @@ const fetchPokemon = () => {
 const displayPokemon = (pokemon) => {
     const pokemonHTMLString = pokemon.map(pokemen => `
         <li class="pokemon">
-            <img src="${pokemen.image}" loading="lazy"/>
-            <p>${pokemen.name}</p>
+            <span class="top">
+                <p>${pokemen.id}</p>
+            </span>
+            <div class="middle">
+                <img src="${pokemen.image}" loading="lazy"/>
+            </div>
+            <div class="bottom">
+                <p>${pokemen.name}</p>
+            </div>
         </li>
     `).join('');
-    pokedex.innerHTML = pokemonHTMLString;
+    grid.innerHTML = pokemonHTMLString;
 }
