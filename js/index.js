@@ -19,7 +19,7 @@ const fetchPokemon = () => {
         const pokemon = results.map( (data) => ({
             id: data.id,
             name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
-            type: data.types.map(type => type.type.name),
+            type: data.types.map((type) => type.type.name),
             image: data.sprites.versions['generation-v']['black-white']['animated'][color]
         }));
         console.log(pokemon['type']);

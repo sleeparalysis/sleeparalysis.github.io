@@ -3,6 +3,47 @@ body {
     font-family: monospace;
 }
 
+a {
+    display: block;
+}
+
+a, a:visited {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    color: rgb(0, 200, 255);
+}
+
+.navigation a, .navigation a:visited {
+    color: rgb(255, 255, 255);
+}
+
+.navigation a:hover, .navigation a:active {
+    color: rgb(79, 164, 213);
+}
+
+header {
+    /* Bar Setup */
+    width: 100%;
+    height: 50px;
+}
+
+.banner {
+    background-color: rgb(79, 164, 213);
+    width: 100%;
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header .icon {
+    height: 125%;
+}
+
 header h1, header p {
     margin:0;
     text-align: center;
@@ -18,7 +59,34 @@ header p {
     padding-bottom: 20px;
 }
 
+.navigation {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    width: auto;
+    height: 2rem;
+
+    display: flex;
+    justify-content: center;
+}
+
+.navigation ul {
+    width: 300px;
+    height: 100%;
+
+    margin-block: 0;
+    padding-inline-start: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation ul li {
+    display: block;
+}
+
 .container {
+    margin-top: 210px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,7 +95,7 @@ header p {
 }
 
 .mini-menu {
-    background-color: #f8f9fa;
+    background-color: hsla(0, 0%, 93%, 0.6);;
     width: fit-content;
     height: fit-content;
     margin: 0;
@@ -46,8 +114,8 @@ header p {
 }
 
 .grid {
-    min-width: calc(120px * 3 - 50px);
-    max-width: calc(120px * 12 - 50px);
+    min-width: calc((120px + 10px) * 7);
+    max-width: calc((120px + 10px) * 12);
 
     padding-inline-start: 0;
     list-style: none;
@@ -63,9 +131,11 @@ header p {
 }
 
 .pokemon  {
-    background-color: #f8f9fa;
-    width: 120px;
-    height: 120px;
+    background-image: url("img/go.jpg");
+    background-color: hsla(0, 0%, 93%, 0.6);
+    width: 118px;
+    height: 118px;
+    border: 1px solid white;
     border-radius: 10px;
 
     margin: 0;
@@ -74,16 +144,22 @@ header p {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    transition: box-shadow .05s, transform .05s;
+    transition: transform .05s, border-color .05s, background-image 0.5s;
 }
 
 .pokemon:hover {
-    background-color: #ffffff;
-    box-shadow: 0px 0px 1px #000000;
-    transform: scale(2);
+    border-color: black;
+    cursor:zoom-in;
 }
 
-img {
+.pokemon:active {
+    background-position: center;
+    backdrop-filter: blur(10px);
+    cursor: zoom-out;
+    transform: scale(4);
+}
+
+.pokemon img {
     image-rendering: pixelated;
 }
 
