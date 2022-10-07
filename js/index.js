@@ -46,16 +46,37 @@ const displayPokemon = (pokemon) => {
         <li class="card-outer">
             <div class="card-inner ${selected.type[0]}">
                 <div class="top">
-                    <p id="text" class="name">${selected.name}</p>
+                    <p class="name">${selected.name}</p>
                     <div class="hp">
-                        <p id="" class="hp-text">HP</p>
-                        <p id="" class="hp-number">${selected.hp}</p>
+                        <p class="text">HP</p>
+                        <p class="number">${selected.hp}</p>
                     </div>
                 </div>
                 <div class="middle">
                     <img src="${selected.image}" loading="lazy"/>
                 </div>
-                
+                <div class="bottom">
+                    <div class="row">
+                        <p class="name">Attack</p>
+                        <p class="number">${selected.attack}</p>
+                    </div>
+                    <div class="row line">
+                        <p class="name">Defense</p>
+                        <p class="number">${selected.defense}</p>
+                    </div>
+                    <div class="row">
+                        <p class="name">Sp. Attack</p>
+                        <p class="number">${selected.sp_attack}</p>
+                    </div>
+                    <div class="row">
+                        <p class="name">Sp. Defense</p>
+                        <p class="number">${selected.sp_defense}</p>
+                    </div>
+                    <div class="row">
+                        <p class="name">Speed</p>
+                        <p class="number">${selected.speed}</p>
+                    </div>
+                </div>
             </div>
         </li>
         `
