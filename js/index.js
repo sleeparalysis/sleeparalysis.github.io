@@ -1,4 +1,4 @@
-const grid = document.getElementById('grid');
+const info = document.getElementById('info');
 
 const fetchPokemon = () => {
     const promises = [];
@@ -17,30 +17,64 @@ const fetchPokemon = () => {
         }
 
         const pokemon = results.map( (data) => ({
-            id: data.id,
-            name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
-            type: data.types.map((type) => type.type.name),
-            image: data.sprites.versions['generation-v']['black-white']['animated'][color]
+            id: String(data.id).padStart(3, '0'),
+            name: data.name,
+            height: data.height,
+            weight: data.weight,
+            exp: data.base_experience,
+            hp: data.stats[0].base_stat,
+            attack: data.stats[1].base_stat,
+            defense: data.stats[2].base_stat,
+            sp_attack: data.stats[3].base_stat,
+            sp_defense: data.stats[4].base_stat,
+            speed: data.stats[5].base_stat,
+            image: data.sprites.versions['generation-v']['black-white']['animated']['front_default'],
+            type: data.types.map((type) => type.type.name)
         }));
-        console.log(pokemon['type']);
-
+        
+        
         displayPokemon(pokemon);
     });    
 }
 
+fetchPokemon();
+
+
 const displayPokemon = (pokemon) => {
-    const pokemonHTMLString = pokemon.map(pokemen => `
-        <li class="pokemon">
-            <span class="top">
-                <p>${pokemen.id}</p>
-            </span>
-            <div class="middle">
-                <img src="${pokemen.image}" loading="lazy"/>
-            </div>
-            <div class="bottom">
-                <p>${pokemen.name}</p>
+    var pokemonHTMLString = pokemon.map(selected =>
+        `
+        <li class="card-outer">
+            <div class="card-inner ${selected.type[0]}">
+                <div class="top">
+                    <p id="text" class="name">${selected.name}</p>
+                    <div class="hp">
+                        <p id="" class="hp-text">HP</p>
+                        <p id="" class="hp-number">${selected.hp}</p>
+                    </div>
+                </div>
+                <div class="middle">
+                    <img src="${selected.image}" loading="lazy"/>
+                </div>
+                
             </div>
         </li>
-    `).join('');
-    grid.innerHTML = pokemonHTMLString;
+        `
+    ).join('');
+
+    info.innerHTML = pokemonHTMLString;
+}
+
+
+const typeNumber = (selected) => {
+    
+    
+
+    var typeHTML = ``;
+    selected.type.forEach( element => {
+        typeHTML += `
+                <p class="type ${element}">${element}</p>
+        `;
+    })
+
+    return typeHTML;
 }

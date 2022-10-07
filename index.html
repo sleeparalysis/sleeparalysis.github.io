@@ -8,31 +8,9 @@
         <title>PokeAPI Test</title>
     </head>
     <body>
-        <main>
-            <header>
-                <div class="banner">
-                    <img class="icon" src="img/banner.png">
-                </div>
-                <div class="navigation">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                    </ul>
-                </div>
-            </header>           
-            <div class="container">
-                <ul class="mini-menu" onchange="fetchPokemon()">
-                    <li class="color">
-                        <input type="radio" id="normal" name="color" value="front_default" autocomplete="off">
-                        <label for="normal">Normal</label>
-                    </li>
-                    <li class="color">
-                        <input type="radio" id="shiny" name="color" value="front_shiny" autocomplete="off">
-                        <label for="shiny">Shiny</label>
-                    </li>
-                </ul>
-                <ol id="grid" class="grid"></ol>
-            </div>
+        <header>
             
-        </main>
+        </header>  
+        <div id="info" class="grid"></div>       
     </body>
 </html>
