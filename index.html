@@ -4,13 +4,35 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/index.css">
+        <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js" defer></script>
         <script src="js/index.js" defer></script>
         <title>PokeAPI Test</title>
     </head>
     <body>
         <header>
-            
-        </header>  
-        <div id="info" class="grid"></div>       
+        </header>
+        <h1>Pokemon Sort</h1>>
+        <table class="sortable">
+            <thead>
+                <tr>
+                    <th class="sorttable_numeric">ID</th>
+                    <th class="left">Name</th>
+                    <th>Sprite</th>
+                    <th>Type</th>
+                    <th class="sorttable_numeric">Height</th>
+                    <th class="sorttable_numeric">Weight</th>
+                    <th class="sorttable_numeric">HP</th>
+                    <th class="sorttable_numeric">Attack</th>
+                    <th class="sorttable_numeric">Defense</th>
+                    <th class="sorttable_numeric">SP Atk</th>
+                    <th class="sorttable_numeric">SP Def</th>
+                    <th class="sorttable_numeric">Speed</th>
+                    <th class="sorttable_numeric">Exp</th>
+                </tr>
+            </thead>
+            <tbody id="info">
+
+            </tbody>
+        </table>       
     </body>
 </html>

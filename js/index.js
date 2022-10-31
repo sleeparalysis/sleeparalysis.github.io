@@ -17,8 +17,8 @@ const fetchPokemon = () => {
         }
 
         const pokemon = results.map( (data) => ({
-            id: String(data.id).padStart(3, '0'),
-            name: data.name,
+            id: Number(data.id),
+            name: String(data.name).split('-')[0],
             height: data.height,
             weight: data.weight,
             exp: data.base_experience,
@@ -28,57 +28,36 @@ const fetchPokemon = () => {
             sp_attack: data.stats[3].base_stat,
             sp_defense: data.stats[4].base_stat,
             speed: data.stats[5].base_stat,
-            image: data.sprites.versions['generation-v']['black-white']['animated']['front_default'],
+            image: data.sprites.versions['generation-vii']['icons']['front_default'],
             type: data.types.map((type) => type.type.name)
         }));
         
         
-        displayPokemon(pokemon);
+        displayPokemonV3(pokemon);
     });    
 }
 
 fetchPokemon();
 
 
-const displayPokemon = (pokemon) => {
+const displayPokemonV3 = (pokemon) => {
     var pokemonHTMLString = pokemon.map(selected =>
         `
-        <li class="card-outer">
-            <div class="card-inner ${selected.type[0]}">
-                <div class="top">
-                    <p class="name">${selected.name}</p>
-                    <div class="hp">
-                        <p class="text">HP</p>
-                        <p class="number">${selected.hp}</p>
-                    </div>
-                </div>
-                <div class="middle">
-                    <img src="${selected.image}" loading="lazy"/>
-                </div>
-                <div class="bottom">
-                    <div class="row">
-                        <p class="name">Attack</p>
-                        <p class="number">${selected.attack}</p>
-                    </div>
-                    <div class="row line">
-                        <p class="name">Defense</p>
-                        <p class="number">${selected.defense}</p>
-                    </div>
-                    <div class="row">
-                        <p class="name">Sp. Attack</p>
-                        <p class="number">${selected.sp_attack}</p>
-                    </div>
-                    <div class="row">
-                        <p class="name">Sp. Defense</p>
-                        <p class="number">${selected.sp_defense}</p>
-                    </div>
-                    <div class="row">
-                        <p class="name">Speed</p>
-                        <p class="number">${selected.speed}</p>
-                    </div>
-                </div>
-            </div>
-        </li>
+            <tr>
+                <td class="center">${selected.id}</td>
+                <td class="left">${selected.name}</td>
+                <td class="center"><img src="${selected.image}"></td>
+                <td class="left">${typeNumber(selected)}</td>
+                <td class="center">${selected.height}</td>
+                <td class="center">${selected.weight}</td>
+                <td class="center">${selected.hp}</td>
+                <td class="center">${selected.attack}</td>
+                <td class="center">${selected.defense}</td>
+                <td class="center">${selected.sp_attack}</td>
+                <td class="center">${selected.sp_defense}</td>
+                <td class="center">${selected.speed}</td>
+                <td class="center">${selected.exp}</td>
+            </tr>
         `
     ).join('');
 
@@ -87,15 +66,13 @@ const displayPokemon = (pokemon) => {
 
 
 const typeNumber = (selected) => {
-    
-    
-
-    var typeHTML = ``;
+    var typeHTML = `<div class="type">`;
     selected.type.forEach( element => {
         typeHTML += `
-                <p class="type ${element}">${element}</p>
+                <p class="ptype ${element}">${element}<p>
         `;
     })
+    typeHTML += `</div`;
 
     return typeHTML;
 }
