@@ -10,8 +10,12 @@ body {
     font-size: large;
 }
 
+header h1 {
+    margin: .5rem;
+    color: white;
+}
+
 h1 {
-    text-align: center;
     margin-top: -.5rem;
 }
 
@@ -22,18 +26,14 @@ p {
     text-align: justify;
 }
 
-
-
 #news {
-    background-color: rgb(255, 196, 0);
+    background-color: black;
     width: 100%;
-    height: 25px;
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-
 
 #container {
     display: flex;
@@ -64,6 +64,7 @@ p {
 
 #navigation {
     width: 20vw;
+    margin-bottom: .5rem;
 }
 
 #row {
