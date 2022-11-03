@@ -11,7 +11,7 @@ const getImage = (id) => {
         .then((data) => {
             for(let i = 0; i < data.data.length; i++) {
                 if(String(data.data[i].id).match(String(id))) {
-                    const info = document.getElementById('column2');
+                    const info = document.getElementById('info');
                     var HTMLString = `
                         <div id="info">
                             <h2>${data.data[i].name}</h2>

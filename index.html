@@ -13,10 +13,18 @@
             <h2>Yugioh Quick Reference</h2>
         </header>
         <div id="container">
+           
+                <label for="searchbox"></label>
+                <input id="searchbox" type="search" name="searchbox" placeholder="Search" onchange="getInput()" autocomplete="off"/>
+                <input id="searchbutton" type="submit" value="" onclick="getInput()"/> 
+            
+        </div>
+        <div id="container">
             <div id="column1">
                 <img id="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/back.jpg"/>
             </div>
             <div id="column2">
+                
                 <div id="info">
                     
                 
@@ -24,13 +32,7 @@
                 <!--js injection-->
             </div>
             <div id="column3">
-                <div id="navigation">
-                    <div id="row">
-                        <label for="searchbox"></label>
-                        <input id="searchbox" type="search" name="searchbox" placeholder="Search" onchange="getInput()" autocomplete="off"/>
-                        <input id="searchbutton" type="submit" value="" onclick="getInput()"/> 
-                    </div>
-                </div>
+                
                 <div id="gallery">
                     <!--js injection-->
                 </div>

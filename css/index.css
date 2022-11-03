@@ -39,36 +39,39 @@ p {
 #container {
     display: flex;
     justify-content:center;
-    margin-top: 50px;
+    margin: 25px;
 }
 
 #column1 {
-    width: 25vw;
+    width: 25%;
     display: flex;
-    justify-content: center;
+   
+    justify-content: left;
+    align-items: flex-start;
 }
 
 #column2 {
-    width: 50vw;
+    width: 50%;
     display: flex;
     justify-content: center;
 }
 
 #column3 {
-    width: 25vw;
+    width: 25%;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: right;
     
 }
 
 #navigation {
-    width: 20vw;
+    width: 50vw;
     margin-bottom: .5rem;
 }
 
 #row {
+    width: 40vw;
     height: fit-content;
     display: flex;
     justify-content: center;
@@ -76,18 +79,18 @@ p {
 
 #card {
     width: 20vw;
-    position: fixed;
 }
 
 #info {
     width: 40vw;
-    position: fixed;
 }
 
 #gallery {
     width: 20vw;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 1vw;
     overflow-y: scroll;
 }
 
@@ -95,12 +98,13 @@ p {
     font-weight: bold;
 }
 .card_small {
-    width: 4vw;
+    width: 6vw;
+    filter:grayscale(2);
 }
 
-.card_small:hover {
+.card_small:hover, .card_small:active {
     cursor: pointer;
-    transform: scale(1.1);
+    filter:grayscale(0);
 }
 
 input[type="search"], input[type="submit"] {
