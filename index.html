@@ -4,35 +4,31 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/index.css">
-        <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js" defer></script>
         <script src="js/index.js" defer></script>
-        <title>PokeAPI Test</title>
+        <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js" defer></script>
+        <title>Yugioh Database</title>
     </head>
     <body>
-        <header>
-        </header>
-        <h1>Pokemon Sort</h1>
-        <table class="sortable">
-            <thead>
-                <tr>
-                    <th class="sorttable_numeric">ID</th>
-                    <th class="left">Name</th>
-                    <th>Sprite</th>
-                    <th>Type</th>
-                    <th class="sorttable_numeric">Height</th>
-                    <th class="sorttable_numeric">Weight</th>
-                    <th class="sorttable_numeric">HP</th>
-                    <th class="sorttable_numeric">Attack</th>
-                    <th class="sorttable_numeric">Defense</th>
-                    <th class="sorttable_numeric">SP Atk</th>
-                    <th class="sorttable_numeric">SP Def</th>
-                    <th class="sorttable_numeric">Speed</th>
-                    <th class="sorttable_numeric">Exp</th>
-                </tr>
-            </thead>
-            <tbody id="info">
-
-            </tbody>
-        </table>       
+        
+        <div id="container">
+            <div id="column1">
+                <img id="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/back.jpg"/>
+            </div>
+            <div id="column2">
+                <!--js injection-->
+            </div>
+            <div id="column3">
+                <div id="navigation">
+                    <div id="row">
+                        <label for="searchbox"></label>
+                        <input id="searchbox" type="search" name="searchbox" placeholder="Search" onchange="getInput()" autocomplete="off"/>
+                        <input id="searchbutton" type="submit" value="" onclick="getInput()"/> 
+                    </div>
+                </div>
+                <div id="gallery">
+                    <!--js injection-->
+                </div>
+            </div>
+        </div>
     </body>
 </html>
