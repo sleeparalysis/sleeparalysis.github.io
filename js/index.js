@@ -14,7 +14,7 @@ const getImage = (id) => {
                     const info = document.getElementById('column2');
                     var HTMLString = `
                         <div id="info">
-                            <h1>${data.data[i].name}</h1>
+                            <h2>${data.data[i].name}</h2>
                             <p><span class="bold">Description</span></p>
                             <p>${data.data[i].desc}</p>
                             <p><span class="bold">Type:</span> ${data.data[i].type}</p>
