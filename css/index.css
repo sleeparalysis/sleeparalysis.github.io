@@ -121,7 +121,7 @@ header h2 {
 
 .info h2 {
     text-align: center;
-    margin-top: 0;
+    margin: 0 0 1rem 0;
 }
 
 .info p {
@@ -131,6 +131,10 @@ header h2 {
 
 .bold {
     font-weight: bold;
+}
+
+.space {
+    padding-top: 1rem;
 }
 
 textarea:focus, input:focus {

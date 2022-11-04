@@ -18,7 +18,8 @@ const insertInfo = (data) => {
             <h2>${data.name}</h2>
             <p><span class="bold">Description</span></p>
             <p>${data.desc}</p>
-            <p><span class="bold">Type:</span> ${data.type}</p>
+
+            <p class="space"><span class="bold">Type:</span> ${data.type}</p>
             <p><span class="bold">Race:</span> ${data.race}</p>
             <p><span class="bold">Attribute:</span> ${data.attribute}</p>
             <p><span class="bold">Archetype:</span> ${data.archetype}</p>
@@ -44,7 +45,6 @@ const getInfo = (id) => {
 }
 
 const fetchCard = (search) => {
-    
     fetch('../js/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
@@ -79,7 +79,7 @@ const fetchCard = (search) => {
                     cards.push(card);
                 }
             }
-            alert('got input');
+            
             displayCards(cards);
         }
     );
