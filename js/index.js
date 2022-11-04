@@ -29,6 +29,16 @@ const sub = () => {
     } 
 }
 
+const openresults = () => {
+    document.getElementById('resize').style.visibility = 'visible';
+    document.getElementById('gallery').style.visibility = 'visible';
+}
+
+const closeresults = () => {
+    document.getElementById('resize').style.visibility = 'collapse';
+    document.getElementById('gallery').style.visibility = 'collapse';
+}
+
 const insertInfo = (data) => {
     const element = document.getElementById('info');
     var HTMLString = `
@@ -106,8 +116,7 @@ const fetchCard = (search) => {
                 }
             }
 
-            document.getElementById('gallery').style.visibility = 'visible';
-            document.getElementById('resize').style.visibility = 'visible';
+            
             displayCards(cards);
         }
     );
@@ -123,6 +132,7 @@ const displayCards = (cards) => {
     ).join('');
     
     info.innerHTML = HTMLString;
+    openresults();
 }
 
 const getDatabase = () => {

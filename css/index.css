@@ -120,9 +120,10 @@ input[type="submit"]:hover {
 }
 
 input[type="button"] {
-    width: 20px;
-    height: 20px;
-    font-size: 11px;
+    width: 25px;
+    height: 25px;
+    font-size: 9.5px;
+    color: #000000;
     border-radius: 25px;
     border-style: none;
 }
