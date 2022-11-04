@@ -71,7 +71,6 @@ body {
     height: 25px;
     gap: 2.5px;
     margin: 5px;
-    visibility: collapse;
     display: none;
     align-items: center;
     justify-content: right;
@@ -81,7 +80,6 @@ body {
     width: 100%;
     height: 0;
     gap:5px;
-    visibility: collapse;
     display: none;
     flex-wrap: wrap;
     justify-content: left;
