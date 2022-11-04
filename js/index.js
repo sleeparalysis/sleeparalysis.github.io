@@ -35,6 +35,7 @@ const insertInfo = (data) => {
 }
 
 const getInfo = (id) => {
+    document.getElementById('left').style.visibility = 'visible';
     fetch('../js/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
