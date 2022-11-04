@@ -36,7 +36,7 @@ body {
     width: 50%;
     min-width: calc((60px * 5) - 5px);
     max-width: calc((60px * 8) - 5px);
-    height: fit-content;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
