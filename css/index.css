@@ -79,7 +79,7 @@ body {
 
 #gallery {
     width: 100%;
-    height: calc((85px * 1) - 5px);
+    height: 0;
     gap:5px;
     
     visibility: collapse;
