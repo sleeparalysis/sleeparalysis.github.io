@@ -19,6 +19,11 @@ const insertInfo = (data) => {
             <p><span class="bold">Description</span></p>
             <p>${data.desc}</p>
 
+            <p class="space"><span class="bold">Level:</span> ${data.level}</p>
+            <p><span class="bold">Attack:</span> ${data.atk}</p>
+            <p><span class="bold">Defense:</span> ${data.def}</p>
+            <p><span class="bold">Link Rating:</span> ${data.linkval}</p>
+
             <p class="space"><span class="bold">Type:</span> ${data.type}</p>
             <p><span class="bold">Race:</span> ${data.race}</p>
             <p><span class="bold">Attribute:</span> ${data.attribute}</p>
@@ -70,6 +75,7 @@ const fetchCard = (search) => {
                         race: data.data[i].race,
                         attribute: data.data[i].attribute,
                         archetype: data.data[i].archetype,
+                        linkval: data.data[i].linkval,
                         card_sets: data.data[i].card_sets,
                         image_url: data.data[i].card_images[0].image_url,
                         image_url_small: data.data[i].card_images[0].image_url_small,
@@ -79,7 +85,7 @@ const fetchCard = (search) => {
                     cards.push(card);
                 }
             }
-            
+
             displayCards(cards);
         }
     );
