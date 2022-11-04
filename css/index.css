@@ -72,7 +72,7 @@ body {
     gap: 2.5px;
     margin: 5px;
     visibility: collapse;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: right;
 }
@@ -82,7 +82,7 @@ body {
     height: 0;
     gap:5px;
     visibility: collapse;
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     justify-content: left;
     overflow-y: scroll;
