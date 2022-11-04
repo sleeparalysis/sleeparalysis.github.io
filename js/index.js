@@ -30,17 +30,12 @@ const sub = () => {
 }
 
 const openresults = () => {
-    document.getElementById('resize').style.visibility = 'visible';
     document.getElementById('resize').style.display = 'flex';
-    document.getElementById('gallery').style.visibility = 'visible';
     document.getElementById('gallery').style.display = 'flex';
-    add();
 }
 
 const closeresults = () => {
-    document.getElementById('resize').style.visibility = 'collapse';
     document.getElementById('resize').style.display = 'none';
-    document.getElementById('gallery').style.visibility = 'collapse';
     document.getElementById('gallery').style.display = 'none';
 }
 
