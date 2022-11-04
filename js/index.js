@@ -44,6 +44,7 @@ const getInfo = (id) => {
 }
 
 const fetchCard = (search) => {
+    
     fetch('../js/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
@@ -78,7 +79,7 @@ const fetchCard = (search) => {
                     cards.push(card);
                 }
             }
-            
+            alert('got input');
             displayCards(cards);
         }
     );
