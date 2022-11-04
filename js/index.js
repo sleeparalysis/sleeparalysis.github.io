@@ -1,6 +1,6 @@
 const min = 1;
 const max = 5;
-var current = 0;
+var current = 1;
 
 const getInput = () => {
     var search = document.getElementById('textbox').value;
@@ -32,7 +32,6 @@ const sub = () => {
 const openresults = () => {
     document.getElementById('resize').style.display = 'flex';
     document.getElementById('gallery').style.display = 'flex';
-    add();
 }
 
 const closeresults = () => {
