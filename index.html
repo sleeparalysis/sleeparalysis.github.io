@@ -12,18 +12,26 @@
         <header id="title">
             <h2>Card Search</h2>
         </header>
-        <div class="container">
-            <div id="right" class="column">
+        <div id="container" class="container">
+            <div id="searchcol" class="column">
                 <div id="search">
-                    <label for="textbox"></label>
                     <input id="textbox" type="search" placeholder="Search" onchange="getInput()" autocomplete="off"/>
-                    <input id="button" type="submit" value="" onclick="getInput()"/> 
+                    <label for="textbox"></label>
+                    <input id="submit" type="submit" value="" onclick="getInput()"/>
+                    <label for="submit"></label>
+                </div>
+                <div id="resize">
+                    <input id="smaller" type="button" value="&#8722;" onclick="sub()"/> 
+                    <label for="smaller"></label>
+                    <input id="bigger" type="button" value="&#43;" onclick="add()"/> 
+                    <label for="bigger"></label>
                 </div>
                 <div id="gallery">
                     <!--js injection-->
                 </div>
+                
             </div>
-            <div id="left" class="column">
+            <div id="infocol" class="column">
                 <div id="image">
                     <!--js injection-->
                 </div>

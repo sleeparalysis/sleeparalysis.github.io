@@ -1,3 +1,7 @@
+const min = 1;
+const max = 5;
+var current = 1;
+
 const getInput = () => {
     var search = document.getElementById('textbox').value;
     fetchCard(search);
@@ -9,6 +13,20 @@ const insertImage = (id) => {
         <img id="${id}" class="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg"/>
         `;
     element.innerHTML = HTMLString;
+}
+
+const add = () => {
+    if(current < 5) {
+        current++;
+        document.getElementById('gallery').style.height = `calc((85px * ${current} - 5px)`;
+    } 
+}
+
+const sub = () => {
+    if(current > 1) {
+        current--;
+        document.getElementById('gallery').style.height = `calc((85px * ${current} - 5px)`;
+    } 
 }
 
 const insertInfo = (data) => {
@@ -42,7 +60,8 @@ const getInfo = (id) => {
                 if(String(data.data[i].id).match(String(id))) {
                     insertImage(data.data[i].id) 
                     insertInfo(data.data[i]);
-                    document.getElementById('left').style.visibility = 'visible';
+                    document.getElementById('container').style.gap = '25px';
+                    document.getElementById('infocol').style.visibility = 'visible';
                     break;
                 }
             }
@@ -88,6 +107,7 @@ const fetchCard = (search) => {
             }
 
             document.getElementById('gallery').style.visibility = 'visible';
+            document.getElementById('resize').style.visibility = 'visible';
             displayCards(cards);
         }
     );

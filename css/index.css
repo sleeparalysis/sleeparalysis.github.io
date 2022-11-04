@@ -10,7 +10,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     margin: 25px 0;
-    gap: 25px;
+    gap: 0;
 }
 
 .column {
@@ -20,20 +20,22 @@ body {
     padding: 25px;
 }
 
-#left {
+#infocol {
     width:50%;
-    min-width: 300px;
-    max-width: 750px;
+    min-width: calc((60px * 5) - 5px);
+    max-width: fit-content;
     gap:25px;
 
     visibility:collapse;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
-#right {
-    width: 300px;
+#searchcol {
+    width: 50%;
+    min-width: calc((60px * 5) - 5px);
+    max-width: calc((60px * 8) - 5px);
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -50,11 +52,12 @@ body {
 
 #image {
     width:50%;
-    min-width: 300px;
+    min-width: calc((60px * 5) - 5px);
+    max-width: calc((60px * 5) - 5px);
 }
 
 #info {
-    width: 350px;
+    width: calc((60px * 5) - 5px);
 }
 
 #search {
@@ -63,10 +66,20 @@ body {
     justify-content: center;
 }
 
+#resize {
+    width: 100%;
+    height: 25px;
+    gap: 1.5px;
+    visibility: collapse;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
 #gallery {
-    height: 250px;
-    margin-top: 25px;
-    gap:4px;
+    width: 100%;
+    height: calc((85px * 1) - 5px);
+    gap:5px;
     
     visibility: collapse;
     display: flex;
@@ -103,6 +116,14 @@ input[type="submit"]:hover {
     background: #008800 url("../img/sw.svg") no-repeat center;
     background-size: 13px;
     cursor: pointer;
+}
+
+input[type="button"] {
+    width: 15px;
+    height: 15px;
+    font-size: 9px;
+    border-radius: 25px;
+    border-style: none;
 }
 
 .card {
