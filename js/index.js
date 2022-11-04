@@ -87,6 +87,7 @@ const fetchCard = (search) => {
                 }
             }
 
+            document.getElementById('gallery').style.visibility = 'visible';
             displayCards(cards);
         }
     );
