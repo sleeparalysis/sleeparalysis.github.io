@@ -31,12 +31,14 @@ const sub = () => {
 
 const openresults = () => {
     document.getElementById('resize').style.visibility = 'visible';
+    document.getElementById('resize').style.height = '25px';
     document.getElementById('gallery').style.visibility = 'visible';
     document.getElementById('gallery').style.height = 'calc((85px * 1) - 5px)'
 }
 
 const closeresults = () => {
     document.getElementById('resize').style.visibility = 'collapse';
+    document.getElementById('resize').style.height = '0';
     document.getElementById('gallery').style.visibility = 'collapse';
     document.getElementById('gallery').style.height = '0';
 }
