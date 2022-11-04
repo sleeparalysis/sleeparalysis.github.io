@@ -1,13 +1,8 @@
-html, body, .container {
-    height: 100vw;
-    
-}
-
 body {
-    background-color: white;
-    margin: 0;
+    background-color: #e7e7e7;;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 16px;
+    margin: 0;
 }
 
 header h2 {
@@ -15,133 +10,134 @@ header h2 {
     color: white;
 }
 
-h2 {
+.info h2 {
     text-align: center;
-    margin-top: -.5rem;
+    margin-top: 0;
 }
 
-p {
+.info p {
     width: 100%;
     margin: 0;
     padding: .5rem 0;
     text-align: justify;
 }
 
-#news {
+.card {
+    width: 300px;
+    display: block;
+}
+
+.card_small {
+    width: 46.5px;
+    height: 67.5px;
+    filter:grayscale(0);
+}
+
+.card_small:hover, .card_small:active {
+    cursor: pointer;
+    filter:grayscale(1);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.column {
+    background-color: #ffffff;
+    height:800px;
+    border-radius: 10px;
+    padding: 25px 0;
+    
+}
+
+#left {
+    margin: 25px 0 25px 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+#right {
+    margin: 25px 25px 25px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#title {
     background-color: black;
-    width: 100%;
+
     height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#container {
+#image {
     display: flex;
-    justify-content:center;
-    margin: 25px;
-}
-
-#column1 {
-    width: 25%;
-    display: flex;
-   
-    justify-content: left;
+    justify-content: center;
     align-items: flex-start;
-}
-
-#column2 {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-}
-
-#column3 {
-    width: 25%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: right;
-    
-}
-
-#navigation {
-    width: 50vw;
-    margin-bottom: .5rem;
-}
-
-#row {
-    width: 40vw;
-    height: fit-content;
-    display: flex;
-    justify-content: center;
-}
-
-#card {
-    width: 20vw;
+    padding: 0 0 0 25px;
 }
 
 #info {
-    width: 40vw;
+    max-width: 500px;
+    padding: 0 25px;
 }
 
-#gallery {
-    width: 20vw;
+#search {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 1vw;
+}
+
+
+#gallery {
+    width: 400px;
+    height: calc(71px * 10);
+    gap: 4px;
+    margin-top: 25px;
+    padding: 0 25px;
     overflow-y: scroll;
 }
 
-.bold {
-    font-weight: bold;
-}
-.card_small {
-    width: 6vw;
-    filter:grayscale(2);
-}
-
-.card_small:hover, .card_small:active {
-    cursor: pointer;
-    filter:grayscale(0);
-}
 
 input[type="search"], input[type="submit"] {
     background-color: #ffffff;
     height: 25px;
-    margin: 0;
     border: 1px solid rgb(187, 187, 187);
     display: inline-block;
 }
 
 input[type="search"] {
-    width: 100%;
+    width: 360px;
     border-radius: 5px 0 0 5px;
     border-right: 0;
+}
+
+input[type="submit"] {
+    width: 40px;    
+    border-radius: 0 5px 5px 0;
+    border-left: 0;
+
+    background: #ffffff url("../img/sb.svg") no-repeat center;
+    background-size: 13px;
+}
+
+input[type="submit"]:hover {
+    background: #008800 url("../img/sw.svg") no-repeat center;
+    background-size: 13px;
+    cursor: pointer;
 }
 
 textarea:focus, input:focus {
     outline: none;
 }
-
-input[type="submit"] {
-    background: transparent url("../img/sb.svg") no-repeat center;
-    background-size: 13px;
-    background-color: #ffffff;
-    width: 40px;
-    border-radius: 0 5px 5px 0;
-    border-left: 0; 
-}
-
-input[type="submit"]:hover {
-    background: transparent url("../img/sw.svg") no-repeat center;
-    background-color: rgb(0, 136, 0);
-    border-color: rgb(0, 136, 0);
-    background-size: 13px;
-    cursor: pointer;
-}
-
-
 
 #sorttable_sortfwdind, #sorttable_sortrevind { display: none; } 

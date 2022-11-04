@@ -1,30 +1,41 @@
 const getInput = () => {
-    var search = document.getElementById('searchbox').value;
+    var search = document.getElementById('textbox').value;
     fetchCard(search);
 }
 
-const getImage = (id) => {
-    document.getElementById('card').src = `https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg`;
+const insertImage = (id) => {
+    const element = document.getElementById('image');
+    var HTMLString = `
+        <img id="${id}" class="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg"/>
+        `;
+    element.innerHTML = HTMLString;
+}
 
+const insertInfo = (data) => {
+    const element = document.getElementById('info');
+    var HTMLString = `
+        <div class="info">
+            <h2>${data.name}</h2>
+            <p><span class="bold">Description</span></p>
+            <p>${data.desc}</p>
+            <p><span class="bold">Type:</span> ${data.type}</p>
+            <p><span class="bold">Race:</span> ${data.race}</p>
+            <p><span class="bold">Attribute:</span> ${data.attribute}</p>
+            <p><span class="bold">Archetype:</span> ${data.archetype}</p>
+            
+        </div>
+        `;
+    element.innerHTML = HTMLString;
+}
+
+const getInfo = (id) => {
     fetch('../js/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
             for(let i = 0; i < data.data.length; i++) {
                 if(String(data.data[i].id).match(String(id))) {
-                    const info = document.getElementById('info');
-                    var HTMLString = `
-                        <div id="info">
-                            <h2>${data.data[i].name}</h2>
-                            <p><span class="bold">Description</span></p>
-                            <p>${data.data[i].desc}</p>
-                            <p><span class="bold">Type:</span> ${data.data[i].type}</p>
-                            <p><span class="bold">Race:</span> ${data.data[i].race}</p>
-                            <p><span class="bold">Attribute:</span> ${data.data[i].attribute}</p>
-                            <p><span class="bold">Archtype:</span> ${data.data[i].archetype}</p>
-                            
-                        </div>
-                        `;
-                    info.innerHTML = HTMLString;
+                    insertImage(data.data[i].id) 
+                    insertInfo(data.data[i]);
                     break;
                 }
             }
@@ -78,7 +89,7 @@ const displayCards = (cards) => {
     const info = document.getElementById('gallery');
     var HTMLString = cards.map(selected =>
         `
-             <img id="${selected.id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${selected.id}.jpg" loading="lazy" onclick="getImage(this.id)"/>
+             <img id="${selected.id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${selected.id}.jpg" loading="lazy" onclick="getInfo(this.id)"/>
         `
     ).join('');
     

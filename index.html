@@ -9,34 +9,29 @@
         <title>Yugioh Database</title>
     </head>
     <body>
-        <header id="news">
-            <h2>Yugioh Quick Reference</h2>
+        <header id="title">
+            <h2>Quick Reference</h2>
         </header>
-        <div id="container">
-           
-                <label for="searchbox"></label>
-                <input id="searchbox" type="search" name="searchbox" placeholder="Search" onchange="getInput()" autocomplete="off"/>
-                <input id="searchbutton" type="submit" value="" onclick="getInput()"/> 
-            
-        </div>
-        <div id="container">
-            <div id="column1">
-                <img id="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/back.jpg"/>
-            </div>
-            <div id="column2">
-                
-                <div id="info">
-                    
-                
+        <div class="container">
+            <div id="left" class="column">
+                <div id="image">
+
                 </div>
-                <!--js injection-->
+                <div id="info">
+
+                </div>
             </div>
-            <div id="column3">
-                
+            <div id="right" class="column">
+                <div id="search">
+                    <label for="textbox"></label>
+                    <input id="textbox" type="search" placeholder="Search" onchange="getInput()" autocomplete="off"/>
+                    <input id="button" type="submit" value="" onclick="getInput()"/> 
+                </div>
                 <div id="gallery">
                     <!--js injection-->
                 </div>
             </div>
         </div>
+        
     </body>
 </html>
