@@ -25,6 +25,7 @@ body {
     min-width: 300px;
     max-width: 750px;
     gap:25px;
+
     visibility:collapse;
     display: flex;
     flex-wrap: wrap;
@@ -65,11 +66,13 @@ body {
 #gallery {
     height: 250px;
     margin-top: 25px;
+    gap:4px;
+    
     visibility: collapse;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    gap:4px;
+
     overflow-y: scroll;
 }
 

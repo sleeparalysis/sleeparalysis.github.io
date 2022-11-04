@@ -35,7 +35,6 @@ const insertInfo = (data) => {
 }
 
 const getInfo = (id) => {
-    document.getElementById('left').style.visibility = 'visible';
     fetch('../js/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
@@ -43,6 +42,7 @@ const getInfo = (id) => {
                 if(String(data.data[i].id).match(String(id))) {
                     insertImage(data.data[i].id) 
                     insertInfo(data.data[i]);
+                    document.getElementById('left').style.visibility = 'visible';
                     break;
                 }
             }
