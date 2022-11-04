@@ -32,11 +32,13 @@ const sub = () => {
 const openresults = () => {
     document.getElementById('resize').style.visibility = 'visible';
     document.getElementById('gallery').style.visibility = 'visible';
+    add();
 }
 
 const closeresults = () => {
     document.getElementById('resize').style.visibility = 'collapse';
     document.getElementById('gallery').style.visibility = 'collapse';
+    document.getElementById('gallery').style.height = '0';
 }
 
 const insertInfo = (data) => {
