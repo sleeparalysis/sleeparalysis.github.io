@@ -1,50 +1,39 @@
 const min_row = 1;
 const max_row = 8;
+var total_rows = 0;
 var current_row = 1;
-var number_of_results = 0;
-
-const search = () => {
-    var search = document.getElementById('textbox').value;
-    fetch('../js/cardinfo.json')
-        .then((res) => res.json())
-        .then((data) => {
-            var cards = [];
-            for(let i = 0; i < data.data.length; i++) {
-                if(isValid(data.data[i], search)) {
-                    max = data.data.lenth;
-                    cards.push(data.data[i].id)
-                }
-            }
-            displayCards(cards);
-        }
-    );
-}
-
-const insertImage = (id) => {
-    const element = document.getElementById('image');
-    var HTMLString = `
-        <img id="${id}" class="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg"/>
-        `;
-    element.innerHTML = HTMLString;
-}
 
 const add = () => {
-    if(current_row < max_row) {
-        current_row++;
-        document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
-    } 
+    var temp_max = 0;
+    if(total_rows < max_row) {
+        temp_max = total_rows;
+        if (current_row < temp_max) {
+            current_row++;
+        }
+    }
+    else {
+        if (current_row < max_row) {
+            current_row++;
+        }
+    }
+    
+    document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
 }
 
 const sub = () => {
-    if(current_row > min_row) {
-        current_row--;
-        document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
-    } 
+    if(current_row > min_row) { current_row--; }
+    document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
+}
+
+const resize = () => {
+    while(total_rows < current_row) { current_row--; }
+    document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
 }
 
 const openresults = () => {
     document.getElementById('resize').style.display = 'flex';
     document.getElementById('gallery').style.display = 'flex';
+    resize();
 }
 
 const closeresults = () => {
@@ -52,31 +41,77 @@ const closeresults = () => {
     document.getElementById('gallery').style.display = 'none';
 }
 
+const getTotalRows = (items) => {
+    total_rows = Math.ceil(items / 8);
+}
+
+const containsKeyword = (keyword, data) => {
+    if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
+        data.type.toLowerCase().match(keyword.toLowerCase()) ||
+        data.desc.toLowerCase().match(keyword.toLowerCase()) ||
+        (data.archetype != null && data.archetype.toLowerCase().match(keyword.toLowerCase())) ||
+        (data.race != null && data.race.toLowerCase().match(keyword.toLowerCase())) ||
+        (data.attribute != null && data.attribute.toLowerCase().match(keyword.toLowerCase())))
+    { 
+        return true;
+    }
+
+    return false;
+}
+
+const search = () => {
+    var keyword = document.getElementById('textbox').value;
+    fetch('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json')
+        .then((res) => res.json())
+        .then((data) => {
+            var cards = [];
+            
+            for(let i = 0; i < data.data.length; i++) {
+                if(containsKeyword(keyword, data.data[i])) {
+                    cards.push(data.data[i].id)
+                }
+            }
+            getTotalRows(cards.length);
+            displayCards(cards);
+            openresults();
+        }
+    );
+}
+
+const insertImage = (id) => {
+    const element = document.getElementById('image');
+    var HTMLString = `
+        <img
+            id="${id}"
+            class="card"
+            src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg"
+        />`;
+    element.innerHTML = HTMLString;
+}
+
 const insertInfo = (data) => {
     const element = document.getElementById('info');
+
     var HTMLString = `
         <div class="info">
             <h2>${data.name}</h2>
             <p><span class="bold">Description</span></p>
             <p>${data.desc}</p>
-
             <p class="space"><span class="bold">Level:</span> ${data.level}</p>
             <p><span class="bold">Attack:</span> ${data.atk}</p>
             <p><span class="bold">Defense:</span> ${data.def}</p>
             <p><span class="bold">Link Rating:</span> ${data.linkval}</p>
-
             <p class="space"><span class="bold">Card Type:</span> ${data.type}</p>
             <p><span class="bold">Type:</span> ${data.race}</p>
             <p><span class="bold">Attribute:</span> ${data.attribute}</p>
             <p><span class="bold">Archetype:</span> ${data.archetype}</p>
-            
-        </div>
-        `;
+        </div>`;
+
     element.innerHTML = HTMLString;
 }
 
 const getInfo = (id) => {
-    fetch('../js/cardinfo.json')
+    fetch('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
             for(let i = 0; i < data.data.length; i++) {
@@ -92,17 +127,38 @@ const getInfo = (id) => {
     );
 }
 
-const isValid = (data, search) => {
-    if(data.name.toLowerCase().match(search.toLowerCase()) ||
-        data.type.toLowerCase().match(search.toLowerCase()) ||
-        data.desc.toLowerCase().match(search.toLowerCase()) ||
-        (data.archetype != null && data.archetype.toLowerCase().match(search.toLowerCase())) ||
-        (data.race != null && data.race.toLowerCase().match(search.toLowerCase())) ||
-        (data.attribute != null && data.attribute.toLowerCase().match(search.toLowerCase()))
-    ) { 
-        return true;
+const displayCards = (cards) => {
+    const info = document.getElementById('gallery');
+    var HTMLString = cards.map(id => `
+        <img 
+            id="${id}"
+            class="card_small"
+            src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${id}.jpg"
+            loading="lazy"
+            onclick="getInfo(this.id)"/>`)
+            .join('');
+    info.innerHTML = HTMLString;
+}
+
+const getDatabase = () => {
+    const url = [
+        [`https://db.ygoprodeck.com/api/v7/cardinfo.php`, `cardinfo`],
+        [`https://db.ygoprodeck.com/api/v7/cardsets.php`, `cardsets`],
+        [`https://db.ygoprodeck.com/api/v7/archetypes.php`, `archetypes`],
+        [`https://db.ygoprodeck.com/api/v7/checkDBVer.php`, `version`]
+    ];
+
+    for(let i = 0; i < url.length; i++) {
+        fetch(url[i][0])
+            .then((res) => res.blob())
+            .then((data) => {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(data);
+                a.download = url[i][1];
+                a.click();
+            }
+        );
     }
-    return false;
 }
 
 const createCard = (data) => {
@@ -126,36 +182,3 @@ const createCard = (data) => {
 }
 
 
-const displayCards = (cards) => {
-    const info = document.getElementById('gallery');
-    var HTMLString = cards.map(id =>
-        `
-             <img id="${id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${id}.jpg" loading="lazy" onclick="getInfo(this.id)"/>
-        `
-    ).join('');
-    
-    info.innerHTML = HTMLString;
-    openresults();
-}
-
-const getDatabase = () => {
-    const url =
-    [
-        [`https://db.ygoprodeck.com/api/v7/cardinfo.php`, `cardinfo`],
-        [`https://db.ygoprodeck.com/api/v7/cardsets.php`, `cardsets`],
-        [`https://db.ygoprodeck.com/api/v7/archetypes.php`, `archetypes`],
-        [`https://db.ygoprodeck.com/api/v7/checkDBVer.php`, `version`]
-    ];
-
-    for(let i = 0; i < url.length; i++) {
-        fetch(url[i][0])
-            .then((res) => res.blob())
-            .then((data) => {
-                var a = document.createElement('a');
-                a.href = window.URL.createObjectURL(data);
-                a.download = url[i][1];
-                a.click();
-            }
-        );
-    }
-}
