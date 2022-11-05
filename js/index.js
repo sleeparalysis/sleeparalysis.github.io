@@ -1,6 +1,7 @@
-const min = 1;
-const max = 5;
-var current = 1;
+const min_row = 1;
+const max_row = 8;
+var current_row = 1;
+var number_of_results = 0;
 
 const getInput = () => {
     var search = document.getElementById('textbox').value;
@@ -16,15 +17,15 @@ const insertImage = (id) => {
 }
 
 const add = () => {
-    if(current < 5) {
-        current++;
+    if(current_row < max_row) {
+        current_row++;
         document.getElementById('gallery').style.height = `calc((85px * ${current} - 5px)`;
     } 
 }
 
 const sub = () => {
-    if(current > 1) {
-        current--;
+    if(current_row > min_row) {
+        current_row--;
         document.getElementById('gallery').style.height = `calc((85px * ${current} - 5px)`;
     } 
 }
@@ -52,8 +53,8 @@ const insertInfo = (data) => {
             <p><span class="bold">Defense:</span> ${data.def}</p>
             <p><span class="bold">Link Rating:</span> ${data.linkval}</p>
 
-            <p class="space"><span class="bold">Type:</span> ${data.type}</p>
-            <p><span class="bold">Race:</span> ${data.race}</p>
+            <p class="space"><span class="bold">Card Type:</span> ${data.type}</p>
+            <p><span class="bold">Type:</span> ${data.race}</p>
             <p><span class="bold">Attribute:</span> ${data.attribute}</p>
             <p><span class="bold">Archetype:</span> ${data.archetype}</p>
             
@@ -79,55 +80,61 @@ const getInfo = (id) => {
     );
 }
 
+const isValid = (data, search) => {
+    if(data.name.toLowerCase().match(search.toLowerCase()) ||
+        data.type.toLowerCase().match(search.toLowerCase()) ||
+        data.desc.toLowerCase().match(search.toLowerCase()) ||
+        (data.archetype != null && data.archetype.toLowerCase().match(search.toLowerCase())) ||
+        (data.race != null && data.race.toLowerCase().match(search.toLowerCase())) ||
+        (data.attribute != null && data.attribute.toLowerCase().match(search.toLowerCase()))
+    ) { 
+        return true;
+    }
+    return false;
+}
+
 const fetchCard = (search) => {
     fetch('../js/cardinfo.json')
         .then((res) => res.json())
         .then((data) => {
             var cards = [];
-
             for(let i = 0; i < data.data.length; i++) {
-                if(
-                    data.data[i].name.toLowerCase().match(search.toLowerCase()) ||
-                    data.data[i].type.toLowerCase().match(search.toLowerCase()) ||
-                    data.data[i].desc.toLowerCase().match(search.toLowerCase()) ||
-                    (data.data[i].archtype != null && data.data[i].archetype.toLowerCase().match(search.toLowerCase())) ||
-                    (data.data[i].race != null && data.data[i].race.toLowerCase().match(search.toLowerCase())) ||
-                    (data.data[i].attribute != null && data.data[i].attribute.toLowerCase().match(search.toLowerCase()))
-                ){
-                    const card = {
-                        id: data.data[i].id,
-                        name: data.data[i].name,
-                        type: data.data[i].type,
-                        desc: data.data[i].desc,
-                        atk: data.data[i].atk,
-                        def: data.data[i].def,
-                        level: data.data[i].level,
-                        race: data.data[i].race,
-                        attribute: data.data[i].attribute,
-                        archetype: data.data[i].archetype,
-                        linkval: data.data[i].linkval,
-                        card_sets: data.data[i].card_sets,
-                        image_url: data.data[i].card_images[0].image_url,
-                        image_url_small: data.data[i].card_images[0].image_url_small,
-                        card_prices: data.data[i].card_prices
-                    }
-
-                    cards.push(card);
+                if(isValid(data.data[i], search)) {
+                    max = data.data.lenth;
+                    cards.push(data.data[i].id)
                 }
             }
-
-            
             displayCards(cards);
         }
     );
 }
 
+const createCard = (data) => {
+    const card = {
+        id: data.data[i].id,
+        name: data.data[i].name,
+        type: data.data[i].type,
+        desc: data.data[i].desc,
+        atk: data.data[i].atk,
+        def: data.data[i].def,
+        level: data.data[i].level,
+        race: data.data[i].race,
+        attribute: data.data[i].attribute,
+        archetype: data.data[i].archetype,
+        linkval: data.data[i].linkval,
+        card_sets: data.data[i].card_sets,
+        image_url: data.data[i].card_images[0].image_url,
+        image_url_small: data.data[i].card_images[0].image_url_small,
+        card_prices: data.data[i].card_prices
+    }
+}
+
 
 const displayCards = (cards) => {
     const info = document.getElementById('gallery');
-    var HTMLString = cards.map(selected =>
+    var HTMLString = cards.map(id =>
         `
-             <img id="${selected.id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${selected.id}.jpg" loading="lazy" onclick="getInfo(this.id)"/>
+             <img id="${id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${id}.jpg" loading="lazy" onclick="getInfo(this.id)"/>
         `
     ).join('');
     
