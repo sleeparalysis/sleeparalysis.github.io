@@ -3,9 +3,21 @@ const max_row = 8;
 var current_row = 1;
 var number_of_results = 0;
 
-const getInput = () => {
+const search = () => {
     var search = document.getElementById('textbox').value;
-    fetchCard(search);
+    fetch('../js/cardinfo.json')
+        .then((res) => res.json())
+        .then((data) => {
+            var cards = [];
+            for(let i = 0; i < data.data.length; i++) {
+                if(isValid(data.data[i], search)) {
+                    max = data.data.lenth;
+                    cards.push(data.data[i].id)
+                }
+            }
+            displayCards(cards);
+        }
+    );
 }
 
 const insertImage = (id) => {
@@ -19,14 +31,14 @@ const insertImage = (id) => {
 const add = () => {
     if(current_row < max_row) {
         current_row++;
-        document.getElementById('gallery').style.height = `calc((85px * ${current} - 5px)`;
+        document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
     } 
 }
 
 const sub = () => {
     if(current_row > min_row) {
         current_row--;
-        document.getElementById('gallery').style.height = `calc((85px * ${current} - 5px)`;
+        document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
     } 
 }
 
@@ -91,22 +103,6 @@ const isValid = (data, search) => {
         return true;
     }
     return false;
-}
-
-const fetchCard = (search) => {
-    fetch('../js/cardinfo.json')
-        .then((res) => res.json())
-        .then((data) => {
-            var cards = [];
-            for(let i = 0; i < data.data.length; i++) {
-                if(isValid(data.data[i], search)) {
-                    max = data.data.lenth;
-                    cards.push(data.data[i].id)
-                }
-            }
-            displayCards(cards);
-        }
-    );
 }
 
 const createCard = (data) => {
