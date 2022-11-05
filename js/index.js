@@ -2,9 +2,7 @@ const min_row = 1;
 const max_row = 8;
 var total_rows = 0;
 var current_row = 1;
-
-
-
+var minimized = false;
 
 const add = () => {
     var temp_max = 0;
@@ -23,6 +21,7 @@ const add = () => {
     document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
 }
 
+
 const sub = () => {
     if(current_row > min_row) { current_row--; }
     document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
@@ -33,13 +32,9 @@ const resize = () => {
     document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
 }
 
-const openresults = () => {
-    document.getElementById('resize').style.display = 'flex';
-    document.getElementById('gallery').style.display = 'flex';
-    resize();
-}
 
-const closeresults = () => {
+
+const minimize = () => {
     document.getElementById('resize').style.display = 'none';
     document.getElementById('gallery').style.display = 'none';
 }
@@ -48,6 +43,10 @@ const getTotalRows = (items) => {
     total_rows = Math.ceil(items / 8);
 }
 
+const openresults = () => {
+    document.getElementById('resize').style.display = 'flex';
+    document.getElementById('gallery').style.display = 'flex';
+}
 const containsKeyword = (keyword, data) => {
     if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
         data.type.toLowerCase().match(keyword.toLowerCase()) ||

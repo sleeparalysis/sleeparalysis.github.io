@@ -13,6 +13,18 @@
             <h2>Card Search</h2>
         </header>
         <div id="container" class="container">
+            <div id="imagecol" class="column">
+                <div id="image">
+                    <!--js injection-->
+                </div>
+                
+            </div>
+            <div id="infocol">
+                <div id=""><!--id="info"-->
+                    <!--js injection-->
+                </div>
+            </div>
+
             <div id="searchcol" class="column">
                 <div id="search">
                     <input id="textbox" type="search" placeholder="Search" onchange="search()" autocomplete="off"/>
@@ -21,11 +33,11 @@
                     <label for="submit"></label>
                 </div>
                 <div id="resize">
-                    <input id="smaller" type="button" value="&#8722;" onclick="sub()"/> 
+                    <input id="smaller" type="button" value="" onclick=""/> 
                     <label for="smaller"></label>
-                    <input id="bigger" type="button" value="&#43;" onclick="add()"/> 
+                    <input id="bigger" type="button" value="" onclick=""/> 
                     <label for="bigger"></label>
-                    <input id="close" type="button" value="&#215;" onclick="closeresults()"/> 
+                    <input id="close" type="button" value="" onclick=""/> 
                     <label for="close"></label>
                 </div>
                 <div id="gallery">
@@ -33,15 +45,6 @@
                 </div>
                 
             </div>
-            <div id="infocol" class="column">
-                <div id="image">
-                    <!--js injection-->
-                </div>
-                <div id="info">
-                    <!--js injection-->
-                </div>
-            </div>
-            
         </div>
         
     </body>
