@@ -46,6 +46,7 @@ const getTotalRows = (items) => {
 const openresults = () => {
     document.getElementById('resize').style.display = 'flex';
     document.getElementById('gallery').style.display = 'flex';
+    document.getElementById('imagecol').style.display = 'flex';
 }
 const containsKeyword = (keyword, data) => {
     if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
@@ -67,7 +68,6 @@ const search = () => {
         .then((res) => res.json())
         .then((data) => {
             var cards = [];
-            
             for(let i = 0; i < data.data.length; i++) {
                 if(containsKeyword(keyword, data.data[i])) {
                     cards.push(data.data[i].id)
@@ -91,22 +91,22 @@ const insertImage = (id) => {
     element.innerHTML = HTMLString;
 }
 
-const insertInfo = (data) => {
+const insertInfo = (card) => {
     const element = document.getElementById('info');
 
     var HTMLString = `
         <div class="info">
-            <h2>${data.name}</h2>
+            <h2>${card.name}</h2>
             <p><span class="bold">Description</span></p>
-            <p>${data.desc}</p>
-            <p class="space"><span class="bold">Level:</span> ${data.level}</p>
-            <p><span class="bold">Attack:</span> ${data.atk}</p>
-            <p><span class="bold">Defense:</span> ${data.def}</p>
-            <p><span class="bold">Link Rating:</span> ${data.linkval}</p>
-            <p class="space"><span class="bold">Card Type:</span> ${data.type}</p>
-            <p><span class="bold">Type:</span> ${data.race}</p>
-            <p><span class="bold">Attribute:</span> ${data.attribute}</p>
-            <p><span class="bold">Archetype:</span> ${data.archetype}</p>
+            <p>${card.desc}</p>
+            <p class="space"><span class="bold">Level:</span> ${card.level}</p>
+            <p><span class="bold">Attack:</span> ${card.atk}</p>
+            <p><span class="bold">Defense:</span> ${card.def}</p>
+            <p><span class="bold">Link Rating:</span> ${card.linkval}</p>
+            <p class="space"><span class="bold">Card Type:</span> ${card.type}</p>
+            <p><span class="bold">Type:</span> ${card.race}</p>
+            <p><span class="bold">Attribute:</span> ${card.attribute}</p>
+            <p><span class="bold">Archetype:</span> ${card.archetype}</p>
         </div>`;
 
     element.innerHTML = HTMLString;
@@ -181,6 +181,8 @@ const createCard = (data) => {
         image_url_small: data.data[i].card_images[0].image_url_small,
         card_prices: data.data[i].card_prices
     }
+
+    return card;
 }
 
 
