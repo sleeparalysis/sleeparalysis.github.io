@@ -3,6 +3,9 @@ const max_row = 8;
 var total_rows = 0;
 var current_row = 1;
 
+
+
+
 const add = () => {
     var temp_max = 0;
     if(total_rows < max_row) {
@@ -16,7 +19,7 @@ const add = () => {
             current_row++;
         }
     }
-    
+
     document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
 }
 
