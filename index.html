@@ -9,20 +9,23 @@
         <title>Yugioh Database</title>
     </head>
     <body>
-        <header id="title">
-            <h2>Card Search</h2>
-        </header>
         <div id="container" class="container">
             <div id="imagecol" class="column">
                 <div id="image">
+                    <img
+                    id="${id}"
+                    class="card"
+                    src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/back.jpg"
+                    loading="eager"
+                    />
                     <!--js injection-->
                 </div>
-                
+                <div id="info"><!--id="info"-->
+                    <!--js injection-->
+                </div>
             </div>
             <div id="infocol">
-                <div id=""><!--id="info"-->
-                    <!--js injection-->
-                </div>
+               
             </div>
 
             <div id="searchcol" class="column">
@@ -32,20 +35,10 @@
                     <input id="submit" type="submit" value="" onclick="search()"/>
                     <label for="submit"></label>
                 </div>
-                <div id="resize">
-                    <input id="smaller" type="button" value="" onclick=""/> 
-                    <label for="smaller"></label>
-                    <input id="bigger" type="button" value="" onclick=""/> 
-                    <label for="bigger"></label>
-                    <input id="close" type="button" value="" onclick=""/> 
-                    <label for="close"></label>
-                </div>
                 <div id="gallery">
                     <!--js injection-->
                 </div>
-                
             </div>
         </div>
-        
     </body>
 </html>

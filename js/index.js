@@ -44,7 +44,6 @@ const getTotalRows = (items) => {
 }
 
 const openresults = () => {
-    document.getElementById('resize').style.display = 'flex';
     document.getElementById('gallery').style.display = 'flex';
     document.getElementById('imagecol').style.display = 'flex';
 }
@@ -73,7 +72,6 @@ const search = () => {
                     cards.push(data.data[i].id)
                 }
             }
-            getTotalRows(cards.length);
             displayCards(cards);
             openresults();
         }
@@ -87,6 +85,7 @@ const insertImage = (id) => {
             id="${id}"
             class="card"
             src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg"
+            loading="eager"
         />`;
     element.innerHTML = HTMLString;
 }
@@ -99,14 +98,6 @@ const insertInfo = (card) => {
             <h2>${card.name}</h2>
             <p><span class="bold">Description</span></p>
             <p>${card.desc}</p>
-            <p class="space"><span class="bold">Level:</span> ${card.level}</p>
-            <p><span class="bold">Attack:</span> ${card.atk}</p>
-            <p><span class="bold">Defense:</span> ${card.def}</p>
-            <p><span class="bold">Link Rating:</span> ${card.linkval}</p>
-            <p class="space"><span class="bold">Card Type:</span> ${card.type}</p>
-            <p><span class="bold">Type:</span> ${card.race}</p>
-            <p><span class="bold">Attribute:</span> ${card.attribute}</p>
-            <p><span class="bold">Archetype:</span> ${card.archetype}</p>
         </div>`;
 
     element.innerHTML = HTMLString;
