@@ -1,179 +1,166 @@
-const min_row = 1;
-const max_row = 8;
-var total_rows = 0;
-var current_row = 1;
-var minimized = false;
-
-const add = () => {
-    var temp_max = 0;
-    if(total_rows < max_row) {
-        temp_max = total_rows;
-        if (current_row < temp_max) {
-            current_row++;
-        }
-    }
-    else {
-        if (current_row < max_row) {
-            current_row++;
-        }
-    }
-
-    document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
-}
-
-
-const sub = () => {
-    if(current_row > min_row) { current_row--; }
-    document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
-}
-
-const resize = () => {
-    while(total_rows < current_row) { current_row--; }
-    document.getElementById('gallery').style.height = `calc((85px * ${current_row} - 5px)`;
-}
-
-
-
-const minimize = () => {
-    document.getElementById('resize').style.display = 'none';
-    document.getElementById('gallery').style.display = 'none';
-}
-
-const getTotalRows = (items) => {
-    total_rows = Math.ceil(items / 8);
-}
-
-const openresults = () => {
-    document.getElementById('gallery').style.display = 'flex';
-    document.getElementById('imagecol').style.display = 'flex';
-}
-const containsKeyword = (keyword, data) => {
-    if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
-        data.type.toLowerCase().match(keyword.toLowerCase()) ||
-        data.desc.toLowerCase().match(keyword.toLowerCase()) ||
-        (data.archetype != null && data.archetype.toLowerCase().match(keyword.toLowerCase())) ||
-        (data.race != null && data.race.toLowerCase().match(keyword.toLowerCase())) ||
-        (data.attribute != null && data.attribute.toLowerCase().match(keyword.toLowerCase())))
-    { 
-        return true;
-    }
-
-    return false;
-}
+var collection = null;
 
 const search = () => {
     var keyword = document.getElementById('textbox').value;
-    fetch('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json')
-        .then((res) => res.json())
-        .then((data) => {
-            var cards = [];
-            for(let i = 0; i < data.data.length; i++) {
-                if(containsKeyword(keyword, data.data[i])) {
-                    cards.push(data.data[i].id)
-                }
-            }
-            displayCards(cards);
-            openresults();
-        }
-    );
-}
-
-const insertImage = (id) => {
-    const element = document.getElementById('image');
-    var HTMLString = `
-        <img
-            id="${id}"
-            class="card"
-            src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${id}.jpg"
-            loading="eager"
-        />`;
-    element.innerHTML = HTMLString;
-}
-
-const insertInfo = (card) => {
-    const element = document.getElementById('info');
-
-    var HTMLString = `
-        <div class="info">
-            <h2>${card.name}</h2>
-            <p><span class="bold">Description</span></p>
-            <p>${card.desc}</p>
-        </div>`;
-
-    element.innerHTML = HTMLString;
+    const database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
+    database.search(keyword)
 }
 
 const getInfo = (id) => {
-    fetch('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json')
-        .then((res) => res.json())
-        .then((data) => {
-            for(let i = 0; i < data.data.length; i++) {
-                if(String(data.data[i].id).match(String(id))) {
-                    insertImage(data.data[i].id) 
-                    insertInfo(data.data[i]);
-                    document.getElementById('container').style.gap = '25px';
-                    document.getElementById('infocol').style.visibility = 'visible';
-                    break;
-                }
-            }
+    const imgelement = document.getElementById('image');
+    var imgHTMLString = `<img id="${collection.card(id).id}" class="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${collection.card(id).id}.jpg" loading="eager"/>`;
+    imgelement.innerHTML = imgHTMLString;
+
+    nameHTML = `<h3>${collection.card(id).name}</h3>`;
+    typeHTML = `<p><span class="bold">[${collection.card(id).race} / ${collection.card(id).type}]</span></p>`;
+    descHTML = `<p>${collection.card(id).desc}</p>`;
+    lineHTML =  `<hr class="solid">`;
+
+    if(collection.card(id).level != null) {
+        levelHTML= `<p class="space center">${collection.card(id).stars}</p>`;
+    }
+    else {
+        levelHTML = ``;
+    }
+
+    if(collection.card(id).atk != null) {
+        atkHTML = `<span class=" right bold">ATK/${collection.card(id).atk}</span>`;
+    }
+    else {
+        atkHTML = ``;
+    }
+
+    if(collection.card(id).def != null) {
+        defHTML = `<span class="right bold">DEF/${collection.card(id).def}</span>`;
+    }
+    else {
+        defHTML = ``;
+    }
+
+    if(collection.card(id).linkval != null) {
+        linkHTML = `<span class="right bold">LINK-${collection.card(id).linkval}</span>`;
+    }
+    else {
+        linkHTML = ``;
+    }
+
+    const infoelement = document.getElementById('info');
+    var infoHTMLString = `<div class="info">`;
+    infoHTMLString +=
+        nameHTML + 
+        levelHTML +
+        lineHTML +
+        typeHTML +
+        descHTML +
+        lineHTML +
+        defHTML +
+        linkHTML +
+        atkHTML;
+    infoHTMLString += `</div>`;    
+    infoelement.innerHTML = infoHTMLString;
+}
+
+class Card {
+    constructor(data) {
+        this.id = data.id,
+        this.name = data.name,
+        this.type = data.type.replace(' Monster', ''),
+        this.desc = data.desc,
+        this.atk = data.atk,
+        this.def = data.def,
+        this.level = data.level,
+        this.stars = String('&#9733;').repeat(data.level),
+        this.race = data.race,
+        this.attribute = data.attribute,
+        this.archetype = data.archetype,
+        this.linkval = data.linkval,
+        this.sets = data.card_sets,
+        this.image = data.card_images[0].image_url,
+        this.thumbnail = data.card_images[0].image_url_small,
+        this.prices = data.card_prices
+    }
+}
+
+class Collection {
+    constructor() { this.cards = []; }
+    get collection() { return this.cards; }
+
+    push(card) {
+        this.cards.push(card);
+    }
+
+    card(id) {
+        for(let i = 0; i < this.collection.length; i++) {
+            if(this.collection[i].id == id) { return this.collection[i]; }
         }
-    );
+    }
+
+    displayCards = (elementID) => {
+        const info = document.getElementById(elementID);
+        var HTMLString = this.cards.map(card => `<img id="${card.id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${card.id}.jpg" loading="lazy" onclick="getInfo(this.id)"/>`).join('');
+        info.innerHTML = HTMLString;
+    }
 }
 
-const displayCards = (cards) => {
-    const info = document.getElementById('gallery');
-    var HTMLString = cards.map(id => `
-        <img 
-            id="${id}"
-            class="card_small"
-            src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${id}.jpg"
-            loading="lazy"
-            onclick="getInfo(this.id)"/>`)
-            .join('');
-    info.innerHTML = HTMLString;
-}
+class Database {
+    constructor(url) {
+        this.url = url;
+    }
 
-const getDatabase = () => {
-    const url = [
-        [`https://db.ygoprodeck.com/api/v7/cardinfo.php`, `cardinfo`],
-        [`https://db.ygoprodeck.com/api/v7/cardsets.php`, `cardsets`],
-        [`https://db.ygoprodeck.com/api/v7/archetypes.php`, `archetypes`],
-        [`https://db.ygoprodeck.com/api/v7/checkDBVer.php`, `version`]
-    ];
-
-    for(let i = 0; i < url.length; i++) {
-        fetch(url[i][0])
-            .then((res) => res.blob())
+    search = (keyword) => {
+        var keyword = document.getElementById('textbox').value;
+        collection = new Collection();
+            
+        fetch(this.url)
+            .then((res) => res.json())
             .then((data) => {
-                var a = document.createElement('a');
-                a.href = window.URL.createObjectURL(data);
-                a.download = url[i][1];
-                a.click();
+                for(let i = 0; i < data.data.length; i++) {
+                    if(this.containsKeyword(keyword, data.data[i])) {
+                        const card = new Card(data.data[i]);
+                        collection.push(card);
+                        
+                    }
+                }
+                collection.displayCards('gallery');
+                collection.open('gallery');
             }
         );
     }
-}
 
-const createCard = (data) => {
-    const card = {
-        id: data.data[i].id,
-        name: data.data[i].name,
-        type: data.data[i].type,
-        desc: data.data[i].desc,
-        atk: data.data[i].atk,
-        def: data.data[i].def,
-        level: data.data[i].level,
-        race: data.data[i].race,
-        attribute: data.data[i].attribute,
-        archetype: data.data[i].archetype,
-        linkval: data.data[i].linkval,
-        card_sets: data.data[i].card_sets,
-        image_url: data.data[i].card_images[0].image_url,
-        image_url_small: data.data[i].card_images[0].image_url_small,
-        card_prices: data.data[i].card_prices
+    containsKeyword = (keyword, data) => {
+        if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
+            data.type.toLowerCase().match(keyword.toLowerCase()) ||
+            data.desc.toLowerCase().match(keyword.toLowerCase()) ||
+            (data.archetype != null && data.archetype.toLowerCase().match(keyword.toLowerCase())) ||
+            (data.race != null && data.race.toLowerCase().match(keyword.toLowerCase())) ||
+            (data.attribute != null && data.attribute.toLowerCase().match(keyword.toLowerCase())))
+        { 
+            return true;
+        }
+    
+        return false;
     }
 
-    return card;
+    update = (url, filename) => {
+        for(let i = 0; i < url.length; i++) {
+            fetch(url[i][0])
+                .then((res) => res.blob())
+                .then((data) => {
+                    var a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(data);
+                    a.download = filename;
+                    a.click();
+                }
+            );
+        }
+    }
 }
 
+class Display {
+    constructor() {
+
+    }
+
+
+}
 

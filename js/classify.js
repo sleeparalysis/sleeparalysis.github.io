@@ -107,6 +107,24 @@ class Search {
         this.keyword = keyword;
     }
 
+    search = () => {
+        var keyword = document.getElementById('textbox').value;
+        fetch('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json')
+            .then((res) => res.json())
+            .then((data) => {
+                const collection = new Collection();
+                for(let i = 0; i < data.data.length; i++) {
+                    if(containsKeyword(keyword, data.data[i])) {
+                        const card = new Card(data.data[i]);
+                        collection.push(card)
+                    }
+                }
+                displayCards(collection);
+                openresults();
+            }
+        );
+    }
+
     containsKeyword = (keyword, data) => {
         if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
             data.type.toLowerCase().match(keyword.toLowerCase()) ||
@@ -119,23 +137,5 @@ class Search {
         }
     
         return false;
-    }
-
-    search = () => {
-        var keyword = document.getElementById('textbox').value;
-        fetch('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json')
-            .then((res) => res.json())
-            .then((data) => {
-                const collection = new Collection;
-                for(let i = 0; i < data.data.length; i++) {
-                    if(containsKeyword(keyword, data.data[i])) {
-                        cards.push(data.data[i].id)
-                    }
-                }
-                getTotalRows(cards.length);
-                displayCards(cards);
-                openresults();
-            }
-        );
     }
 }
