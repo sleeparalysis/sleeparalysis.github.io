@@ -45,18 +45,8 @@ const getInfo = (id) => {
     }
 
     const infoelement = document.getElementById('info');
-    var infoHTMLString = `<div class="info">`;
-    infoHTMLString +=
-        nameHTML + 
-        levelHTML +
-        lineHTML +
-        typeHTML +
-        descHTML +
-        lineHTML +
-        defHTML +
-        linkHTML +
-        atkHTML;
-    infoHTMLString += `</div>`;    
+    var infoHTMLString = `<div class="info">` + nameHTML + levelHTML + lineHTML + typeHTML + descHTML + lineHTML + atkHTML + defHTML + linkHTML + `</div>`;
+  
     infoelement.innerHTML = infoHTMLString;
 }
 
@@ -65,7 +55,7 @@ class Card {
         this.id = data.id,
         this.name = data.name,
         this.type = data.type.replace(' Monster', ''),
-        this.desc = data.desc,
+        this.desc = data.desc.replaceAll('●', '<br>●'),
         this.atk = data.atk,
         this.def = data.def,
         this.level = data.level,

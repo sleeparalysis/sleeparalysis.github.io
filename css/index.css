@@ -23,7 +23,7 @@ p {
 
 span {
     padding-right: .5rem;
-    float: right;
+
 }
 
 span.bold {
@@ -65,7 +65,7 @@ hr.solid {
 }
 
 #imagecol {
-    width: 250px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -73,7 +73,7 @@ hr.solid {
 }
 
 #deckcol {
-    width: 1170px;
+    width: 1070px;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -81,7 +81,7 @@ hr.solid {
 }
 
 #searchcol {
-    width: 250px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -165,13 +165,13 @@ input[type="submit"]:hover {
 }
 
 .card {
-    width: 250px;
+    width: 300px;
     display: block;
 }
 
 .card_small {
-   width: 80px;
-   height: 115px;
+   width: 71.2px;
+   height: 102.84px;
    filter:grayscale(0);
 }
 
