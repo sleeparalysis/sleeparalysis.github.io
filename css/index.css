@@ -20,11 +20,6 @@ p {
     text-align: justify;
 }
 
-span {
-    padding-right: .5rem;
-
-}
-
 span.bold {
     font-weight: bold;
 }
@@ -86,6 +81,12 @@ hr.solid {
 
 #info {
     overflow-y: scroll;
+}
+
+#battle {
+    gap: 0.5rem;
+    display: flex;
+    justify-content: right;
 }
 
 #image {

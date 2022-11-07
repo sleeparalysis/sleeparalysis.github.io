@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", function() {
     var keyword = " ";
     const database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
     database.search(keyword);
-    database
+});
+
+document.addEventListener("loaded", function() {
+    console.log(collection.cards);
 });
 
 const search = () => {
@@ -86,8 +89,16 @@ const getInfo = (id) => {
         linkHTML = ``;
     }
 
+    battleHTML = `
+        <div id="battle">
+            ${atkHTML}
+            ${defHTML}
+            ${linkHTML}
+        </div>
+    `;
+
     const infoelement = document.getElementById('info');
-    var infoHTMLString = `<div class="info">` + nameHTML + levelHTML + lineHTML + typeHTML + descHTML + lineHTML + atkHTML + defHTML + linkHTML + `</div>`;
+    var infoHTMLString = `<div class="info">` + nameHTML + levelHTML + lineHTML + typeHTML + descHTML + lineHTML + battleHTML + `</div>`;
   
     infoelement.innerHTML = infoHTMLString;
 }
