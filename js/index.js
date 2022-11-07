@@ -150,8 +150,8 @@ class Deck {
         var HTMLString = this.main.map(card => `
             <img
                 id="${card.id}"
-                class="card_small"
-                src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${card.id}.jpg"
+                class="card_medium"
+                src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
                 loading="lazy"
                 onmouseover="getInfo(this.id)"/>`).join('');
         info.innerHTML = HTMLString;
