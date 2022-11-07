@@ -68,8 +68,8 @@ hr.solid {
     width: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-   
+    justify-content: flex-start;
+    gap: 25px;
 }
 
 #deckcol {
@@ -92,7 +92,11 @@ hr.solid {
 }
 
 #image {
+    padding: 12.5px 12.5px 0 12.5px;
+}
 
+#build {
+    text-align: center;
 }
 
 #search {
@@ -103,7 +107,7 @@ hr.solid {
 
 #maindeck {
     width: 100%;
-    margin-top: 60px;
+
     height: calc(120px * 5);
     border: 1px solid rgb(187, 187, 187);
     border-radius: 5px;
@@ -159,13 +163,13 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background: #008800 url("../img/sw.svg") no-repeat center;
+    background: #000000 url("../img/sw.svg") no-repeat center;
     background-size: 13px;
     cursor: pointer;
 }
 
 .card {
-    width: 300px;
+    width: 275px;
     display: block;
 }
 
