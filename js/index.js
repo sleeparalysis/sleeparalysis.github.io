@@ -7,10 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
     database.search(keyword);
 });
 
-document.addEventListener("loaded", function() {
-    console.log(collection.cards);
-});
-
 const search = () => {
     var keyword = document.getElementById('textbox').value;
     const database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
