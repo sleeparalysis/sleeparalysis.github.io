@@ -4,10 +4,9 @@ html, body {
 }
 
 body {
-    background-color: #e7e7e7;;
+    background-color: #e7e7e7;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 16px;
-    
+    font-size: 16px;   
 }
 
 h3 {
@@ -68,15 +67,13 @@ hr.solid {
     width: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 25px;
+    justify-content: space-between;
 }
 
 #deckcol {
     width: 1070px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
     justify-content: flex-start;
 }
 
@@ -92,11 +89,18 @@ hr.solid {
 }
 
 #image {
-    padding: 12.5px 12.5px 0 12.5px;
+    padding: 25px 25px 0 25px;
 }
 
 #build {
-    text-align: center;
+
+}
+
+.buttons {
+    margin-top: 25px;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 #search {
@@ -105,19 +109,35 @@ hr.solid {
     justify-content: center;
 }
 
-#maindeck {
-    width: 100%;
+.right {
+    display: flex;
+    justify-content: right;
+    gap: 5px;
+    margin: 5px 0;
+}
 
-    height: calc(120px * 5);
+#maindeck {
+    background-color: #e7e7e7;
     border: 1px solid rgb(187, 187, 187);
     border-radius: 5px;
+    width: 99%;
+    min-height: 102.84px;
+    padding: 5px;
+    gap: 5px;
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
 }
 
 #extradeck {
-    width: 100%;
+    width: 99%;
     height: 120px;
+    padding: 5px;
+    gap: 5px;
     border: 1px solid rgb(187, 187, 187);
     border-radius: 5px;
+    display: flex;
 }
 
 #resize {
@@ -130,13 +150,13 @@ hr.solid {
 
 #gallery {
     width: 100%;
-    height: 100%;
     margin-top: 25px;
     gap: 5px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: scroll;
+    justify-content: flex-start;
 }
 
 input[type="search"], input[type="submit"] {
@@ -169,7 +189,7 @@ input[type="submit"]:hover {
 }
 
 .card {
-    width: 275px;
+    width: 250px;
     display: block;
 }
 

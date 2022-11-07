@@ -1,4 +1,12 @@
 var collection = null;
+var deck = null;
+
+document.addEventListener("DOMContentLoaded", function() {
+    var keyword = " ";
+    const database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
+    database.search(keyword);
+    database
+});
 
 const search = () => {
     var keyword = document.getElementById('textbox').value;
@@ -6,9 +14,43 @@ const search = () => {
     database.search(keyword)
 }
 
+const newdeck = () => {
+    deck = new Deck();
+    deck.new('maindeck');
+}
+
+const deletedeck = () => {
+    deck.delete('maindeck');
+    deck = null;
+}
+
+const add = (id) => {
+    if(deck != null) {
+        deck.push(collection.card(id));
+        deck.displayCards('maindeck');
+    }
+    else {
+        alert('Create deck first');
+    }
+}
+
+const remove = (id) => {
+    deck.pop(collection.card(id));
+}
+
 const getInfo = (id) => {
     const imgelement = document.getElementById('image');
-    var imgHTMLString = `<img id="${collection.card(id).id}" class="card" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${collection.card(id).id}.jpg" loading="eager"/>`;
+    var imgHTMLString = `
+        <img
+            id="${collection.card(id).id}"
+            class="card"
+            src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${collection.card(id).id}.jpg"
+            loading="eager"/>
+        <div class="buttons">
+            <input id="${collection.card(id).id}" type="button" value="Add" onclick="add(this.id)">
+            <input id="${collection.card(id).id}" type="button" value="Remove" onclick="remove(this.id)">
+        </div>
+    `;
     imgelement.innerHTML = imgHTMLString;
 
     nameHTML = `<h3>${collection.card(id).name}</h3>`;
@@ -71,15 +113,53 @@ class Card {
     }
 }
 
+class Deck {
+    constructor() {
+        this.main = [];
+        this.max = 60;
+    }
+
+    push = (card) => {
+        this.main.push(card);
+    }
+
+    new = (elementID) => {
+        const info = document.getElementById(elementID);
+        var HTMLString = '';
+        info.innerHTML = HTMLString;
+        document.getElementById('maindeck').style.display = 'flex';
+    }
+
+    delete = (elementID) => {
+        this.main = [];
+        const info = document.getElementById(elementID);
+        var HTMLString = '';
+        info.innerHTML = HTMLString;
+        document.getElementById('maindeck').style.display = 'none';
+    }
+
+    displayCards = (elementID) => {
+        const info = document.getElementById(elementID);
+        var HTMLString = this.main.map(card => `
+            <img
+                id="${card.id}"
+                class="card_small"
+                src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${card.id}.jpg"
+                loading="lazy"
+                onmouseover="getInfo(this.id)"/>`).join('');
+        info.innerHTML = HTMLString;
+    }
+}
+
 class Collection {
     constructor() { this.cards = []; }
     get collection() { return this.cards; }
 
-    push(card) {
+    push = (card) => {
         this.cards.push(card);
     }
 
-    card(id) {
+    card = (id) => {
         for(let i = 0; i < this.collection.length; i++) {
             if(this.collection[i].id == id) { return this.collection[i]; }
         }
@@ -87,7 +167,13 @@ class Collection {
 
     displayCards = (elementID) => {
         const info = document.getElementById(elementID);
-        var HTMLString = this.cards.map(card => `<img id="${card.id}" class="card_small" src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${card.id}.jpg" loading="lazy" onclick="getInfo(this.id)"/>`).join('');
+        var HTMLString = this.cards.map(card => `
+            <img
+                id="${card.id}"
+                class="card_small"
+                src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${card.id}.jpg"
+                loading="lazy"
+                onclick="getInfo(this.id)"/>`).join('');
         info.innerHTML = HTMLString;
     }
 }
@@ -108,11 +194,9 @@ class Database {
                     if(this.containsKeyword(keyword, data.data[i])) {
                         const card = new Card(data.data[i]);
                         collection.push(card);
-                        
                     }
                 }
                 collection.displayCards('gallery');
-                collection.open('gallery');
             }
         );
     }
@@ -145,12 +229,3 @@ class Database {
         }
     }
 }
-
-class Display {
-    constructor() {
-
-    }
-
-
-}
-

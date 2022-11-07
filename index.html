@@ -10,32 +10,26 @@
     </head>
     <body>
         <div id="container" class="container">
-            <div id="imagecol" class="column">
-                <div id="image">
+            <section id="imagecol" class="column">
+                <div id="info">
                     <!--js injection-->
                 </div>
                 <div id="build">
-                    <input id="add" type="button" value="Add">
-                    <input id="remove" type="button" value="Remove">
+                    <div id="image">
+                        <!--js injection-->
+                    </div>
                 </div>
-                <div id="info"><!--id="info"-->
-                    <!--js injection-->
+            </section>
+            <section id="deckcol" class="column">
+                <div class="right">
+                    <input id="new" type="button" value="New" onclick="newdeck()">
+                    <input id="delete" type="button" value="Delete" onclick="deletedeck()">
                 </div>
-                
-            </div>
-            <div id="deckcol" class="column">
-                <h3>Main Deck</h3>
                 <div id="maindeck">
-                    
                     <!--js injection-->
                 </div>
-                <h3>Extra Deck</h3>
-                <div id="extradeck">
-                    
-                    <!--js injection-->
-                </div>
-            </div>
-            <div id="searchcol" class="column">
+            </section>
+            <section id="searchcol" class="column">
                 <div id="search">
                     <input id="textbox" type="search" placeholder="Search" onchange="search()" autocomplete="off"/>
                     <label for="textbox"></label>
@@ -45,7 +39,7 @@
                 <div id="gallery">
                     <!--js injection-->
                 </div>
-            </div>
+            </section>
         </div>
     </body>
 </html>
