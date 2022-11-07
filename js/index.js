@@ -1,15 +1,16 @@
+var database = null;
 var collection = null;
 var deck = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     var keyword = " ";
-    const database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
+    database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
     database.search(keyword);
 });
 
 const search = () => {
     var keyword = document.getElementById('textbox').value;
-    const database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
+    database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
     database.search(keyword)
 }
 
@@ -207,6 +208,26 @@ class Database {
             }
         );
     }
+
+     /*
+    search = (keyword, limit) => {
+        var keyword = document.getElementById('textbox').value;
+        collection = new Collection();
+            
+        fetch(this.url)
+            .then((res) => res.json())
+            .then((data) => {
+                for(let i = 0; i < limit; i++) {
+                    if(this.containsKeyword(keyword, data.data[i])) {
+                        const card = new Card(data.data[i]);
+                        collection.push(card);
+                    }
+                }
+                collection.displayCards('gallery');
+            }
+        );
+    }
+    */
 
     containsKeyword = (keyword, data) => {
         if(data.name.toLowerCase().match(keyword.toLowerCase()) ||
