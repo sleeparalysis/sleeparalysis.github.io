@@ -9,56 +9,67 @@ body {
     font-size: 16px;   
 }
 
-h3 {
+/* Text Settings */
+
+.info h3 {
     text-align: center;
     margin: 0;
     padding-bottom: .5rem;
 }
 
-p {
+.info p {
     margin: 0;
     text-align: justify;
 }
 
-span.bold {
+.bold {
     font-weight: bold;
 }
 
-p.space {
+.space {
     padding-bottom: .5rem;
 }
 
-p.center {
+.center {
+    margin: 0;
     text-align: center;
-}
-
-p.right {
-    text-align: right;
+    padding-bottom: 25px;
 }
 
 hr.solid {
     border-bottom: 1px solid black;
 }
 
+#battle {
+    gap: 0.5rem;
+    display: flex;
+    justify-content: right;
+}
+
+/* Container Settings */
+
 .container {
     min-height: 585px;
     height: 90%;
-    gap: 25px;
     padding: 25px;
+    gap: 25px;
     position: relative;
     display: flex;
-    justify-content: right;
+    flex-wrap: wrap;
+    justify-content: space-between;
     
 }
 
 .column {
-    background-color: #ffffff;
     padding: 25px;
     height: 100%;
     border-radius: 10px;
 }
 
+/* Content Settings */
+
 #imagecol {
+    background-color: #ffffff;
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -66,6 +77,7 @@ hr.solid {
 }
 
 #deckcol {
+    background-color: #ffffff;
     width: 1070px;
     display: flex;
     flex-direction: column;
@@ -73,7 +85,7 @@ hr.solid {
 }
 
 #searchcol {
-    min-width: 71.2px;
+    background-color: #ffffff;
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -84,18 +96,8 @@ hr.solid {
     overflow-y: scroll;
 }
 
-#battle {
-    gap: 0.5rem;
-    display: flex;
-    justify-content: right;
-}
-
 #image {
-    padding: 25px 25px 0 25px;
-}
-
-#build {
-
+    padding-top: 25px;
 }
 
 .buttons {
@@ -111,22 +113,8 @@ hr.solid {
     justify-content: center;
 }
 
-.right {
-    display: flex;
-    justify-content: right;
-    gap: 5px;
-    margin: 5px 0;
-}
-
 #maindeck {
-    background-color: #e7e7e7;
-    border: 1px solid rgb(187, 187, 187);
-    border-radius: 5px;
-    min-width: calc((106.3px * 3) - 5px);
-    min-height: 146.46px;
-    max-height: calc(150px * 4);
-    padding: 5px;
-    gap: 5px;
+    width: 100%;
     display: none;
     flex-direction: row;
     flex-wrap: wrap;
@@ -134,27 +122,17 @@ hr.solid {
 }
 
 #extradeck {
-    width: 99%;
-    height: 120px;
-    padding: 5px;
-    gap: 5px;
-    border: 1px solid rgb(187, 187, 187);
-    border-radius: 5px;
-    display: flex;
-}
-
-#resize {
+    margin-top: 25px;
     width: 100%;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: right;
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
 }
 
 #gallery {
     width: 100%;
     margin-top: 25px;
-    gap: 5px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -163,9 +141,8 @@ hr.solid {
 }
 
 input[type="search"], input[type="submit"] {
+    margin: 0;
     background-color: #ffffff;
-    height: fit-content;
-    padding: 10px;
     border: 1px solid rgb(187, 187, 187);
     display: inline-block;
 }
@@ -191,31 +168,33 @@ input[type="submit"]:hover {
     cursor: pointer;
 }
 
+textarea:focus, input:focus {
+    outline: none;
+}
+
+/* Card Settings */
+
 .card {
-    width: 250px;
+    width: 100%;
     display: block;
 }
 
 .card_medium {
-    width: 101.3px;
-    height: 146.46px;
+    width: 8.333%;
+}
+
+.card_medium:hover, .card_medium:active {
+    cursor: pointer;
+    filter:brightness(.8);
 }
 
 .card_small {
-   width: 71.2px;
-   height: 102.84px;
-   filter:grayscale(0);
+   width: 20%;
 }
 
 .card_small:hover, .card_small:active {
     cursor: pointer;
-    filter:grayscale(1);
-}
-
-
-
-textarea:focus, input:focus {
-    outline: none;
+    filter:brightness(.8);
 }
 
 #sorttable_sortfwdind, #sorttable_sortrevind { display: none; } 

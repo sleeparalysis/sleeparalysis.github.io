@@ -29,7 +29,10 @@ const deletedeck = () => {
 const add = (id) => {
     if(deck != null) {
         deck.push(collection.card(id));
-        deck.displayCards('maindeck');
+        deck.sort();
+        deck.display('maindeck');
+        deck.display('extradeck');
+
     }
     else {
         alert('Create deck first');
@@ -38,6 +41,9 @@ const add = (id) => {
 
 const remove = (id) => {
     deck.pop(collection.card(id));
+    deck.sort();
+    deck.display('maindeck');
+    deck.display('extradeck');
 }
 
 const getInfo = (id) => {
@@ -61,28 +67,28 @@ const getInfo = (id) => {
     lineHTML =  `<hr class="solid">`;
 
     if(collection.card(id).level != null) {
-        levelHTML= `<p class="space center">${collection.card(id).stars}</p>`;
+        levelHTML= `<h3>${collection.card(id).stars}</h3>`;
     }
     else {
         levelHTML = ``;
     }
 
     if(collection.card(id).atk != null) {
-        atkHTML = `<span class=" right bold">ATK/${collection.card(id).atk}</span>`;
+        atkHTML = `<span class="bold">ATK/${collection.card(id).atk}</span>`;
     }
     else {
         atkHTML = ``;
     }
 
     if(collection.card(id).def != null) {
-        defHTML = `<span class="right bold">DEF/${collection.card(id).def}</span>`;
+        defHTML = `<span class="bold">DEF/${collection.card(id).def}</span>`;
     }
     else {
         defHTML = ``;
     }
 
     if(collection.card(id).linkval != null) {
-        linkHTML = `<span class="right bold">LINK-${collection.card(id).linkval}</span>`;
+        linkHTML = `<span class="bold">LINK-${collection.card(id).linkval}</span>`;
     }
     else {
         linkHTML = ``;
@@ -111,7 +117,6 @@ class Card {
         this.atk = data.atk,
         this.def = data.def,
         this.level = data.level,
-        this.stars = String('&#9733;').repeat(data.level),
         this.race = data.race,
         this.attribute = data.attribute,
         this.archetype = data.archetype,
@@ -119,45 +124,157 @@ class Card {
         this.sets = data.card_sets,
         this.image = data.card_images[0].image_url,
         this.thumbnail = data.card_images[0].image_url_small,
-        this.prices = data.card_prices
+        this.prices = data.card_prices,
+        this.stars = String('&#9733;').repeat(data.level)
     }
 }
 
 class Deck {
     constructor() {
         this.main = [];
-        this.max = 60;
+        this.extra = [];
+        this.max_deck = 60;
+        this.max_extra = 15;
+        this.max_copy = 3;
     }
 
     push = (card) => {
-        this.main.push(card);
+        if(this.type(card) == 'main') {
+            if(this.main.length < this.max_deck && this.copy(card) < this.max_copy) {
+                this.main.push(card);
+            }
+        }
+
+        else if (this.type(card) == 'extra') {
+            if(this.extra.length < this.max_extra && this.copy(card) < this.max_copy) {
+                this.extra.push(card);
+            }
+        }
+       
     }
 
+    pop = (card) => {
+        if(this.type(card) == 'main') {
+            for(let i = 0; i < this.main.length; i++) {
+                if(card.name == this.main[i].name) {
+                    this.main.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
+        else if(this.type(card) == 'extra') {
+            for(let i = 0; i < this.main.length; i++) {
+                if(card.name == this.extra[i].name) {
+                    this.extra.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    copy = (card) => {
+        var copy = 0;
+        if(this.type(card) == 'main') {
+            for(let i = 0; i < this.main.length; i++) {
+                if(card.name == this.main[i].name) {
+                    copy++;
+                }
+            }
+        }
+
+        if(this.type(card) == 'extra') {
+            for(let i = 0; i < this.extra.length; i++) {
+                if(card.name == this.extra[i].name) {
+                    copy++;
+                }
+            }
+        }
+        
+        return copy;
+    }
+    
     new = (elementID) => {
         const info = document.getElementById(elementID);
         var HTMLString = '';
         info.innerHTML = HTMLString;
         document.getElementById('maindeck').style.display = 'flex';
+        document.getElementById('extradeck').style.display = 'flex';
     }
 
     delete = (elementID) => {
         this.main = [];
+        this.extra = [];
         const info = document.getElementById(elementID);
         var HTMLString = '';
         info.innerHTML = HTMLString;
         document.getElementById('maindeck').style.display = 'none';
+        document.getElementById('extradeck').style.display = 'none';
     }
 
-    displayCards = (elementID) => {
-        const info = document.getElementById(elementID);
-        var HTMLString = this.main.map(card => `
-            <img
-                id="${card.id}"
-                class="card_medium"
-                src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
-                loading="lazy"
-                onmouseover="getInfo(this.id)"/>`).join('');
-        info.innerHTML = HTMLString;
+    sort = () => {
+        console.log(this.main);
+        for(let j = 0; j < this.main.length; j++) {
+            for(let i = 0; i < this.main.length - 1; i++) {           
+                if(this.main[i].name > this.main[i + 1].name) {
+                    var temp = this.main[i];
+                    this.main[i] = this.main[i + 1];
+                    this.main[i + 1] = temp;
+                }
+            }
+        }
+        
+        for(let j = 0; j < this.extra.length; j++) {
+            for(let i = 0; i < this.extra.length - 1; i++) {           
+                if(this.extra[i].name > this.extra[i + 1].name) {
+                    var temp = this.extra[i];
+                    this.extra[i] = this.extra[i + 1];
+                    this.extra[i + 1] = temp;
+                }
+            }
+        }
+    }
+
+    type = (card) => {
+        switch(card.type) {
+            case 'Fusion':
+            case 'Link':
+            case 'Pendulum Effect Fusion':
+            case 'Synchro':
+            case 'Synchro Pendulum Effect':
+            case 'Synchro Tuner':
+            case 'XYZ':
+            case 'XYZ Pendulum Effect':
+                return 'extra';
+            default:
+                return 'main';
+        }
+    }
+
+    display = (elementID) => {
+        if(elementID == 'maindeck') {
+            const info = document.getElementById(elementID);
+            var HTMLString = this.main.map(card => `
+                <img
+                    id="${card.id}"
+                    class="card_medium"
+                    src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
+                    loading="lazy"
+                    onclick="getInfo(this.id)"/>`).join('');
+            info.innerHTML = HTMLString;
+        }
+
+        else if(elementID == 'extradeck') {
+            const info = document.getElementById(elementID);
+            var HTMLString = this.extra.map(card => `
+                <img
+                    id="${card.id}"
+                    class="card_medium"
+                    src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
+                    loading="lazy"
+                    onclick="getInfo(this.id)"/>`).join('');
+            info.innerHTML = HTMLString;
+        }
     }
 }
 
