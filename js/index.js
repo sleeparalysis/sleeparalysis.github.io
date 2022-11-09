@@ -1,3 +1,5 @@
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 var database = null;
 var collection = null;
 var deck = null;
@@ -260,7 +262,8 @@ class Deck {
                     class="card_medium"
                     src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
                     loading="lazy"
-                    onclick="getInfo(this.id)"/>`).join('');
+                    onclick="getInfo(this.id)"
+                    oncontextmenu="remove(this.id)"/>`).join('');
             info.innerHTML = HTMLString;
         }
 
@@ -272,7 +275,8 @@ class Deck {
                     class="card_medium"
                     src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
                     loading="lazy"
-                    onclick="getInfo(this.id)"/>`).join('');
+                    onclick="getInfo(this.id)"
+                    oncontextmenu="remove(this.id)"/>`).join('');
             info.innerHTML = HTMLString;
         }
     }
@@ -300,7 +304,8 @@ class Collection {
                 class="card_small"
                 src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards_small/${card.id}.jpg"
                 loading="lazy"
-                onclick="getInfo(this.id)"/>`).join('');
+                onclick="getInfo(this.id)"
+                oncontextmenu="add(this.id)"/>`).join('');
         info.innerHTML = HTMLString;
     }
 }

@@ -56,7 +56,7 @@ hr.solid {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     
 }
 
@@ -78,7 +78,8 @@ hr.solid {
 
 #deckcol {
     background-color: #ffffff;
-    width: 1070px;
+    min-width: 300px;
+    max-width: 1070px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
