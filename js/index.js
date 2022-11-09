@@ -2,11 +2,13 @@ var database = null;
 var collection = null;
 var deck = null;
 
+/*
 document.addEventListener("DOMContentLoaded", function() {
     var keyword = " ";
     database = new Database('https://raw.githubusercontent.com/sleeparalysis/ygocards/main/data/cardinfo.json');
     database.search(keyword);
 });
+*/
 
 const search = () => {
     var keyword = document.getElementById('textbox').value;
