@@ -78,8 +78,7 @@ hr.solid {
 
 #deckcol {
     background-color: #ffffff;
-    min-width: 300px;
-    max-width: 1070px;
+    width: 1070px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

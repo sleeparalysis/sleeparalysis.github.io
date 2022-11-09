@@ -21,10 +21,12 @@ const search = () => {
 const newdeck = () => {
     deck = new Deck();
     deck.new('maindeck');
+    deck.new('extradeck')
 }
 
 const deletedeck = () => {
     deck.delete('maindeck');
+    deck.delete('extradeck')
     deck = null;
 }
 
@@ -205,13 +207,18 @@ class Deck {
     }
 
     delete = (elementID) => {
-        this.main = [];
-        this.extra = [];
         const info = document.getElementById(elementID);
         var HTMLString = '';
         info.innerHTML = HTMLString;
-        document.getElementById('maindeck').style.display = 'none';
-        document.getElementById('extradeck').style.display = 'none';
+        if(elementID == 'maindeck') {
+            this.main = [];
+            document.getElementById('maindeck').style.display = 'none';
+        }
+
+        if(elementID == 'extradeck') {
+            this.extra = [];
+            document.getElementById('extradeck').style.display = 'none';
+        }
     }
 
     sort = () => {
@@ -254,8 +261,8 @@ class Deck {
     }
 
     display = (elementID) => {
+        const info = document.getElementById(elementID);
         if(elementID == 'maindeck') {
-            const info = document.getElementById(elementID);
             var HTMLString = this.main.map(card => `
                 <img
                     id="${card.id}"
@@ -264,7 +271,6 @@ class Deck {
                     loading="lazy"
                     onclick="getInfo(this.id)"
                     oncontextmenu="remove(this.id)"/>`).join('');
-            info.innerHTML = HTMLString;
         }
 
         else if(elementID == 'extradeck') {
@@ -277,8 +283,9 @@ class Deck {
                     loading="lazy"
                     onclick="getInfo(this.id)"
                     oncontextmenu="remove(this.id)"/>`).join('');
-            info.innerHTML = HTMLString;
         }
+
+        info.innerHTML = HTMLString;
     }
 }
 
