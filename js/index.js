@@ -221,6 +221,7 @@ class Collection {
                 class="card"
                 src="https://raw.githubusercontent.com/sleeparalysis/ygocards/main/img/cards/${card.id}.jpg"
                 loading="lazy"/>
+                <input type="button">
             </li>`).join('');
         info.innerHTML = HTMLString;
     }
