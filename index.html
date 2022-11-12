@@ -1,48 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/index.css">
-        <script src="js/index.js" defer></script>
-        <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js" defer></script>
-        <title>Yugioh Database</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/index.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+    </script>
+    <title>Yugioh Database</title>
+</head>
+<body>
+    <main id="fullscreen" class="fullscreen">
+        <header>
+            <div id="menu">
+                <div id="icon"></div>
+                <div id="icon"></div>
+                <div id="icon"></div>
+            </div>
+            <input id="textbox" type="search" placeholder="Search" onchange="search()" autocomplete="off"/>
+            <label for="textbox"></label>
+        </header>
         <div id="container" class="container">
-            <section id="imagecol" class="column">
-                <div id="info">
-                    <!--js injection-->
-                </div>
-                <div id="build">
-                    <div id="image">
-                        <!--js injection-->
-                    </div>
-                </div>
-            </section>
-            <section id="deckcol" class="column">
-                <div class="center">
-                    <input id="new" type="button" value="New" onclick="newdeck()">
-                    <input id="delete" type="button" value="Delete" onclick="deletedeck()">
-                </div>
-                <div id="maindeck">
-                    <!--js injection-->
-                </div>
-                <div id="extradeck">
-                    
-                </div>
-            </section>
-            <section id="searchcol" class="column">
-                <div id="search">
-                    <input id="textbox" type="search" placeholder="Search" onchange="search()" autocomplete="off"/>
-                    <label for="textbox"></label>
-                    <input id="submit" type="submit" value="" onclick="search()"/>
-                    <label for="submit"></label>
-                </div>
-                <div id="gallery">
-                    <!--js injection-->
-                </div>
-            </section>
+            <ul id="gallery">
+                <!--js injection-->
+            </ul>
         </div>
-    </body>
+    </main>
+</body>
+
 </html>
