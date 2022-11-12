@@ -3,7 +3,7 @@
     #sleeve {
         background-color: rgb(255, 255, 255);
         box-sizing: border-box;
-        width: 12vw;
+        width: 20vw;
         padding: .2vw;
         border-radius: 3px;
         box-shadow: 0 0px 5px rgb(160, 160, 160);
@@ -95,7 +95,7 @@ textarea:focus, input:focus {
 
 #gallery {
     width: 100%;
-    height: 90%;
+    height: 100%;
     padding: 1vw;
     gap: 1vw;
     margin-top: 60px;
