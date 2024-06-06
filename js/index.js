@@ -50,7 +50,8 @@ const search = () => {
 }
 
 const view = (id) => {
-    window.confirm(id);
+    var card = database.get(id);
+    window.confirm(card.name + "\n\n"+ card.desc);
 }
 
 class Card {
@@ -157,10 +158,12 @@ class Database {
         this.cards.push(card);
     }
 
-    clear = (array) => {
-        while(array.length > 0) {
-            array.pop();
-        }
+    get = (id) => {
+        for(let i = 0; i < this.cards.length; i++) {
+            if(id == this.cards[i].getID()) {
+                return this.cards[i];
+            }
+        }   
     }
 
     sort = (type) => {
@@ -175,12 +178,10 @@ class Database {
         }        
     }
 
-    get = (id) => {
-        for(let i = 0; i < this.cards.length; i++) {
-            if(id == this.cards[i].getID()) {
-                return this.cards[i];
-            }
-        }   
+    clear = (array) => {
+        while(array.length > 0) {
+            array.pop();
+        }
     }
 
     /*
@@ -197,34 +198,34 @@ class Database {
     }
     */
 
-    getFilter = (filters) => {
+    filter = (keywords) => {
         var url = '';
 
-        for(let i = 0; i < filters.length; i++) {
-            if(filters[i][0] == 'name') {
-                url += `&fname=${filters[i][1]}`
+        for(let i = 0; i < keywords.length; i++) {
+            if(keywords[i][0] == 'name') {
+                url += `&fname=${keywords[i][1]}`
             }
-            else if(filters[i][0] == 'type') {
-                url += `&type=${filters[i][1]}`
+            else if(keywords[i][0] == 'type') {
+                url += `&type=${keywords[i][1]}`
             }
-            else if(filters[i][0] == 'race') {
-                url += `&race=${filters[i][1]}`
+            else if(keywords[i][0] == 'race') {
+                url += `&race=${keywords[i][1]}`
             }
-            else if(filters[i][0] == 'archetype') {
-                url += `&archetype=${filters[i][1]}`
+            else if(keywords[i][0] == 'archetype') {
+                url += `&archetype=${keywords[i][1]}`
             }
-            else if(filters[i][0] == 'format') {
-                url += `&format=${filters[i][1]}`
+            else if(keywords[i][0] == 'format') {
+                url += `&format=${keywords[i][1]}`
             }
         }
 
         return url;
     }
 
-    search = (filters) => {
+    search = (keywords) => {
         this.clear(this.cards);        
 
-        fetch(this.url + this.getFilter(filters))
+        fetch(this.url + this.filter(keywords))
             .then((res) => res.json())
             .then((data) => {
                 try {
