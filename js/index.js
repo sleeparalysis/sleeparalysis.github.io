@@ -114,6 +114,8 @@ class Card {
     getCardSets = () => { return this.card_sets; }
     getBanlistInfo = () => { return this.banlist_info; }
     getCardImages = () => { return this.card_images; }
+    getLocalImages = () => { return this.local_images; }
+    getGithubImages = () => { return this.github_images; }
     getCardPrices = () => { return this.card_prices; }
     getBetaName = () => { return this.beta_name; }
     getStaple = () => { return this.staple; }
@@ -131,25 +133,18 @@ class Card {
     getQuestionAtk = () => { return this.question_atk; }
     getQuestionDef = () => { return this.question_def; }
 
-    // Card image sources
-    getLocalImages = () => {
-        return this.local_images;
-    }
-
-    getGithubImages = () => {
-        return this.github_images;
-    }
-
-    getEdisonBanlistInfo = () => {
-        const data = require("./data/ban_edison.json");
-        console.log(data);
-        return 'hi';
-    }
-
     // Card html code
     getCardHTML = () => {
-        return this.cardHTML = `<img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>`;
+        return this.cardHTML =
+            `<img id="${this.getID()}" 
+                class="item"
+                src="${this.getCardImages()[0].image_url}" 
+                loading='lazy' 
+                onclick="view(${this.getID()});"
+            />`;
     }
+
+    setEdisonBanlistInfo = (limit) => { this.ban_edison = limit; }
 }
 
 class Database {
@@ -187,20 +182,6 @@ class Database {
             array.pop();
         }
     }
-
-    /*
-    init = () => {
-        fetch(this.url)
-            .then((res) => res.json())
-            .then((data) => {
-                for(let i = 0; i < data.data.length; i++) {
-                    const card = new Card(data.data[i]);
-                    this.cards.push(card);
-                }
-            }
-        );
-    }
-    */
 
     filter = (keywords) => {
         var url = '';
@@ -242,7 +223,10 @@ class Database {
                         else if (card.getBanlistInfo() == null) {
                             if (document.getElementById("format").value != "edison" && document.getElementById("limit").value == "unlimited") {
                                 this.add(card);
-                            }                            
+                            }
+                            else if (document.getElementById("format").value == "edison") {
+
+                            }
                         }
                         else if (card.getBanlistInfo() != null) {
                             if (document.getElementById("format") == "tcg" && card.getBanlistInfo().ban_tcg != null) {
