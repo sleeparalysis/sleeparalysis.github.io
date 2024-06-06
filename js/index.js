@@ -220,31 +220,26 @@ class Database {
 
                         if(document.getElementById("limit").value == "") {
                             this.add(card);
-                            console.log(this.cards.length);
                         }
                         else if(card.getBanlistInfo() == null) {
                             if(document.getElementById("limit").value == "unlimited") {  
                                 this.add(card);
-                                console.log(this.cards.length);
                             }
                          }
                         else if(card.getBanlistInfo() != null) {
                             if(card.getBanlistInfo().ban_tcg != null) {
                                 if(document.getElementById("limit").value == card.getBanlistInfo().ban_tcg.toLowerCase()) {  
                                     this.add(card);
-                                    console.log(this.cards.length);
                                 }
                             }
                             else if(card.getBanlistInfo().ban_ocg != null) {
                                 if(document.getElementById("limit").value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
                                     this.add(card);
-                                    console.log(this.cards.length);
                                 }
                             }
                             else if(card.getBanlistInfo().ban_goat != null) {
                                 if(document.getElementById("limit").value == card.getBanlistInfo().ban_goat.toLowerCase()) {  
                                     this.add(card);
-                                    console.log(this.cards.length);
                                 }
                             }
                         }
