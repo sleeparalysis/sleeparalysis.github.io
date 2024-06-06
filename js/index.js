@@ -57,6 +57,7 @@ class Card {
         this.card_sets = data.card_sets;
         this.card_images = data.card_images;
         this.card_prices = data.card_prices;
+        this.beta_name = data.misc_info[0].beta_name;
         this.staple = data.misc_info[0].staple;
         this.views = data.misc_info[0].views;
         this.viewsweek = data.misc_info[0].viewsweek;
