@@ -1,57 +1,54 @@
-/*const search = (keyword) => {
-    database.search(keyword, 'gallery');
-}
-*/
-
 const checkBan = () => {
-    if(document.getElementById("format").value == 'tcg') {
-        document.getElementById("limit").disabled = false;
-    }
-    else if(document.getElementById("format").value == 'ocg') {
-        document.getElementById("limit").disabled = false;
-    }
-    else if(document.getElementById("format").value == 'goat') {
-        document.getElementById("limit").disabled = false;
-    }
-    else {
-        document.getElementById("limit").disabled = true;
-        document.getElementById('limit').value = '';
+    format = document.getElementById("format").value;
+
+    switch (format) {
+        case 'tcg':
+        case 'ocg':
+        case 'edison':
+        case 'goat':
+            document.getElementById("limit").disabled = false;
+            break;
+        default:
+            document.getElementById("limit").disabled = true;
+            document.getElementById('limit').value = '';
+            break;
+
     }
 }
 
 const search = () => {
     filters = [];
 
-    if(document.getElementById("name").value != '') {
+    if (document.getElementById("name").value != '') {
         filters.push(['name', document.getElementById("name").value]);
     }
 
-    if(document.getElementById("type").value != '') {
+    if (document.getElementById("type").value != '') {
         filters.push(['type', document.getElementById("type").value]);
     }
 
-    if(document.getElementById("race").value != '') {
+    if (document.getElementById("race").value != '') {
         filters.push(['race', document.getElementById("race").value]);
     }
 
-    if(document.getElementById("archetype").value != '') {
+    if (document.getElementById("archetype").value != '') {
         filters.push(['archetype', document.getElementById("archetype").value]);
     }
 
-    if(document.getElementById("format").value != '') {
+    if (document.getElementById("format").value != '') {
         filters.push(['format', document.getElementById("format").value]);
     }
 
-    if(document.getElementById("limit").value != '') {
+    if (document.getElementById("limit").value != '') {
         filters.push([`banlist`, document.getElementById("limit").value]);
     }
-    
+
     database.search(filters);
 }
 
 const view = (id) => {
     var card = database.get(id);
-    window.confirm(card.name + "\n\n"+ card.desc);
+    window.confirm(card.name + "\n\n" + card.desc);
 }
 
 class Card {
@@ -92,8 +89,9 @@ class Card {
         this.has_effect = data.misc_info[0].has_effect;
         this.question_atk = data.misc_info[0].question_atk;
         this.question_def = data.misc_info[0].question_def;
-        this.local_images = [{"local" : `../img/${this.id}.jpg`, "local_small" : `../img/small/${this.id}.jpg`}];
-        this.github_images = [{"github" : `https://raw.githubusercontent.com/sleeparalysis/Yugioh-Cards/main/${this.id}.jpg`}];
+        this.local_images = [{ "local": `../img/${this.id}.jpg`, "local_small": `../img/small/${this.id}.jpg` }];
+        this.github_images = [{ "github": `https://raw.githubusercontent.com/sleeparalysis/Yugioh-Cards/main/${this.id}.jpg` }];
+        this.ban_edison = "";
     }
 
     getID = () => { return this.id; }
@@ -142,6 +140,12 @@ class Card {
         return this.github_images;
     }
 
+    getEdisonBanlistInfo = () => {
+        const data = require("./data/ban_edison.json");
+        console.log(data);
+        return 'hi';
+    }
+
     // Card html code
     getCardHTML = () => {
         return this.cardHTML = `<img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>`;
@@ -159,27 +163,27 @@ class Database {
     }
 
     get = (id) => {
-        for(let i = 0; i < this.cards.length; i++) {
-            if(id == this.cards[i].getID()) {
+        for (let i = 0; i < this.cards.length; i++) {
+            if (id == this.cards[i].getID()) {
                 return this.cards[i];
             }
-        }   
+        }
     }
 
     sort = (type) => {
-        for(let j = 0; j < this.cards.length; j++) {
-            for(let i = 0; i < this.cards.length - 1; i++) {           
-                if(this.cards[i].getName() > this.cards[i + 1].getName()) {
+        for (let j = 0; j < this.cards.length; j++) {
+            for (let i = 0; i < this.cards.length - 1; i++) {
+                if (this.cards[i].getName() > this.cards[i + 1].getName()) {
                     var temp = this.cards[i];
                     this.cards[i] = this.cards[i + 1];
                     this.cards[i + 1] = temp;
                 }
             }
-        }        
+        }
     }
 
     clear = (array) => {
-        while(array.length > 0) {
+        while (array.length > 0) {
             array.pop();
         }
     }
@@ -201,20 +205,20 @@ class Database {
     filter = (keywords) => {
         var url = '';
 
-        for(let i = 0; i < keywords.length; i++) {
-            if(keywords[i][0] == 'name') {
+        for (let i = 0; i < keywords.length; i++) {
+            if (keywords[i][0] == 'name') {
                 url += `&fname=${keywords[i][1]}`
             }
-            else if(keywords[i][0] == 'type') {
+            else if (keywords[i][0] == 'type') {
                 url += `&type=${keywords[i][1]}`
             }
-            else if(keywords[i][0] == 'race') {
+            else if (keywords[i][0] == 'race') {
                 url += `&race=${keywords[i][1]}`
             }
-            else if(keywords[i][0] == 'archetype') {
+            else if (keywords[i][0] == 'archetype') {
                 url += `&archetype=${keywords[i][1]}`
             }
-            else if(keywords[i][0] == 'format') {
+            else if (keywords[i][0] == 'format') {
                 url += `&format=${keywords[i][1]}`
             }
         }
@@ -223,56 +227,57 @@ class Database {
     }
 
     search = (keywords) => {
-        this.clear(this.cards);        
+        this.clear(this.cards);
 
         fetch(this.url + this.filter(keywords))
             .then((res) => res.json())
             .then((data) => {
                 try {
-                    for(let i = 0; i < data.data.length; i++) {
+                    for (let i = 0; i < data.data.length; i++) {
                         const card = new Card(data.data[i]);
 
-                        if(document.getElementById("limit").value == "") {
+                        if (document.getElementById("limit").value == "") {
                             this.add(card);
                         }
-                        else if(card.getBanlistInfo() == null) {
-                            if(document.getElementById("limit").value == "unlimited") {  
+                        else if (card.getBanlistInfo() == null) {
+                            if (document.getElementById("format").value != "edison" && document.getElementById("limit").value == "unlimited") {
                                 this.add(card);
-                            }
-                         }
-                        else if(card.getBanlistInfo() != null) {
-                            if(card.getBanlistInfo().ban_tcg != null) {
-                                if(document.getElementById("limit").value == card.getBanlistInfo().ban_tcg.toLowerCase()) {  
+                            }                            
+                        }
+                        else if (card.getBanlistInfo() != null) {
+                            if (document.getElementById("format") == "tcg" && card.getBanlistInfo().ban_tcg != null) {
+                                if (document.getElementById("limit").value == card.getBanlistInfo().ban_tcg.toLowerCase()) {
                                     this.add(card);
                                 }
                             }
-                            else if(card.getBanlistInfo().ban_ocg != null) {
-                                if(document.getElementById("limit").value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
+                            else if (document.getElementById("format") == "ocg" && card.getBanlistInfo().ban_ocg != null) {
+                                if (document.getElementById("limit").value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
                                     this.add(card);
                                 }
                             }
-                            else if(card.getBanlistInfo().ban_goat != null) {
-                                if(document.getElementById("limit").value == card.getBanlistInfo().ban_goat.toLowerCase()) {  
+
+                            else if (document.getElementById("format") == "goat" && card.getBanlistInfo().ban_goat != null) {
+                                if (document.getElementById("limit").value == card.getBanlistInfo().ban_goat.toLowerCase()) {
                                     this.add(card);
                                 }
                             }
                         }
                     }
                 }
-                catch(error) {
+                catch (error) {
                     window.confirm('No results found');
                 }
-                
+
                 this.display('gallery');
             }
-        );
+            );
     }
 
     display = (elementID) => {
         const info = document.getElementById(elementID);
         var HTMLString = `<div class="${elementID}">`;
-        
-        for(let i = 0; i < this.cards.length; i++) {
+
+        for (let i = 0; i < this.cards.length; i++) {
             HTMLString += this.cards[i].getCardHTML();
         }
 
@@ -316,7 +321,7 @@ class Database {
                 a.download = filename;
                 a.click();
             }
-        );
+            );
     }
 }
 
