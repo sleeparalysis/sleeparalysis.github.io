@@ -1,0 +1,105 @@
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+    font-family: monospace;
+}
+
+p {
+    font-size: 14px;
+    font-family:inherit;
+    font-weight: bold;
+    margin: 0;
+    padding-right: 1rem;
+}
+
+#name, #desc, #race, #type, #archetype, #format {
+    width: 100%;
+    height: 30px;
+    
+    background-color: rgb(243, 243, 243);
+    color: black;
+    border: 0px;
+    border-radius: 5px;
+    outline: none;
+
+    font-size: 13px;
+    font-family: inherit;
+    text-align: left;
+}
+
+#submit {
+    width: 100%;
+    height: 30px;
+    margin-top: 1rem;
+
+    background-color: rgb(216, 216, 216);
+    border: 0px;
+    border-radius: 5px;
+
+    font-size: 14px;
+    font-family:inherit;
+    font-weight: bold;
+    padding-right: 1rem;
+}
+
+#submit:active {
+    background-color: rgb(192, 192, 192);
+}
+
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.c1 {
+    width:14vw;
+    padding: 1rem 0rem 1rem 1rem;
+    position:fixed;
+}
+
+.c2 {
+    width:86vw;
+    height:100vh;
+    padding: 1rem;
+    margin-left: 15vw;
+}
+
+.c3 {
+    width: 50%;
+}
+
+.r1 {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.r2 {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.gallery {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-content: center;
+    
+    overflow:hidden;
+}
+
+.item {
+    width:calc(84vw/10 - 1rem);
+}
