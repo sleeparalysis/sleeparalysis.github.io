@@ -20,7 +20,7 @@
                     <p>Type</p>
                     <label for="type"></label>
                     <select name="type" id="type">
-                        <option value="" selected></option>
+                        <option value="">All</option>
                         <option disabled>---------- Main Deck ----------</option>
                         <option value="effect monster">Effect Monster</option>
                         <option value="flip effect monster">Flip Effect Monster</option>
@@ -59,7 +59,7 @@
                     <p>Race</p>
                     <label for="race"></label>
                     <select name="race" id="race">
-                        <option value="" selected></option>
+                        <option value="">All</option>
                         <option disabled>-------- Monster Cards --------</option>
                         <option value="aqua">Aqua</option>
                         <option value="beast">Beast</option>
@@ -101,10 +101,12 @@
                 <div class="r1">
                     <p>Archetype</p>
                     <select name="archetype" id="archetype">
-                        <option value=""></option>
+                        <option value="">All</option>
+                        <option disabled>----------- Symbols -----------</option>
                         <option value="-eyes dragon">-Eyes Dragon</option>
                         <option value='"C"'>"C"</option>
                         <option value="@ignister">@Ignister</option>
+                        <option disabled>-------------- A --------------</option>
                         <option value="a-to-z">A-to-Z</option>
                         <option value="a.i.">A.I.</option>
                         <option value="abc">ABC</option>
@@ -143,106 +145,110 @@
                         <option value="atlantean">Atlantean</option>
                         <option value="attraction">Attraction</option>
                         <option value="attribute summoner">Attribute Summoner</option>
+                        <option disabled>-------------- B --------------</option>
                         <option value="b.e.s.">B.E.S.</option>
-                        <option value="">Bamboo Sword</option>
-                        <option value="">Barbaros</option>
-                        <option value="">Barian's</option>
-                        <option value="">Batteryman</option>
-                        <option value="">Battleguard</option>
-                        <option value="">Battlewasp</option>
-                        <option value="">Battlin' Boxer</option>
-                        <option value="">Battlin' Boxing</option>
-                        <option value="">Beetrooper</option>
-                        <option value="">Black Luster Soldier</option>
-                        <option value="">Blackwing</option>
-                        <option value="">Blaze Accelerator</option>
-                        <option value="">Blue Tears</option>
-                        <option value="">Blue-Eyes</option>
-                        <option value="">Bonding</option>
-                        <option value="">Book of</option>
-                        <option value="">Boot-Up</option>
-                        <option value="">Borrel</option>
-                        <option value="">Bounzer</option>
-                        <option value="">Branded</option>
-                        <option value="">Broken World</option>
-                        <option value="">Bugroth</option>
-                        <option value="">Bujin</option>
-                        <option value="">Burning Abyss</option>
-                        <option value="">Butterfly</option>
-                        <option value="">Butterspy</option>
-                        <option value="">Bystial</option>
-                        <option value="">Cataclysmic</option>
-                        <option value="">Celtic Guard</option>
-                        <option value="">Centur-Ion</option>
-                        <option value="">Chaos</option>
-                        <option value="">Chaos Phantom</option>
-                        <option value="">Charmer</option>
-                        <option value="">Chemicritter</option>
-                        <option value="">Chimera</option>
-                        <option value="">Chronomaly</option>
-                        <option value="">Chrysalis</option>
-                        <option value="">Cipher</option>
-                        <option value="">Circular</option>
-                        <option value="">Clear Wing</option>
-                        <option value="">Cloudian</option>
-                        <option value="">Code Talker</option>
-                        <option value="">Codebreaker</option>
-                        <option value="">Constellar</option>
-                        <option value="">Contact</option>
-                        <option value="">Cosmic Synchro Monster</option>
-                        <option value="">Counter Fairy</option>
-                        <option value="">Crusadia</option>
-                        <option value="">Crystal</option>
-                        <option value="">Crystal Beast</option>
-                        <option value="">Crystron</option>
-                        <option value="">Cubic</option>
-                        <option value="">Cupid</option>
-                        <option value="">Curse of Dragon</option>
-                        <option value="">CXyz</option>
-                        <option value="">Cyber</option>
-                        <option value="">Cyber Angel</option>
-                        <option value="">Cyber Dragon</option>
-                        <option value="">Cyberdark</option>
-                        <option value="">Cynet</option>
-                        <option value="">D.D.</option>
-                        <option value="">D/D</option>
-                        <option value="">Danger!</option>
-                        <option value="">Dark Contract</option>
-                        <option value="">Dark counterpart</option>
-                        <option value="">Dark Magician</option>
-                        <option value="">Dark Scorpion</option>
-                        <option value="">Dark World</option>
-                        <option value="">Darklord</option>
-                        <option value="">Deep Sea</option>
-                        <option value="">Demise</option>
-                        <option value="">Deskbot</option>
-                        <option value="">Despia</option>
-                        <option value="">Destiny HERO</option>
-                        <option value="">Destruction Sword</option>
-                        <option value="">Diabellstar</option>
-                        <option value="">Dice</option>
-                        <option value="">Digital Bug</option>
-                        <option value="">Dinomist</option>
-                        <option value="">Dinomorphia</option>
-                        <option value="">Dinowrestler</option>
-                        <option value="">Divine Dragon</option>
-                        <option value="">Djinn</option>
-                        <option value="">Dododo</option>
-                        <option value="">Dogmatika</option>
-                        <option value="">Doll</option>
-                        <option value="">Doll Monster</option>
-                        <option value="">Doodle Beast</option>
-                        <option value="">Doodlebook</option>
-                        <option value="">Doriado</option>
-                        <option value="">Draconia</option>
-                        <option value="">Dracoslayer</option>
-                        <option value="">Dracoverlord</option>
-                        <option value="">Dragonmaid</option>
-                        <option value="">Dragunity</option>
-                        <option value="">Dream Mirror</option>
-                        <option value="">Drytron</option>
-                        <option value="">Dual Avatar</option>
-                        <option value="">Duston</option>
+                        <option value="bamboo sword">Bamboo Sword</option>
+                        <option value="barbaros">Barbaros</option>
+                        <option value="barian's">Barian's</option>
+                        <option value="batteryman">Batteryman</option>
+                        <option value="battleguard">Battleguard</option>
+                        <option value="battlewasp">Battlewasp</option>
+                        <option value="battlin' boxer">Battlin' Boxer</option>
+                        <option value="battlin' boxing">Battlin' Boxing</option>
+                        <option value="beetrooper">Beetrooper</option>
+                        <option value="black luster soldier">Black Luster Soldier</option>
+                        <option value="blackwing">Blackwing</option>
+                        <option value="blaze accelerator">Blaze Accelerator</option>
+                        <option value="blue tears">Blue Tears</option>
+                        <option value="blue-eyes">Blue-Eyes</option>
+                        <option value="bonding">Bonding</option>
+                        <option value="book of">Book of</option>
+                        <option value="boot-up">Boot-Up</option>
+                        <option value="borrel">Borrel</option>
+                        <option value="bounzer">Bounzer</option>
+                        <option value="branded">Branded</option>
+                        <option value="broken world">Broken World</option>
+                        <option value="bugroth">Bugroth</option>
+                        <option value="bujin">Bujin</option>
+                        <option value="burning abyss">Burning Abyss</option>
+                        <option value="butteryfly">Butterfly</option>
+                        <option value="butterspy">Butterspy</option>
+                        <option value="bystial">Bystial</option>
+                        <option disabled>-------------- C --------------</option>
+                        <option value="cataclysmic">Cataclysmic</option>
+                        <option value="celtic guard">Celtic Guard</option>
+                        <option value="centur-ion">Centur-Ion</option>
+                        <option value="chaos">Chaos</option>
+                        <option value="chaos phantom">Chaos Phantom</option>
+                        <option value="charmer">Charmer</option>
+                        <option value=""chemicritter>Chemicritter</option>
+                        <option value="chimera">Chimera</option>
+                        <option value="chronomaly">Chronomaly</option>
+                        <option value="chrysalis">Chrysalis</option>
+                        <option value="cipher">Cipher</option>
+                        <option value="circular">Circular</option>
+                        <option value="clear wing">Clear Wing</option>
+                        <option value="cloudian">Cloudian</option>
+                        <option value="code talker">Code Talker</option>
+                        <option value="codebreaker">Codebreaker</option>
+                        <option value="constellar">Constellar</option>
+                        <option value="contact">Contact</option>
+                        <option value="cosmic synchro monster">Cosmic Synchro Monster</option>
+                        <option value="counter fairy">Counter Fairy</option>
+                        <option value="crusadia">Crusadia</option>
+                        <option value="crystal">Crystal</option>
+                        <option value="crystal beast">Crystal Beast</option>
+                        <option value="crystron">Crystron</option>
+                        <option value="cubic">Cubic</option>
+                        <option value="cupid">Cupid</option>
+                        <option value="curse of dragon">Curse of Dragon</option>
+                        <option value="cxyz">CXyz</option>
+                        <option value="cyber">Cyber</option>
+                        <option value="cyber angel">Cyber Angel</option>
+                        <option value="cyber dragon">Cyber Dragon</option>
+                        <option value="cyberdark">Cyberdark</option>
+                        <option value="cynet">Cynet</option>
+                        <option disabled>-------------- D --------------</option>
+                        <option value="d.d.">D.D.</option>
+                        <option value="d/d">D/D</option>
+                        <option value="danger!">Danger!</option>
+                        <option value="dark contract">Dark Contract</option>
+                        <option value="dark counterpart">Dark counterpart</option>
+                        <option value="dark magician">Dark Magician</option>
+                        <option value="dark scorpion">Dark Scorpion</option>
+                        <option value="dark world">Dark World</option>
+                        <option value="darklord">Darklord</option>
+                        <option value="deep sea">Deep Sea</option>
+                        <option value="demise">Demise</option>
+                        <option value="deskbot">Deskbot</option>
+                        <option value="despia">Despia</option>
+                        <option value="destiny hero">Destiny HERO</option>
+                        <option value="destruction sword">Destruction Sword</option>
+                        <option value="diabellstar">Diabellstar</option>
+                        <option value="dice">Dice</option>
+                        <option value="digital bug">Digital Bug</option>
+                        <option value="dinomist">Dinomist</option>
+                        <option value="dinomorphia">Dinomorphia</option>
+                        <option value="dinowrestler">Dinowrestler</option>
+                        <option value="divine dragon">Divine Dragon</option>
+                        <option value="djinn">Djinn</option>
+                        <option value="dododo">Dododo</option>
+                        <option value="dogmatika">Dogmatika</option>
+                        <option value="doll">Doll</option>
+                        <option value="doll monster">Doll Monster</option>
+                        <option value="doodle beast">Doodle Beast</option>
+                        <option value="doodlebook">Doodlebook</option>
+                        <option value="doriado">Doriado</option>
+                        <option value="draconia">Draconia</option>
+                        <option value="dracoslayer">Dracoslayer</option>
+                        <option value="dracoverlord">Dracoverlord</option>
+                        <option value="dragonmaid">Dragonmaid</option>
+                        <option value="dragunity">Dragunity</option>
+                        <option value="dream mirro">Dream Mirror</option>
+                        <option value="drytron">Drytron</option>
+                        <option value="dual avatar">Dual Avatar</option>
+                        <option value="duston">Duston</option>
+                        <option disabled>-------------- E --------------</option>
                         <option value="">Earthbound</option>
                         <option value="">Edge Imp</option>
                         <option value="">Egyptian God</option>
@@ -266,6 +272,7 @@
                         <option value="">Exodo</option>
                         <option value="">Exosister</option>
                         <option value="">Eyes Restrict</option>
+                        <option disabled>-------------- F --------------</option>
                         <option value="">F.A.</option>
                         <option value="">Fabled</option>
                         <option value="">Fairy</option>
@@ -294,6 +301,7 @@
                         <option value="">From the Underworld</option>
                         <option value="">Fur Hire</option>
                         <option value="">Fusion</option>
+                        <option disabled>-------------- G --------------</option>
                         <option value="">G Golem</option>
                         <option value="">Gadget</option>
                         <option value="">Gagaga</option>
@@ -330,6 +338,7 @@
                         <option value="">Guardragon</option>
                         <option value="">Gunkan</option>
                         <option value="">Gusto</option>
+                        <option disabled>-------------- H --------------</option>
                         <option value="">Harpie</option>
                         <option value="">Hazy</option>
                         <option value="">Heart</option>
@@ -345,6 +354,7 @@
                         <option value="">Horus</option>
                         <option value="">Horus the Black Flame Dragon</option>
                         <option value="">Hyperion</option>
+                        <option disabled>-------------- I --------------</option>
                         <option value="">Ice Barrier</option>
                         <option value="">Icejade</option>
                         <option value="">Igknight</option>
@@ -358,11 +368,13 @@
                         <option value="">Invoked</option>
                         <option value="">Inzektor</option>
                         <option value="">Iron Chain</option>
+                        <option disabled>-------------- J --------------</option>
                         <option value="">Jar</option>
                         <option value="">Jester</option>
                         <option value="">Jinzo</option>
                         <option value="">Junk</option>
                         <option value="">Jurrac</option>
+                        <option disabled>-------------- K --------------</option>
                         <option value="">Kaiju</option>
                         <option value="">Kairyu-Shin</option>
                         <option value="">Karakuri</option>
@@ -375,6 +387,7 @@
                         <option value="">Kozmo</option>
                         <option value="">Krawler</option>
                         <option value="">Kuriboh</option>
+                        <option disabled>-------------- L --------------</option>
                         <option value="">Labrynth</option>
                         <option value="">Labyrinth Wall</option>
                         <option value="">Lady of Lament</option>
@@ -387,6 +400,7 @@
                         <option value="">Lswarm</option>
                         <option value="">Lunalight</option>
                         <option value="">Lyrilusc</option>
+                        <option disabled>-------------- M --------------</option>
                         <option value="">Machina</option>
                         <option value="">Machine Angel</option>
                         <option value="">Madolche</option>
@@ -432,6 +446,7 @@
                         <option value="">Mystical Beast of the Forest</option>
                         <option value="">Mythical Beast</option>
                         <option value="">Myutant</option>
+                        <option disabled>-------------- N --------------</option>
                         <option value="">Naturia</option>
                         <option value="">Nekroz</option>
                         <option value="">Nemeses</option>
@@ -450,12 +465,14 @@
                         <option value="">Nouvelles</option>
                         <option value="">Number</option>
                         <option value="">Numeron</option>
+                        <option disabled>-------------- O --------------</option>
                         <option value="">Odd-Eyes</option>
                         <option value="">Ogdoadic</option>
                         <option value="">Ojama</option>
                         <option value="">Onomat</option>
                         <option value="">Orcust</option>
                         <option value="">Overlay</option>
+                        <option disabled>-------------- P --------------</option>
                         <option value="">P.U.N.K.</option>
                         <option value="">Paladins of Dragons</option>
                         <option value="">Paleozoic</option>
@@ -485,7 +502,9 @@
                         <option value="">PSY-Frame</option>
                         <option value="">Puppet</option>
                         <option value="">Purrely</option>
+                        <option disabled>-------------- Q --------------</option>
                         <option value="">Qli</option>
+                        <option disabled>-------------- R --------------</option>
                         <option value="">Ragnaraika</option>
                         <option value="">Raidraptor</option>
                         <option value="">Rainbow Bridge</option>
@@ -506,6 +525,7 @@
                         <option value="">Rose</option>
                         <option value="">Rose Dragon</option>
                         <option value="">Runick</option>
+                        <option disabled>-------------- S --------------</option>
                         <option value="">S-Force</option>
                         <option value="">Saber</option>
                         <option value="">Sacred Beast</option>
@@ -570,6 +590,7 @@
                         <option value="">Symphonic Warrior</option>
                         <option value="">Synchro</option>
                         <option value="">Synchron</option>
+                        <option disabled>-------------- T --------------</option>
                         <option value="">T.G.</option>
                         <option value="">Tachyon</option>
                         <option value="">Tearlaments</option>
@@ -596,6 +617,7 @@
                         <option value="">Triamid</option>
                         <option value="">Trickstar</option>
                         <option value="">True Draco</option>
+                        <option disabled>-------------- U --------------</option>
                         <option value="">U.A.</option>
                         <option value="">Umbral Horror</option>
                         <option value="">Umi</option>
@@ -604,6 +626,7 @@
                         <option value="">Ursarctic</option>
                         <option value="">Utopia</option>
                         <option value="">Utopic</option>
+                        <option disabled>-------------- V --------------</option>
                         <option value="">Vaalmonica</option>
                         <option value="">Valkyrie</option>
                         <option value="">Vampire</option>
@@ -621,6 +644,7 @@
                         <option value="">Void</option>
                         <option value="">Volcanic</option>
                         <option value="">Vylon</option>
+                        <option disabled>-------------- W --------------</option>
                         <option value="">War Rock</option>
                         <option value="">Watt</option>
                         <option value="">White</option>
@@ -634,11 +658,14 @@
                         <option value="">World Chalice</option>
                         <option value="">World Legacy</option>
                         <option value="">Worm</option>
+                        <option disabled>-------------- X --------------</option>
                         <option value="">X-Saber</option>
                         <option value="">Xyz</option>
+                        <option disabled>-------------- Y --------------</option>
                         <option value="">Yang Zing</option>
                         <option value="">Yosenju</option>
                         <option value="">Yubel</option>
+                        <option disabled>-------------- Z --------------</option>
                         <option value="">Zefra</option>
                         <option value="">Zera</option>
                         <option value="">Zexal</option>
@@ -646,34 +673,37 @@
                         <option value="">Zoodiac</option>
                     </select>
                 </div>
-                <div class="r1">
-                    <p>Format</p>
-                    <label for="format"></label>
-                    <select name="format" id="format">
-                        <option value="" selected></option>
-                        <option disabled>------- Official Formats ------</option>
-                        <option value="tcg">TCG</option>
-                        <option value="ocg">OCG</option>
-                        <option value="duel links">Duel Links</option>
-                        <option value="speed duel">Speed Duel</option>
-                        <option disabled>------ Unofficial Formats -----</option>
-                        <option value="common charity">Common Charity</option>
-                        <option value="edison">Edison</option>
-                        <option value="goat">Goat</option>
-                        <option value="ocg goat">OCG Goat</option>
-                    </select>
+                <div class="r2">
+                    <div class="c3">
+                        <p>Format</p>
+                        <label for="format"></label>
+                        <select name="format" id="format" onchange="checkBan();">
+                            <option value="">All</option>
+                            <option disabled>----- Official -----</option>
+                            <option value="tcg">TCG</option>
+                            <option value="ocg">OCG</option>
+                            <option value="duel links">Duel Links</option>
+                            <option value="speed duel">Speed Duel</option>
+                            <option disabled>-- Unofficial --</option>
+                            <option value="common charity">Common Charity</option>
+                            <option value="edison">Edison</option>
+                            <option value="goat">Goat</option>
+                            <option value="ocg goat">OCG Goat</option>
+                        </select>
+                    </div>
+                    <div class="c4">
+                        <p>Limit</p>
+                        <label for="limit"></label>
+                        <select name="limit" id="limit">
+                            <option value="">All</option>
+                            <option value="unlimited">3</option>
+                            <option value="semi-limited">2</option>
+                            <option value="limited">1</option>
+                            <option value="banned">0</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="r1">
-                    <p>Limit</p>
-                    <label for="limit"></label>
-                    <select name="limit" id="limit">
-                        <option value="" selected></option>
-                        <option value="unlimited">Unlimited</option>
-                        <option value="semi-limited">Semi-limited</option>
-                        <option value="limited">Limited</option>
-                        <option value="Banned">Forbidden</option>
-                    </select>
-                </div>
+                
                 <input type="button" id="submit" onclick="search();" value="Search"></button>
             </form>
         </div>

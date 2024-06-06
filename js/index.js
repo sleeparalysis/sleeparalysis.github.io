@@ -3,35 +3,43 @@
 }
 */
 
+const checkBan = () => {
+    if(document.getElementById("format").value == 'tcg' || document.getElementById("format").value == 'ocg' || document.getElementById("format").value == 'goat') {
+        document.getElementById("limit").disabled = false;
+    }
+    else {
+        document.getElementById("limit").disabled = true;
+        document.getElementById('limit').value = '';
+    }
+}
+
 const search = () => {
     filters = [];
 
-    try {
-        if(document.getElementById("name").value != '') {
-            filters.push(['name', document.getElementById("name").value]);
-        }
-    
-        if(document.getElementById("type").value != '') {
-            filters.push(['type', document.getElementById("type").value]);
-        }
-    
-        if(document.getElementById("race").value != '') {
-            filters.push(['race', document.getElementById("race").value]);
-        }
-
-        if(document.getElementById("archetype").value != '') {
-            filters.push(['archetype', document.getElementById("archetype").value]);
-        }
-
-        if(document.getElementById("format").value != '') {
-            filters.push(['format', document.getElementById("format").value]);
-        }
+    if(document.getElementById("name").value != '') {
+        filters.push(['name', document.getElementById("name").value]);
     }
-    catch(error) {
-        console.error(error);
+
+    if(document.getElementById("type").value != '') {
+        filters.push(['type', document.getElementById("type").value]);
+    }
+
+    if(document.getElementById("race").value != '') {
+        filters.push(['race', document.getElementById("race").value]);
+    }
+
+    if(document.getElementById("archetype").value != '') {
+        filters.push(['archetype', document.getElementById("archetype").value]);
+    }
+
+    if(document.getElementById("format").value != '') {
+        filters.push(['format', document.getElementById("format").value]);
+    }
+
+    if(document.getElementById("limit").value != '') {
+        filters.push([`banlist`, document.getElementById("limit").value]);
     }
     
-
     database.search(filters);
 }
 
@@ -55,6 +63,7 @@ class Card {
         this.scale = data.scale;
         this.ygoprodeck_url = data.ygoprodeck_url;
         this.card_sets = data.card_sets;
+        this.banlist_info = data.banlist_info;
         this.card_images = data.card_images;
         this.card_prices = data.card_prices;
         this.beta_name = data.misc_info[0].beta_name;
@@ -70,6 +79,8 @@ class Card {
         this.ocg_date = data.misc_info[0].ocg_date;
         this.konami_id = data.misc_info[0].konami_id;
         this.has_effect = data.misc_info[0].has_effect;
+        this.question_atk = data.misc_info[0].question_atk;
+        this.question_def = data.misc_info[0].question_def;
         this.local_images = [{"local" : `../img/${this.id}.jpg`, "local_small" : `../img/small/${this.id}.jpg`}];
         this.github_images = [{"github" : `https://raw.githubusercontent.com/sleeparalysis/Yugioh-Cards/main/${this.id}.jpg`}];
     }
@@ -92,8 +103,10 @@ class Card {
     getScale = () => { return this.scale; }
     getCardURL = () => { return this.ygoprodeck_url; }
     getCardSets = () => { return this.card_sets; }
+    getBanlistInfo = () => { return this.banlist_info; }
     getCardImages = () => { return this.card_images; }
     getCardPrices = () => { return this.card_prices; }
+    getBetaName = () => { return this.beta_name; }
     getStaple = () => { return this.staple; }
     getViews = () => { return this.views; }
     getViewsWeek = () => { return this.viewsweek; }
@@ -106,6 +119,8 @@ class Card {
     getOCGDate = () => { return this.ocg_date; }
     getKonamiID = () => { return this.konami_id; }
     getHasEffect = () => { return this.has_effect; }
+    getQuestionAtk = () => { return this.question_atk; }
+    getQuestionDef = () => { return this.question_def; }
 
     // Card image sources
     getLocalImages = () => {
@@ -175,6 +190,7 @@ class Database {
     search = (filters) => {
         this.clear(this.cards);
         var addurl = '';
+        var format = '';
 
         for(let i = 0; i < filters.length; i++) {
             if(filters[i][0] == 'name') {
@@ -191,10 +207,9 @@ class Database {
             }
             else if(filters[i][0] == 'format') {
                 addurl += `&format=${filters[i][1]}`
+                format = filters[i][1];
             }
         }
-
-        console.log(addurl);
 
         fetch(this.url + addurl)
             .then((res) => res.json())
@@ -202,20 +217,47 @@ class Database {
                 try {
                     for(let i = 0; i < data.data.length; i++) {
                         const card = new Card(data.data[i]);
-                        this.add(card);
+
+                        if(document.getElementById("limit").value == "") {
+                            this.add(card);
+                            console.log(this.cards.length);
+                        }
+                        else if(card.getBanlistInfo() == null) {
+                            if(document.getElementById("limit").value == "unlimited") {  
+                                this.add(card);
+                                console.log(this.cards.length);
+                            }
+                         }
+                        else if(card.getBanlistInfo() != null) {
+                            if(card.getBanlistInfo().ban_tcg != null) {
+                                if(document.getElementById("limit").value == card.getBanlistInfo().ban_tcg.toLowerCase()) {  
+                                    this.add(card);
+                                    console.log(this.cards.length);
+                                }
+                            }
+                            else if(card.getBanlistInfo().ban_ocg != null) {
+                                if(document.getElementById("limit").value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
+                                    this.add(card);
+                                    console.log(this.cards.length);
+                                }
+                            }
+                            else if(card.getBanlistInfo().ban_goat != null) {
+                                if(document.getElementById("limit").value == card.getBanlistInfo().ban_goat.toLowerCase()) {  
+                                    this.add(card);
+                                    console.log(this.cards.length);
+                                }
+                            }
+                        }
                     }
                 }
                 catch(error) {
                     window.confirm('No results found');
                 }
                 
-
                 this.display('gallery');
             }
         );
     }
-
-    
 
     display = (elementID) => {
         const info = document.getElementById(elementID);
@@ -244,8 +286,8 @@ class Database {
         info.innerHTML = HTMLString;
     }
     */
+
     random = (elementID) => {
-        console.log(this.cards.length);
         const info = document.getElementById(elementID);
         var HTMLString = '<div class="container">';
 
@@ -270,3 +312,4 @@ class Database {
 }
 
 var database = new Database();
+search();
