@@ -4,7 +4,13 @@
 */
 
 const checkBan = () => {
-    if(document.getElementById("format").value == 'tcg' || document.getElementById("format").value == 'ocg' || document.getElementById("format").value == 'goat') {
+    if(document.getElementById("format").value == 'tcg') {
+        document.getElementById("limit").disabled = false;
+    }
+    else if(document.getElementById("format").value == 'ocg') {
+        document.getElementById("limit").disabled = false;
+    }
+    else if(document.getElementById("format").value == 'goat') {
         document.getElementById("limit").disabled = false;
     }
     else {
@@ -41,6 +47,10 @@ const search = () => {
     }
     
     database.search(filters);
+}
+
+const view = (id) => {
+    window.confirm(id);
 }
 
 class Card {
@@ -133,7 +143,7 @@ class Card {
 
     // Card html code
     getCardHTML = () => {
-        return this.cardHTML = `<img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy'/>`;
+        return this.cardHTML = `<img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>`;
     }
 }
 
@@ -187,31 +197,34 @@ class Database {
     }
     */
 
-    search = (filters) => {
-        this.clear(this.cards);
-        var addurl = '';
-        var format = '';
+    getFilter = (filters) => {
+        var url = '';
 
         for(let i = 0; i < filters.length; i++) {
             if(filters[i][0] == 'name') {
-                addurl += `&fname=${filters[i][1]}`
+                url += `&fname=${filters[i][1]}`
             }
             else if(filters[i][0] == 'type') {
-                addurl += `&type=${filters[i][1]}`
+                url += `&type=${filters[i][1]}`
             }
             else if(filters[i][0] == 'race') {
-                addurl += `&race=${filters[i][1]}`
+                url += `&race=${filters[i][1]}`
             }
             else if(filters[i][0] == 'archetype') {
-                addurl += `&archetype=${filters[i][1]}`
+                url += `&archetype=${filters[i][1]}`
             }
             else if(filters[i][0] == 'format') {
-                addurl += `&format=${filters[i][1]}`
-                format = filters[i][1];
+                url += `&format=${filters[i][1]}`
             }
         }
 
-        fetch(this.url + addurl)
+        return url;
+    }
+
+    search = (filters) => {
+        this.clear(this.cards);        
+
+        fetch(this.url + this.getFilter(filters))
             .then((res) => res.json())
             .then((data) => {
                 try {

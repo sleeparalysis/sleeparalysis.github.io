@@ -112,4 +112,10 @@ p {
 
 .item {
     width:calc(84vw/10 - 1rem);
+    transition: filter .05s;
+}
+
+.item:hover {
+    cursor: pointer;
+    filter:brightness(85%);
 }
