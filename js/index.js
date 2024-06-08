@@ -1,5 +1,3 @@
-oldCard1 = "";
-
 const view = (id) => {
     var body = document.body;
     var img = document.getElementById(id);
@@ -70,13 +68,11 @@ const getDropdown = () => {
     switch (card1.value) {
         // Filter by monster cards
         case 'monster':
-            console.log('old: ' + oldCard1 + ' / current: ' + card1.value);
-
-            // Set previous card1
-            oldCard1 = card1.value;
-
             // Enable card2 filters
             card2.disabled = false;
+
+            // Set card2 default value
+            card2.value = '';
 
             // Set type1 filter default value
             type1.value = '';
@@ -90,20 +86,18 @@ const getDropdown = () => {
             }
 
             // Disable last 7 type1 filters
-            for(let i = 25; i < type1.options.length; i++) {
+            for(let i = 26; i < type1.options.length; i++) {
                 type1.options[i].style.display = "none";
             }
 
             break;
         // Filter by spell cards
         case 'spell':
-            console.log('old: ' + oldCard1 + ' / current: ' + card1.value);
-
-            // Set previous card1
-            oldCard1 = card1.value;
-
             // Disable card2 filters
             card2.disabled = true;
+
+            // Set card2 default value
+            card2.value = '';
 
             // Set type1 filter default value
             type1.value = '';
@@ -126,13 +120,11 @@ const getDropdown = () => {
 
             break;
         case 'trap':
-            console.log('old: ' + oldCard1 + ' / current: ' + card1.value);
-
-            // Set previous card1
-            oldCard1 = card1.value;
-
             // Disable card2 filters
             card2.disabled = true;
+
+            // Set card2 default value
+            card2.value = '';
 
             // Set type1 filter default value
             type1.value = '';
@@ -151,16 +143,16 @@ const getDropdown = () => {
             }
 
             // Disable field option
-            type1.options[26].style.display = "none";
-
-            // Disable equip option
             type1.options[27].style.display = "none";
 
+            // Disable equip option
+            type1.options[28].style.display = "none";
+
             // Disable quick-play option
-            type1.options[29].style.display = "none";
+            type1.options[30].style.display = "none";
 
             // Disablle ritual option
-            type1.options[30].style.display = "none";
+            type1.options[31].style.display = "none";
 
             break;    
         default:
@@ -169,11 +161,6 @@ const getDropdown = () => {
 
             // Set card2 filters default value
             card2.value = '';
-
-            // Set type1 filter default value
-            if(card1.value != oldCard1) {
-                 type1.value = '';
-            }
 
             // Enable all type1 filters
             for(let i = 0; i < type1.options.length; i++) {
@@ -185,7 +172,7 @@ const getDropdown = () => {
 
             // Set type2 filter default value
             type2.value = '';
-            
+
             break;
     }
 
