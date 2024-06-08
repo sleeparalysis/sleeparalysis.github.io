@@ -33,7 +33,7 @@
                     <div class="w2">
                         <p>Card</p>
                         <label for="card1"></label>
-                        <select id="card1" name="card1" onchange="enableMonsterType();">
+                        <select id="card1" name="card1" onchange="getDropdown();">
                             <option value="">All</option>
                             <option value="monster">Monster</option>
                             <option value="spell">Spell</option>
@@ -741,7 +741,7 @@
                     <div class="w3">
                         <p>Format</p>
                         <label for="format"></label>
-                        <select name="format" id="format" onchange="enableCardLimit()">
+                        <select name="format" id="format" onchange="getDropdown()">
                             <option value="">All</option>
 						    <option value="tcg">TCG</option>
                             <option value="ocg">OCG</option>

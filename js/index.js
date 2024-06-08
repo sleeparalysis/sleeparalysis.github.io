@@ -1,3 +1,5 @@
+oldCard1 = "";
+
 const view = (id) => {
     var body = document.body;
     var img = document.getElementById(id);
@@ -57,36 +59,145 @@ const parseFile = (file) => {
     return data;
 }
 
-const enableCardType = () => {
-    cardType = document.getElementById("card1").value;
+const getDropdown = () => {
+    card1 = document.getElementById("card1");
+    card2 = document.getElementById("card2");
+    type1 = document.getElementById("type1");
+    type2 = document.getElementById("type2");
+    format = document.getElementById("format");
+    limit = document.getElementById("limit");
 
-    switch (cardType) {
+    switch (card1.value) {
+        // Filter by monster cards
         case 'monster':
-            document.getElementById("card2").disabled = false;
-            document.getElementById("type2").disabled = false;
+            console.log('old: ' + oldCard1 + ' / current: ' + card1.value);
+
+            // Set previous card1
+            oldCard1 = card1.value;
+
+            // Enable card2 filters
+            card2.disabled = false;
+
+            // Set type1 filter default value
+            type1.value = '';
+
+            // Enable type2 filters
+            type2.disabled = false;
+
+            // Enable all type1 filters
+            for(let i = 0; i < type1.options.length; i++) {
+                type1.options[i].style.display = "block";
+            }
+
+            // Disable last 7 type1 filters
+            for(let i = 25; i < type1.options.length; i++) {
+                type1.options[i].style.display = "none";
+            }
+
             break;
+        // Filter by spell cards
+        case 'spell':
+            console.log('old: ' + oldCard1 + ' / current: ' + card1.value);
+
+            // Set previous card1
+            oldCard1 = card1.value;
+
+            // Disable card2 filters
+            card2.disabled = true;
+
+            // Set type1 filter default value
+            type1.value = '';
+
+            // Disable type2 filters
+            type2.disabled = true;
+
+            // Enable all type1 filters
+            for(let i = 0; i < type1.options.length; i++) {
+                type1.options[i].style.display = "block";
+            }
+
+            // Disable first 25 options
+            for(let i = 1; i < type1.options.length - 7; i++) {
+                type1.options[i].style.display = "none";
+            }
+
+            // Disable counter option
+            type1.options[31].style.display = "none";
+
+            break;
+        case 'trap':
+            console.log('old: ' + oldCard1 + ' / current: ' + card1.value);
+
+            // Set previous card1
+            oldCard1 = card1.value;
+
+            // Disable card2 filters
+            card2.disabled = true;
+
+            // Set type1 filter default value
+            type1.value = '';
+
+            // Disable type2 filters
+            type2.disabled = true;
+
+            // Enable all type1 filters
+            for(let i = 0; i < type1.options.length; i++) {
+                type1.options[i].style.display = "block";
+            }
+
+            // Disable first 25 options
+            for(let i = 1; i < type1.options.length - 7; i++) {
+                type1.options[i].style.display = "none";
+            }
+
+            // Disable field option
+            type1.options[26].style.display = "none";
+
+            // Disable equip option
+            type1.options[27].style.display = "none";
+
+            // Disable quick-play option
+            type1.options[29].style.display = "none";
+
+            // Disablle ritual option
+            type1.options[30].style.display = "none";
+
+            break;    
         default:
-            document.getElementById("card2").disabled = true;
-            document.getElementById("type2").disabled = true;
+            // Disable card2 filters by default
+            card2.disabled = true;
+
+            // Set card2 filters default value
+            card2.value = '';
+
+            // Set type1 filter default value
+            if(card1.value != oldCard1) {
+                 type1.value = '';
+            }
+
+            // Enable all type1 filters
+            for(let i = 0; i < type1.options.length; i++) {
+                type1.options[i].style.display = "block";
+            }
+           
+            // Disable type2 filter by default
+            type2.disabled = true;
+
+            // Set type2 filter default value
+            type2.value = '';
             
-            document.getElementById('card2').value = '';
-            document.getElementById('type2').value = '';
             break;
     }
-}
 
-const enableCardLimit = () => {
-    format = document.getElementById("format").value;
-
-    switch (format) {
+    switch (format.value) {
         case 'tcg':
         case 'ocg':
         case 'goat':
-            document.getElementById("limit").disabled = false;
+            limit.disabled = false;
             break;
         default:
-            document.getElementById("limit").disabled = true;
-            document.getElementById('limit').value = '';
+            limit.disabled = true;
+            limit.value = '';
             break;
 
     }
@@ -120,8 +231,6 @@ const search = () => {
     // Add name filtering to the active filters list
     if (document.getElementById("name").value != '') {
         filters.push(['name', document.getElementById("name").value]);
-        console.log('filters:');
-        console.log(filters);
     }
 
     // Add temporary filters based on card type
@@ -132,8 +241,6 @@ const search = () => {
                 
             }
         }
-        console.log('tempfilters1');
-        console.log(tempfilters);
     }
 
     // Remove temporary filters and keep only desired monster type 
@@ -144,12 +251,10 @@ const search = () => {
                 // Remove one item at index i
                 tempfilters.splice(i, 1);
                 
-                // This function steps forward one step 
+                // Step back one index since splice makes the array smaller by 1 
                 i--;
             }
         }
-        console.log('tempfilters2');
-        console.log(tempfilters);
     }
 
     // Filter by type
@@ -206,9 +311,6 @@ const search = () => {
 
 
     filters = filters.concat(tempfilters);
-    
-    console.log('concat filters:');
-    console.log(filters);
     database.searchList(filters);
 }
 
@@ -458,5 +560,5 @@ class Database {
 }
 
 var database = new Database();
-enableMonsterType();
+getDropdown();
 search();
