@@ -1,10 +1,85 @@
-const checkBan = () => {
+const view = (id) => {
+    var body = document.body;
+    var img = document.getElementById(id);
+    var modal = document.getElementById("modal");
+    var modalContent = document.getElementById("modal-content");
+    var span = document.getElementsByClassName("close")[0];
+    
+    var card = database.getItem(id);
+    var name = document.getElementById("card-name");
+    var desc = document.getElementById("card-description");
+    
+    if(modal.style.display === "none" || modal.style.display === "") {
+        // Disable scrolling when modal is displayed
+        body.style.overflow = "hidden";
+
+        // Display modal
+        modal.style.display = "flex";
+
+        // Inject card image src
+        modalContent.src = img.src;
+
+        // Inject card name
+        name.innerText = card.name;
+
+        // Inject card description
+        desc.innerText = card.getFormattedDesc();
+    }
+    else {
+        // Initialize style display
+        modal.style.display = "none";
+    }
+    
+    span.onclick = function() {
+        // Enable scrolling when modal is hidden
+        body.style.overflow = "auto";
+
+        // Hide modal
+        modal.style.display = "none";
+    }
+}
+
+const close = () => {
+    var span = document.getElementsByClassName("close")[0];
+    var modal = document.getElementById("modal");
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+
+const parseFile = (file) => {
+    var request = new XMLHttpRequest();
+    request.open("GET", file, false);
+    request.send(null);
+    var data = JSON.parse(request.responseText);
+    return data;
+}
+
+const enableMonsterType = () => {
+    cardType = document.getElementById("card1").value;
+
+    switch (cardType) {
+        case 'monster':
+            document.getElementById("card2").disabled = false;
+            document.getElementById("type2").disabled = false;
+            break;
+        default:
+            document.getElementById("card2").disabled = true;
+            document.getElementById("type2").disabled = true;
+            
+            document.getElementById('card2').value = '';
+            document.getElementById('type2').value = '';
+            break;
+    }
+}
+
+const enableCardLimit = () => {
     format = document.getElementById("format").value;
 
     switch (format) {
         case 'tcg':
         case 'ocg':
-        case 'edison':
         case 'goat':
             document.getElementById("limit").disabled = false;
             break;
@@ -16,9 +91,86 @@ const checkBan = () => {
     }
 }
 
-const search = () => {
-    filters = [];
+const updateDropdown = (id) => {
+    switch (id) {
+        case 'card1':
+            break;
+        case 'card1':
+            break;
+        case 'card1':
+            break;
+        case 'card1':
+            break;
+    }
+}
 
+
+
+const search = () => {
+    // List of active filters
+    var filters = [];
+
+    // List of filters to be set as active secondary filtering
+    var tempfilters = [];
+
+    // Retrieve filter list from file
+    var filterData = parseFile('./data/sort.json');
+
+    // Add loose name filtering to the active filters list
+    if (document.getElementById("name").value != '') {
+        filters.push(['name', document.getElementById("name").value]);
+    }
+
+    // Filter by card type
+    if (document.getElementById("card1").value != '') {
+        for (let i = 0; i < filterData.types.length; i++) {
+            if (filterData.types[i].toLowerCase().includes(document.getElementById("card1").value)) {
+                filters.push(['card1', filterData.types[i]]);
+            }
+        }
+    }
+
+    // Filter by summoning condition
+    if (document.getElementById("card2").value != '') {
+        while (tempfilters.length > 0) {
+            tempfilters[i].pop();
+        }
+
+        for (let i = 0; i < filters.length; i++) {
+            if (filters[i][1].toLowerCase().includes(document.getElementById("card2").value)) {
+                tempfilters.push(filters[i]);
+            }
+        }
+        
+        filters += tempfilters;
+    }
+
+    // Filter by type
+    if (document.getElementById("type1").value != '') {
+        filters.push(['type1', document.getElementById("type1").value]);
+    }
+
+    // Filter by ability
+    if (document.getElementById("type2").value != '') {
+        filters.push(['type2', document.getElementById("type2").value]);
+    }
+
+    // Filter by archetype
+    if (document.getElementById("archetype").value != '') {
+        filters.push(['archetype', document.getElementById("archetype").value]);
+    }
+
+    // Filter by format
+    if (document.getElementById("format").value != '') {
+        filters.push(['format', document.getElementById("format").value]);
+    }
+
+    // Filter by card limit
+    if (document.getElementById("limit").value != '') {
+        filters.push([`banlist`, document.getElementById("limit").value]);
+    }
+
+    /*
     if (document.getElementById("name").value != '') {
         filters.push(['name', document.getElementById("name").value]);
     }
@@ -42,14 +194,14 @@ const search = () => {
     if (document.getElementById("limit").value != '') {
         filters.push([`banlist`, document.getElementById("limit").value]);
     }
+    */
 
-    database.search(filters);
+    
+    console.log(filters);
+    database.searchList(filters);
 }
 
-const view = (id) => {
-    var card = database.get(id);
-    window.confirm(card.name + "\n\n" + card.desc);
-}
+
 
 class Card {
     constructor(data) {
@@ -133,6 +285,13 @@ class Card {
     getQuestionAtk = () => { return this.question_atk; }
     getQuestionDef = () => { return this.question_def; }
 
+    getFormattedDesc = () => {
+        // Adjust text for pendulum cards
+        var formattedDesc = this.desc.replaceAll(".\n[", ".\n\n[");
+        
+        return formattedDesc;
+    }
+
     // Card html code
     getCardHTML = () => {
         return this.cardHTML =
@@ -143,74 +302,80 @@ class Card {
                 onclick="view(${this.getID()});"
             />`;
     }
-
-    setEdisonBanlistInfo = (limit) => { this.ban_edison = limit; }
 }
 
 class Database {
     constructor() {
-        this.cards = [];
-        this.url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes';
+        this.list = [];
     }
 
-    add = (card) => {
-        this.cards.push(card);
+    addItem = (card) => {
+        this.list.push(card);
     }
 
-    get = (id) => {
-        for (let i = 0; i < this.cards.length; i++) {
-            if (id == this.cards[i].getID()) {
-                return this.cards[i];
+    getItem = (id) => {
+        for (let i = 0; i < this.list.length; i++) {
+            if (id == this.list[i].getID()) {
+                return this.list[i];
             }
         }
     }
 
-    sort = (type) => {
-        for (let j = 0; j < this.cards.length; j++) {
-            for (let i = 0; i < this.cards.length - 1; i++) {
-                if (this.cards[i].getName() > this.cards[i + 1].getName()) {
-                    var temp = this.cards[i];
-                    this.cards[i] = this.cards[i + 1];
-                    this.cards[i + 1] = temp;
+    sortList = (type) => {
+        for (let j = 0; j < this.list.length; j++) {
+            for (let i = 0; i < this.list.length - 1; i++) {
+                if (this.list[i].getName() > this.list[i + 1].getName()) {
+                    var temp = this.list[i];
+                    this.list[i] = this.list[i + 1];
+                    this.list[i + 1] = temp;
                 }
             }
         }
     }
 
-    clear = (array) => {
-        while (array.length > 0) {
-            array.pop();
+    clearList = () => {
+        while (this.list.length > 0) {
+            this.list.pop();
         }
     }
 
-    filter = (keywords) => {
+    filteredUrl = (filters) => {
         var url = '';
+        //console.log(filters);
 
-        for (let i = 0; i < keywords.length; i++) {
-            if (keywords[i][0] == 'name') {
-                url += `&fname=${keywords[i][1]}`
+        for (let i = 0; i < filters.length; i++) {
+            if (filters[i][0] == 'name') {
+                url += `&fname=${filters[i][1]}`;
             }
-            else if (keywords[i][0] == 'type') {
-                url += `&type=${keywords[i][1]}`
+            if (filters[i][0] == 'card1') {
+                if (filters[i][0] == 'card1') {
+                    if (!url.includes('&type=')) {
+                        url += `&type=${filters[i][1]}`;
+                    }
+                    else {
+                        url += `,${filters[i][1]}`
+                    }
+                }
             }
-            else if (keywords[i][0] == 'race') {
-                url += `&race=${keywords[i][1]}`
+            if (filters[i][0] == 'type1') {
+                url += `&race=${filters[i][1]}`
             }
-            else if (keywords[i][0] == 'archetype') {
-                url += `&archetype=${keywords[i][1]}`
+            if (filters[i][0] == 'archetype') {
+                url += `&archetype=${filters[i][1]}`
             }
-            else if (keywords[i][0] == 'format') {
-                url += `&format=${keywords[i][1]}`
+            if (filters[i][0] == 'format') {
+                url += `&format=${filters[i][1]}`
             }
         }
 
+        console.log(url);
         return url;
     }
 
-    search = (keywords) => {
-        this.clear(this.cards);
+    searchList = (filters) => {
+        this.clearList();
 
-        fetch(this.url + this.filter(keywords))
+        fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes' + this.filteredUrl(filters))
             .then((res) => res.json())
             .then((data) => {
                 try {
@@ -218,31 +383,31 @@ class Database {
                         const card = new Card(data.data[i]);
 
                         if (document.getElementById("limit").value == "") {
-                            this.add(card);
+                            this.addItem(card);
                         }
                         else if (card.getBanlistInfo() == null) {
                             if (document.getElementById("format").value != "edison" && document.getElementById("limit").value == "unlimited") {
-                                this.add(card);
+                                this.addItem(card);
                             }
                             else if (document.getElementById("format").value == "edison") {
-
+                                // No edison banlist support
                             }
                         }
                         else if (card.getBanlistInfo() != null) {
                             if (document.getElementById("format") == "tcg" && card.getBanlistInfo().ban_tcg != null) {
                                 if (document.getElementById("limit").value == card.getBanlistInfo().ban_tcg.toLowerCase()) {
-                                    this.add(card);
+                                    this.addItem(card);
                                 }
                             }
                             else if (document.getElementById("format") == "ocg" && card.getBanlistInfo().ban_ocg != null) {
                                 if (document.getElementById("limit").value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
-                                    this.add(card);
+                                    this.addItem(card);
                                 }
                             }
 
                             else if (document.getElementById("format") == "goat" && card.getBanlistInfo().ban_goat != null) {
                                 if (document.getElementById("limit").value == card.getBanlistInfo().ban_goat.toLowerCase()) {
-                                    this.add(card);
+                                    this.addItem(card);
                                 }
                             }
                         }
@@ -252,45 +417,18 @@ class Database {
                     window.confirm('No results found');
                 }
 
-                this.display('gallery');
+                this.displayList('gallery');
             }
             );
     }
 
-    display = (elementID) => {
+    displayList = (elementID) => {
         const info = document.getElementById(elementID);
         var HTMLString = `<div class="${elementID}">`;
 
-        for (let i = 0; i < this.cards.length; i++) {
-            HTMLString += this.cards[i].getCardHTML();
+        for (let i = 0; i < this.list.length; i++) {
+            HTMLString += this.list[i].getCardHTML();
         }
-
-        HTMLString += '</div>';
-        info.innerHTML = HTMLString;
-    }
-
-    /*
-    search = (keyword, elementID) => {
-        const info = document.getElementById(elementID);
-        var HTMLString = `<div class="${elementID}">`;
-        
-        for(let i = 0; i < this.cards.length; i++) {
-            if(this.cards[i].getName().toLowerCase().match(keyword.toLowerCase())) {
-                HTMLString += this.cards[i].getCardHTML();
-            }
-        }
-
-        HTMLString += '</div>';
-        info.innerHTML = HTMLString;
-    }
-    */
-
-    random = (elementID) => {
-        const info = document.getElementById(elementID);
-        var HTMLString = '<div class="container">';
-
-        var i = Math.floor(Math.random() * this.cards.length);
-        HTMLString += this.cards[i].getCardHTML();
 
         HTMLString += '</div>';
         info.innerHTML = HTMLString;
@@ -310,4 +448,5 @@ class Database {
 }
 
 var database = new Database();
+enableMonsterType();
 search();

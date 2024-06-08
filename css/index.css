@@ -1,4 +1,3 @@
-
 html, body {
     height: 100%;
     width: 100%;
@@ -12,16 +11,16 @@ body {
 
 p {
     font-size: 14px;
-    font-family:inherit;
+    font-family: inherit;
     font-weight: bold;
     margin: 0;
     padding-right: 1rem;
 }
 
-#name, #desc, #race, #type, #archetype, #format, #limit {
+#name, #desc, #card1, #card2, #type1, #type2, #archetype, #format, #limit {
     width: 100%;
     height: 30px;
-    
+
     background-color: rgb(240, 240, 240);
     color: black;
     border: 0px;
@@ -33,9 +32,9 @@ p {
     text-align: left;
 }
 
-#limit:disabled {
+#card2:disabled, #type2:disabled, #limit:disabled {
     background-color: rgb(235, 235, 235);
-    color:rgb(210, 210, 210);
+    color: rgb(210, 210, 210);
 }
 
 #submit {
@@ -49,7 +48,7 @@ p {
 
     color: white;
     font-size: 14px;
-    font-family:inherit;
+    font-family: inherit;
     font-weight: bold;
     padding-right: 1rem;
 }
@@ -63,25 +62,90 @@ p {
     display: flex;
 }
 
+.gallery {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-content: center;
+    overflow: auto;
+}
+
+.modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: 0;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+
+}
+
+.modal-h2, .modal-p {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 650px;
+    color: white;
+}
+
+.modal-h2 {
+    margin: 0;
+    padding-bottom: 1rem;
+    font-size: 36px;
+    text-align: center;
+}
+
+.modal-p {
+    font-size: 20px;
+    font-weight: normal;
+    text-align: justify;
+}
+
+.info {
+    
+}
+
+.item {
+    width: calc(84vw/10 - 1rem);
+    transition: filter .05s;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.item:hover, .close:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+}
+
 .c1 {
-    width:14vw;
+    width: 14vw;
     padding: 1rem 0rem 1rem 1rem;
-    position:fixed;
+    position: fixed;
 }
 
 .c2 {
-    width:86vw;
-    height:100vh;
+    width: 86vw;
+    height: 100vh;
     padding: 1rem;
     margin-left: 15vw;
-}
-
-.c3 {
-    width: 75%;
-}
-
-.c4 {
-    width: 25%;
 }
 
 .r1 {
@@ -93,29 +157,33 @@ p {
 
 .r2 {
     width: 100%;
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     gap: 1rem;
 }
 
-.gallery {
+.r3 {
+    margin: 0;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-content: center;
-    
-    overflow:hidden;
+    justify-content: center;
+    flex-direction: row;
+    gap: 3rem;
 }
 
-.item {
-    width:calc(84vw/10 - 1rem);
-    transition: filter .05s;
+.w1 {
+    width: 25%;
 }
 
-.item:hover {
-    cursor: pointer;
-    filter:brightness(85%);
+.w2 {
+    width: 50%;
+}
+
+.w3 {
+    width: 75%;
+}
+
+.w4 {
+    width: 100%;
 }
