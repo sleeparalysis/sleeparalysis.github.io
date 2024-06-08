@@ -18,6 +18,7 @@ const view = (id) => {
 
         // Inject card image src
         modalContent.src = img.src;
+        modalContent.style.width = "500px";
 
         // Inject card name
         name.innerText = card.name;
@@ -56,7 +57,7 @@ const parseFile = (file) => {
     return data;
 }
 
-const enableMonsterType = () => {
+const enableCardType = () => {
     cardType = document.getElementById("card1").value;
 
     switch (cardType) {
@@ -116,33 +117,39 @@ const search = () => {
     // Retrieve filter list from file
     var filterData = parseFile('./data/sort.json');
 
-    // Add loose name filtering to the active filters list
+    // Add name filtering to the active filters list
     if (document.getElementById("name").value != '') {
         filters.push(['name', document.getElementById("name").value]);
+        console.log('filters:');
+        console.log(filters);
     }
 
-    // Filter by card type
+    // Add temporary filters based on card type
     if (document.getElementById("card1").value != '') {
         for (let i = 0; i < filterData.types.length; i++) {
             if (filterData.types[i].toLowerCase().includes(document.getElementById("card1").value)) {
-                filters.push(['card1', filterData.types[i]]);
+                tempfilters.push(['card1', filterData.types[i]]);
+                
             }
         }
+        console.log('tempfilters1');
+        console.log(tempfilters);
     }
 
-    // Filter by summoning condition
+    // Remove temporary filters and keep only desired monster type 
     if (document.getElementById("card2").value != '') {
-        while (tempfilters.length > 0) {
-            tempfilters[i].pop();
-        }
+        for (let i = 0; i < tempfilters.length; i++) {
+            if (!tempfilters[i][1].toLowerCase().includes(document.getElementById("card2").value)) {
 
-        for (let i = 0; i < filters.length; i++) {
-            if (filters[i][1].toLowerCase().includes(document.getElementById("card2").value)) {
-                tempfilters.push(filters[i]);
+                // Remove one item at index i
+                tempfilters.splice(i, 1);
+                
+                // This function steps forward one step 
+                i--;
             }
         }
-        
-        filters += tempfilters;
+        console.log('tempfilters2');
+        console.log(tempfilters);
     }
 
     // Filter by type
@@ -195,8 +202,12 @@ const search = () => {
         filters.push([`banlist`, document.getElementById("limit").value]);
     }
     */
-
     
+
+
+    filters = filters.concat(tempfilters);
+    
+    console.log('concat filters:');
     console.log(filters);
     database.searchList(filters);
 }
@@ -341,8 +352,7 @@ class Database {
 
     filteredUrl = (filters) => {
         var url = '';
-        //console.log(filters);
-
+        
         for (let i = 0; i < filters.length; i++) {
             if (filters[i][0] == 'name') {
                 url += `&fname=${filters[i][1]}`;
