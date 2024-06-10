@@ -11,20 +11,20 @@
 
 <body>
     <div id="modal" class="modal">
-        <span class="close">&times;</span>
         <div class="r3">
             <div>
                 <img class="modal-content" id="modal-content">
             </div>
+            
             <div class="info">
-                <h2 id="card-name" class="modal-h2"></h2>
-                <p id="card-description" class="modal-p"></p>
+                <!--<h2 id="card-name" class="modal-h2"></h2>
+                <p id="card-description" class="modal-p"></p>-->
             </div>
         </div>
     </div>
     <div class="container">
         <div class="c1">
-            <form id="f1" onkeypress="return event.keyCode != 13;">
+            <form id="f1" onsubmit="search()">
                 <div class="r1">
                     <p>Name</p>
                     <input type="textbox" id="name" name="name" value=""/>
@@ -52,14 +52,19 @@
                             <option value="xyz">XYZ</option>
                             <option value="link">Link</option>
                             <option value="pendulum">Pendulum</option>
+                            <option value="tuner">Tuner</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="spirit">Spirit</option>
+                            <option value="union">Union</option>
+                            <option value="toon">Toon</option>
                         </select>
                     </div>
                 </div>
                 <div class="r2">
-                    <div class="w2">
+                    <div class="w4">
                         <p>Type</p>
-                        <label for="type1"></label>
-                        <select id="type1" name="type1">
+                        <label for="type"></label>
+                        <select id="type" name="type">
                             <option value="">All</option>
                             <option value="aqua">Aqua</option>
                             <option value="beast">Beast</option>
@@ -95,101 +100,7 @@
                             <option value="counter">Counter</option>
                         </select>
                     </div>
-                    <div class="w2">
-                        <label for="type2"></label>
-                        <select id="type2" name="type2">
-                            <option value="">All</option>
-                            <option value="gemini">Gemini</option>
-                            <option value="spirit">Spirit</option>
-                            <option value="toon">Toon</option>
-                            <option value="tuner">Tuner</option>
-                            <option value="union">Union</option>
-                        </select>
-                    </div>
                 </div>
-                <!--<div class="r2">
-                    <div class="w2">
-                        <p>Type</p>
-                        <label for="type"></label>
-                        <select id="type" name="type">
-                            <option disabled>---------- Main Deck ----------</option>
-                            <option value="effect monster">Effect Monster</option>
-                            <option value="flip effect monster">Flip Effect Monster</option>
-                            <option value="flip tuner effect monster">Flip Tuner Effect Monster</option>
-                            <option value="gemini monster">Gemini Monster</option>
-                            <option value="normal monster">Normal Monster</option>
-                            <option value="normal tuner monster">Normal Tuner Monster</option>
-                            <option value="pendulum effect monster">Pendulum Effect Monster</option>
-                            <option value="pendulum effect ritual monster">Pendulum Effect Ritual Monster</option>
-                            <option value="pendulum flip effect monster">Pendulum Flip Effect Monster</option>
-                            <option value="pendulum normal monster">Pendulum Normal Monster</option>
-                            <option value="pendulum tuner effect monster">Pendulum Tuner Effect Monster</option>
-                            <option value="ritual effect monster">Ritual Effect Monster</option>
-                            <option value="ritual monster">Ritual Monster</option>
-                            <option value="spell card">Spell Card</option>
-                            <option value="spirit monster">Spirit Monster</option>
-                            <option value="toon monster">Toon Monster</option>
-                            <option value="trap card">Trap Card</option>
-                            <option value="tuner monster">Tuner Monster</option>
-                            <option value="union effect monster">Union Effect Monster</option>
-                            <option disabled>--------- Extra Deck ----------</option>
-                            <option value="fusion monster">Fusion Monster</option>
-                            <option value="link monster">Link Monster</option>
-                            <option value="pendulum effect fusion monster">Pendulum Effect Fusion Monster</option>
-                            <option value="synchro monster">Synchro Monster</option>
-                            <option value="synchro pendulum effect monster">Synchro Pendulum Effect Monster</option>
-                            <option value="Synchro tuner monster">Synchro Tuner Monster</option>
-                            <option value="xyz monster">XYZ Monster</option>
-                            <option value="xyz pendulum effect monster"> XYZ Pendulum Effect Monster</option>
-                            <option disabled>------------ Other ------------</option>
-                            <option value="skill card">Skill Card</option>
-                            <option value="token">Token</option>
-                        </select>
-                    </div>
-                    <div class="w2">
-                        <p>Race</p>
-                        <label for="race"></label>
-                        <select name="race" id="race">
-                            <option value="">All</option>
-                            <option disabled>-------- Monster Cards --------</option>
-                            <option value="aqua">Aqua</option>
-                            <option value="beast">Beast</option>
-                            <option value="beast-warrior">Beast-Warrior</option>
-                            <option value="creator-god">Creator-God</option>
-                            <option value="cyberse">Cyberse</option>
-                            <option value="dinoaur">Dinosaur</option>
-                            <option value="divine-beast">Divine-Beast</option>
-                            <option value="dragon">Dragon</option>
-                            <option value="fairy">Fairy</option>
-                            <option value="fiend">Fiend</option>
-                            <option value="fish">Fish</option>
-                            <option value="insect">Insect</option>
-                            <option value="machine">Machine</option>
-                            <option value="plant">Plant</option>
-                            <option value="psychic">Psychic</option>
-                            <option value="pyro">Pyro</option>
-                            <option value="reptile">Reptile</option>
-                            <option value="rock">Rock</option>
-                            <option value="sea serpent">Sea Serpent</option>
-                            <option value="spellcaster">Spellcaster</option>
-                            <option value="thunder">Thunder</option>
-                            <option value="warrior">Warrior</option>
-                            <option value="wyrm">Wyrm</option>
-                            <option value="zombie">Zombie</option>
-                            <option disabled>--------- Spell Cards ---------</option>
-                            <option value="normal">Normal</option>
-                            <option value="field">Field</option>
-                            <option value="equip">Equip</option>
-                            <option value="continuous">Continuous</option>
-                            <option value="quick-play">Quick-Play</option>
-                            <option value="ritual">Ritual</option>
-                            <option disabled>---------- Trap Cards ---------</option>
-                            <option value="normal">Normal</option>
-                            <option value="continuous">Continuous</option>
-                            <option value="counter">Counter</option>
-                        </select>
-                    </div>
-                </div>-->
                 <div class="r1">
                     <p>Archetype</p>
                     <select name="archetype" id="archetype">
@@ -335,138 +246,138 @@
                         <option value="drytron">Drytron</option>
                         <option value="dual avatar">Dual Avatar</option>
                         <option value="duston">Duston</option>
-						<option value="">Earthbound</option>
-                        <option value="">Edge Imp</option>
-                        <option value="">Egyptian God</option>
-                        <option value="">Eldlich</option>
-                        <option value="">Elemental HERO</option>
-                        <option value="">Elemental Lord</option>
-                        <option value="">Elementsaber</option>
-                        <option value="">Emblema</option>
-                        <option value="">Empower</option>
-                        <option value="">Empowered Warrior</option>
-                        <option value="">Endymion</option>
-                        <option value="">Evil Eye</option>
-                        <option value="">Evil HERO</option>
-                        <option value="">Evil★Twin</option>
-                        <option value="">Evol</option>
-                        <option value="">Evolsaur</option>
-                        <option value="">Evoltile</option>
-                        <option value="">Evolzar</option>
-                        <option value="">Exchange of the Spirit</option>
-                        <option value="">Exodia</option>
-                        <option value="">Exodo</option>
-                        <option value="">Exosister</option>
-                        <option value="">Eyes Restrict</option>
-						<option value="">F.A.</option>
-                        <option value="">Fabled</option>
-                        <option value="">Fairy</option>
-                        <option value="">Fairy Tail</option>
-                        <option value="">Favorite</option>
-                        <option value="">Felgrand</option>
-                        <option value="">Field Searcher</option>
-                        <option value="">Fiendsmith</option>
-                        <option value="">Fire Fist</option>
-                        <option value="">Fire Formation</option>
-                        <option value="">Fire King</option>
-                        <option value="">Firewall</option>
-                        <option value="">Fishborg</option>
-                        <option value="">Flame Swordsman</option>
-                        <option value="">Flamvell</option>
-                        <option value="">Fleur</option>
-                        <option value="">Floowandereeze</option>
-                        <option value="">Flower Cardian</option>
-                        <option value="">Fluffal</option>
-                        <option value="">Forbidden</option>
-                        <option value="">Fortune Fairy</option>
-                        <option value="">Fortune Lady</option>
-                        <option value="">Fossil</option>
-                        <option value="">Frightfur</option>
-                        <option value="">Frog</option>
-                        <option value="">From the Underworld</option>
-                        <option value="">Fur Hire</option>
-                        <option value="">Fusion</option>
-						<option value="">G Golem</option>
-                        <option value="">Gadget</option>
-                        <option value="">Gagaga</option>
-                        <option value="">Gaia Knight</option>
-                        <option value="">Gaia The Fierce Knight</option>
-                        <option value="">Galaxy</option>
-                        <option value="">Galaxy-Eyes</option>
-                        <option value="">Gandora</option>
-                        <option value="">Gate Guardian</option>
-                        <option value="">Geargia</option>
-                        <option value="">Gem-</option>
-                        <option value="">Generaider</option>
-                        <option value="">Genex</option>
-                        <option value="">Ghostrick</option>
-                        <option value="">Ghoti</option>
-                        <option value="">Gimmick Puppet</option>
-                        <option value="">Gishki</option>
-                        <option value="">Gizmek</option>
-                        <option value="">Glacial Beast</option>
-                        <option value="">Gladiator Beast</option>
-                        <option value="">Goblin</option>
-                        <option value="">Gogogo</option>
-                        <option value="">Gold Pride</option>
-                        <option value="">Golden Castle of Stromberg</option>
-                        <option value="">Golden Land</option>
-                        <option value="">Gorgonic</option>
-                        <option value="">Gouki</option>
-                        <option value="">GranSolfachord</option>
-                        <option value="">Gravekeeper's</option>
-                        <option value="">Graydle</option>
-                        <option value="">Greed</option>
-                        <option value="">Grepher</option>
-                        <option value="">Guardian</option>
-                        <option value="">Guardragon</option>
-                        <option value="">Gunkan</option>
-                        <option value="">Gusto</option>
-						<option value="">Harpie</option>
-                        <option value="">Hazy</option>
-                        <option value="">Heart</option>
-                        <option value="">Herald</option>
-                        <option value="">Heraldic</option>
-                        <option value="">Heraldry</option>
-                        <option value="">HERO</option>
-                        <option value="">Heroic</option>
-                        <option value="">Hi-Speedroid</option>
-                        <option value="">Hieratic</option>
-                        <option value="">Hole</option>
-                        <option value="">Holy Knight</option>
-                        <option value="">Horus</option>
-                        <option value="">Horus the Black Flame Dragon</option>
-                        <option value="">Hyperion</option>
-						<option value="">Ice Barrier</option>
-                        <option value="">Icejade</option>
-                        <option value="">Igknight</option>
-                        <option value="">Impcantation</option>
-                        <option value="">Infernity</option>
-                        <option value="">Infernoble Arms</option>
-                        <option value="">Infernoble Knight</option>
-                        <option value="">Infernoid</option>
-                        <option value="">Infestation</option>
-                        <option value="">Infinitrack</option>
-                        <option value="">Invoked</option>
-                        <option value="">Inzektor</option>
-                        <option value="">Iron Chain</option>
-						<option value="">Jar</option>
-                        <option value="">Jester</option>
-                        <option value="">Jinzo</option>
-                        <option value="">Junk</option>
-                        <option value="">Jurrac</option>
-						<option value="">Kaiju</option>
-                        <option value="">Kairyu-Shin</option>
-                        <option value="">Karakuri</option>
-                        <option value="">Kashtira</option>
-                        <option value="">Ki-sikil</option>
-                        <option value="">Knight</option>
-                        <option value="">Knightmare</option>
-                        <option value="">Koa'ki Meiru</option>
-                        <option value="">Koala</option>
-                        <option value="">Kozmo</option>
-                        <option value="">Krawler</option>
-                        <option value="">Kuriboh</option>
+						<option value="earthbound">Earthbound</option>
+                        <option value="edge imp">Edge Imp</option>
+                        <option value="egyptian god">Egyptian God</option>
+                        <option value="eldlich">Eldlich</option>
+                        <option value="elemental hero">Elemental HERO</option>
+                        <option value="elemental lord">Elemental Lord</option>
+                        <option value="elementsaber">Elementsaber</option>
+                        <option value="emblema">Emblema</option>
+                        <option value="empower">Empower</option>
+                        <option value="empowered warrior">Empowered Warrior</option>
+                        <option value="endymion">Endymion</option>
+                        <option value="evil eye">Evil Eye</option>
+                        <option value="evil hero">Evil HERO</option>
+                        <option value="evil★twin">Evil★Twin</option>
+                        <option value="evol">Evol</option>
+                        <option value="evolsaur">Evolsaur</option>
+                        <option value="evoltile">Evoltile</option>
+                        <option value="evolzar">Evolzar</option>
+                        <option value="exchange of the spirit">Exchange of the Spirit</option>
+                        <option value="exodia">Exodia</option>
+                        <option value="exodo">Exodo</option>
+                        <option value="exosister">Exosister</option>
+                        <option value="eyes restrict">Eyes Restrict</option>
+						<option value="f.a.">F.A.</option>
+                        <option value="fabled">Fabled</option>
+                        <option value="fairy">Fairy</option>
+                        <option value="fairy tail">Fairy Tail</option>
+                        <option value="favorite">Favorite</option>
+                        <option value="felgrand">Felgrand</option>
+                        <option value="field searcher">Field Searcher</option>
+                        <option value="fiendsmith">Fiendsmith</option>
+                        <option value="fire fist">Fire Fist</option>
+                        <option value="fire formation">Fire Formation</option>
+                        <option value="fire king">Fire King</option>
+                        <option value="firewall">Firewall</option>
+                        <option value="fishborg">Fishborg</option>
+                        <option value="flame swordsman">Flame Swordsman</option>
+                        <option value="flamvell">Flamvell</option>
+                        <option value="fleur">Fleur</option>
+                        <option value="floorwandereeze">Floowandereeze</option>
+                        <option value="flower cardian">Flower Cardian</option>
+                        <option value="fluffal">Fluffal</option>
+                        <option value="forbidden">Forbidden</option>
+                        <option value="fortune fairy">Fortune Fairy</option>
+                        <option value="fortune lady">Fortune Lady</option>
+                        <option value="fossile">Fossil</option>
+                        <option value="frightfur">Frightfur</option>
+                        <option value="frog">Frog</option>
+                        <option value="from the underworld">From the Underworld</option>
+                        <option value="fur hire">Fur Hire</option>
+                        <option value="fusion">Fusion</option>
+						<option value="g golem">G Golem</option>
+                        <option value="gadget">Gadget</option>
+                        <option value="gagaga">Gagaga</option>
+                        <option value="gaia knight">Gaia Knight</option>
+                        <option value="gaia the fierce knight">Gaia The Fierce Knight</option>
+                        <option value="galaxy">Galaxy</option>
+                        <option value="galaxy-eyes">Galaxy-Eyes</option>
+                        <option value="gandora">Gandora</option>
+                        <option value="gata gaurdian">Gate Guardian</option>
+                        <option value="geargia">Geargia</option>
+                        <option value="gem-">Gem-</option>
+                        <option value="generaider">Generaider</option>
+                        <option value="genex">Genex</option>
+                        <option value="ghostrick">Ghostrick</option>
+                        <option value="ghoti">Ghoti</option>
+                        <option value="gimmick puppet">Gimmick Puppet</option>
+                        <option value="gishki">Gishki</option>
+                        <option value="gizmek">Gizmek</option>
+                        <option value="glacial beast">Glacial Beast</option>
+                        <option value="gladiator beast">Gladiator Beast</option>
+                        <option value="goblin">Goblin</option>
+                        <option value="gogogo">Gogogo</option>
+                        <option value="gold pride">Gold Pride</option>
+                        <option value="golden castle of stromberg">Golden Castle of Stromberg</option>
+                        <option value="golden land">Golden Land</option>
+                        <option value="gorgonic">Gorgonic</option>
+                        <option value="gouki">Gouki</option>
+                        <option value="gransolfachord">GranSolfachord</option>
+                        <option value="gravekeeper's">Gravekeeper's</option>
+                        <option value="graydle">Graydle</option>
+                        <option value="greed">Greed</option>
+                        <option value="grepher">Grepher</option>
+                        <option value="guardian">Guardian</option>
+                        <option value="gaurdragon">Guardragon</option>
+                        <option value="gunkan">Gunkan</option>
+                        <option value="gusto">Gusto</option>
+						<option value="harpie">Harpie</option>
+                        <option value="hazy">Hazy</option>
+                        <option value="heart">Heart</option>
+                        <option value="herald">Herald</option>
+                        <option value="heraldic">Heraldic</option>
+                        <option value="heraldry">Heraldry</option>
+                        <option value="hero">HERO</option>
+                        <option value="heroic">Heroic</option>
+                        <option value="hi-speedroid">Hi-Speedroid</option>
+                        <option value="hieratic">Hieratic</option>
+                        <option value="hole">Hole</option>
+                        <option value="holy knight">Holy Knight</option>
+                        <option value="horus">Horus</option>
+                        <option value="horus the black flame dragon">Horus the Black Flame Dragon</option>
+                        <option value="hyperion">Hyperion</option>
+						<option value="ice barrier">Ice Barrier</option>
+                        <option value="icejade">Icejade</option>
+                        <option value="igknight">Igknight</option>
+                        <option value="impcantation">Impcantation</option>
+                        <option value="infernity">Infernity</option>
+                        <option value="infernoble arms">Infernoble Arms</option>
+                        <option value="infernoble knight">Infernoble Knight</option>
+                        <option value="infernoid">Infernoid</option>
+                        <option value="infestation">Infestation</option>
+                        <option value="infinitrack">Infinitrack</option>
+                        <option value="invoked">Invoked</option>
+                        <option value="inzektor">Inzektor</option>
+                        <option value="iron chain">Iron Chain</option>
+						<option value="jar">Jar</option>
+                        <option value="jester">Jester</option>
+                        <option value="jinzo">Jinzo</option>
+                        <option value="junk">Junk</option>
+                        <option value="jurrac">Jurrac</option>
+						<option value="kaiju">Kaiju</option>
+                        <option value="kairyu-shin">Kairyu-Shin</option>
+                        <option value="karakuri">Karakuri</option>
+                        <option value="kashtira">Kashtira</option>
+                        <option value="ki-sikil">Ki-sikil</option>
+                        <option value="knight">Knight</option>
+                        <option value="knightmare">Knightmare</option>
+                        <option value="koa'ki meiru">Koa'ki Meiru</option>
+                        <option value="koala">Koala</option>
+                        <option value="kozmo">Kozmo</option>
+                        <option value="krawler">Krawler</option>
+                        <option value="kuriboh">Kuriboh</option>
 						<option value="">Labrynth</option>
                         <option value="">Labyrinth Wall</option>
                         <option value="">Lady of Lament</option>
@@ -750,8 +661,8 @@
                             <option value="speed duel">Speed Duel</option>
 						    <option value="common charity">Common Charity</option>
                             <option value="edison">Edison</option>
-                            <option value="goat">Goat</option>
-                            <option value="ocg goat">OCG Goat</option>
+                            <option value="goat">GOAT</option>
+                            <option value="ocg goat">OCG GOAT</option>
                         </select>
                     </div>
                     <div class="w1">

@@ -1,54 +1,38 @@
+// Ygoprodeck API link
+const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes';
+
+// Display modal and populate with selected card information
 const view = (id) => {
-    var body = document.body;
+    // Get html references
+    const body = document.body;
     var img = document.getElementById(id);
     var modal = document.getElementById("modal");
     var modalContent = document.getElementById("modal-content");
-    var span = document.getElementsByClassName("close")[0];
-    
-    var card = database.getItem(id);
-    var name = document.getElementById("card-name");
-    var desc = document.getElementById("card-description");
-    
-    if(modal.style.display === "none" || modal.style.display === "") {
-        // Disable scrolling when modal is displayed
-        body.style.overflow = "hidden";
 
-        // Display modal
+    // Display if modal is hidden
+    if (modal.style.display === "none" || modal.style.display === "") {
+        // Disable scrolling and display modal
+        body.style.overflow = "hidden";
         modal.style.display = "flex";
 
-        // Inject card image src
+        // Inject card image via clicked element id
         modalContent.src = img.src;
         modalContent.style.width = "500px";
-
-        // Inject card name
-        name.innerText = card.name;
-
-        // Inject card description
-        desc.innerText = card.getFormattedDesc();
     }
     else {
-        // Initialize style display
+        // Initialize style display if empty
         modal.style.display = "none";
     }
-    
-    span.onclick = function() {
-        // Enable scrolling when modal is hidden
+
+    // Close modal when modal element is clicked
+    modal.onclick = function () {
+        // Enable scrolling and hide modal
         body.style.overflow = "auto";
-
-        // Hide modal
         modal.style.display = "none";
     }
 }
 
-const close = () => {
-    var span = document.getElementsByClassName("close")[0];
-    var modal = document.getElementById("modal");
-
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-}
-
+// Request response from JSON file and return parsed JSON data
 const parseFile = (file) => {
     var request = new XMLHttpRequest();
     request.open("GET", file, false);
@@ -57,251 +41,324 @@ const parseFile = (file) => {
     return data;
 }
 
+// Update dropdown contents based on other dropdown selections
 const getDropdown = () => {
-    card1 = document.getElementById("card1");
-    card2 = document.getElementById("card2");
-    type1 = document.getElementById("type1");
-    type2 = document.getElementById("type2");
-    format = document.getElementById("format");
-    limit = document.getElementById("limit");
+    // Input references
+    var card1 = document.getElementById("card1");
+    var card2 = document.getElementById("card2");
+    var type = document.getElementById("type");
+    var format = document.getElementById("format");
+    var limit = document.getElementById("limit");
 
+    // Update dropdowns based on card type
     switch (card1.value) {
-        // Filter by monster cards
-        case 'monster':
-            // Enable card2 filters
-            card2.disabled = false;
+    case 'monster':
+        // Set default values
+        card2.disabled = false;
+        card2.value = '';
+        type.value = '';
 
-            // Set card2 default value
-            card2.value = '';
+        // Enable all type filters
+        for (let i = 0; i < type.options.length; i++) {
+            type.options[i].style.display = "block";
+        }
 
-            // Set type1 filter default value
-            type1.value = '';
+        // Disable last 7 type filters
+        for (let i = 26; i < type.options.length; i++) {
+            type.options[i].style.display = "none";
+        }
 
-            // Enable type2 filters
-            type2.disabled = false;
+        break;
+    case 'spell':
+        // Set default values
+        card2.disabled = true;
+        card2.value = '';
+        type.value = '';
 
-            // Enable all type1 filters
-            for(let i = 0; i < type1.options.length; i++) {
-                type1.options[i].style.display = "block";
-            }
+        // Enable all type filters
+        for (let i = 0; i < type.options.length; i++) {
+            type.options[i].style.display = "block";
+        }
 
-            // Disable last 7 type1 filters
-            for(let i = 26; i < type1.options.length; i++) {
-                type1.options[i].style.display = "none";
-            }
+        // Disable first 25 options
+        for (let i = 1; i < type.options.length - 7; i++) {
+            type.options[i].style.display = "none";
+        }
 
-            break;
-        // Filter by spell cards
-        case 'spell':
-            // Disable card2 filters
-            card2.disabled = true;
+        // Disable counter option
+        type.options[32].style.display = "none";
 
-            // Set card2 default value
-            card2.value = '';
+        break;
+    case 'trap':
+        // Set default values
+        card2.disabled = true;
+        card2.value = '';
+        type.value = '';
 
-            // Set type1 filter default value
-            type1.value = '';
+        // Enable all type filters
+        for (let i = 0; i < type.options.length; i++) {
+            type.options[i].style.display = "block";
+        }
 
-            // Disable type2 filters
-            type2.disabled = true;
+        // Disable first 25 options
+        for (let i = 1; i < type.options.length - 7; i++) {
+            type.options[i].style.display = "none";
+        }
 
-            // Enable all type1 filters
-            for(let i = 0; i < type1.options.length; i++) {
-                type1.options[i].style.display = "block";
-            }
+        // Disable spell options
+        type.options[27].style.display = "none";
+        type.options[28].style.display = "none";
+        type.options[30].style.display = "none";
+        type.options[31].style.display = "none";
 
-            // Disable first 25 options
-            for(let i = 1; i < type1.options.length - 7; i++) {
-                type1.options[i].style.display = "none";
-            }
+        break;
+    default:
+        // Set default values
+        card2.disabled = true;
+        card2.value = '';
+        type.value = '';
 
-            // Disable counter option
-            type1.options[31].style.display = "none";
+        // Enable all type filters
+        for (let i = 0; i < type.options.length; i++) {
+            type.options[i].style.display = "block";
+        }
 
-            break;
-        case 'trap':
-            // Disable card2 filters
-            card2.disabled = true;
-
-            // Set card2 default value
-            card2.value = '';
-
-            // Set type1 filter default value
-            type1.value = '';
-
-            // Disable type2 filters
-            type2.disabled = true;
-
-            // Enable all type1 filters
-            for(let i = 0; i < type1.options.length; i++) {
-                type1.options[i].style.display = "block";
-            }
-
-            // Disable first 25 options
-            for(let i = 1; i < type1.options.length - 7; i++) {
-                type1.options[i].style.display = "none";
-            }
-
-            // Disable field option
-            type1.options[27].style.display = "none";
-
-            // Disable equip option
-            type1.options[28].style.display = "none";
-
-            // Disable quick-play option
-            type1.options[30].style.display = "none";
-
-            // Disablle ritual option
-            type1.options[31].style.display = "none";
-
-            break;    
-        default:
-            // Disable card2 filters by default
-            card2.disabled = true;
-
-            // Set card2 filters default value
-            card2.value = '';
-
-            // Enable all type1 filters
-            for(let i = 0; i < type1.options.length; i++) {
-                type1.options[i].style.display = "block";
-            }
-           
-            // Disable type2 filter by default
-            type2.disabled = true;
-
-            // Set type2 filter default value
-            type2.value = '';
-
-            break;
+        break;
     }
 
+    // Update limit dropdown based on format
     switch (format.value) {
-        case 'tcg':
-        case 'ocg':
-        case 'goat':
-            limit.disabled = false;
-            break;
-        default:
-            limit.disabled = true;
-            limit.value = '';
-            break;
-
+    case 'tcg':
+    case 'ocg':
+    case 'goat':
+        limit.disabled = false;
+        break;
+    default:
+        limit.disabled = true;
+        limit.value = '';
+        break;
     }
 }
 
-const updateDropdown = (id) => {
-    switch (id) {
-        case 'card1':
-            break;
-        case 'card1':
-            break;
-        case 'card1':
-            break;
-        case 'card1':
-            break;
-    }
-}
-
-
-
+// Search 
 const search = () => {
-    // List of active filters
+    // Initialize filters
     var filters = [];
-
-    // List of filters to be set as active secondary filtering
     var tempfilters = [];
 
-    // Retrieve filter list from file
-    var filterData = parseFile('./data/sort.json');
+    // Input references
+    var fname = document.getElementById("name");
+    var card1 = document.getElementById("card1");
+    var card2 = document.getElementById("card2");
+    var type = document.getElementById("type");
+    var archetype = document.getElementById("archetype");
+    var format = document.getElementById("format");
+    var limit = document.getElementById("limit");
 
-    // Add name filtering to the active filters list
-    if (document.getElementById("name").value != '') {
-        filters.push(['name', document.getElementById("name").value]);
+    // Add cards that partially matches the inputted text
+    if (fname.value != '') {
+        filters.push(['name', fname.value]);
     }
 
-    // Add temporary filters based on card type
-    if (document.getElementById("card1").value != '') {
+    // Filter by type
+    if (type.value != '') {
+        filters.push(['type', type.value]);
+    }
+
+    // Filter by archetype
+    if (archetype.value != '') {
+        filters.push(['archetype', archetype.value]);
+    }
+
+    // Filter by format
+    if (format.value != '') {
+        filters.push(['format', format.value]);
+    }
+
+    // Filter by card limit
+    if (limit.value != '') {
+        filters.push([`banlist`, limit.value]);
+    }
+
+    // Add types that matches the selected card type
+    if (card1.value != '') {
         for (let i = 0; i < filterData.types.length; i++) {
-            if (filterData.types[i].toLowerCase().includes(document.getElementById("card1").value)) {
+            if (filterData.types[i].toLowerCase().includes(card1.value)) {
                 tempfilters.push(['card1', filterData.types[i]]);
-                
             }
         }
     }
 
-    // Remove temporary filters and keep only desired monster type 
-    if (document.getElementById("card2").value != '') {
+    // Remove temporary types that do not match the selected monster type
+    if (card2.value != '') {
         for (let i = 0; i < tempfilters.length; i++) {
-            if (!tempfilters[i][1].toLowerCase().includes(document.getElementById("card2").value)) {
-
-                // Remove one item at index i
+            if (!tempfilters[i][1].toLowerCase().includes(card2.value)) {
                 tempfilters.splice(i, 1);
-                
-                // Step back one index since splice makes the array smaller by 1 
                 i--;
             }
         }
     }
 
-    // Filter by type
-    if (document.getElementById("type1").value != '') {
-        filters.push(['type1', document.getElementById("type1").value]);
-    }
-
-    // Filter by ability
-    if (document.getElementById("type2").value != '') {
-        filters.push(['type2', document.getElementById("type2").value]);
-    }
-
-    // Filter by archetype
-    if (document.getElementById("archetype").value != '') {
-        filters.push(['archetype', document.getElementById("archetype").value]);
-    }
-
-    // Filter by format
-    if (document.getElementById("format").value != '') {
-        filters.push(['format', document.getElementById("format").value]);
-    }
-
-    // Filter by card limit
-    if (document.getElementById("limit").value != '') {
-        filters.push([`banlist`, document.getElementById("limit").value]);
-    }
-
-    /*
-    if (document.getElementById("name").value != '') {
-        filters.push(['name', document.getElementById("name").value]);
-    }
-
-    if (document.getElementById("type").value != '') {
-        filters.push(['type', document.getElementById("type").value]);
-    }
-
-    if (document.getElementById("race").value != '') {
-        filters.push(['race', document.getElementById("race").value]);
-    }
-
-    if (document.getElementById("archetype").value != '') {
-        filters.push(['archetype', document.getElementById("archetype").value]);
-    }
-
-    if (document.getElementById("format").value != '') {
-        filters.push(['format', document.getElementById("format").value]);
-    }
-
-    if (document.getElementById("limit").value != '') {
-        filters.push([`banlist`, document.getElementById("limit").value]);
-    }
-    */
-    
-
-
+    // Create filtered url to send to API
     filters = filters.concat(tempfilters);
-    database.searchList(filters);
+    filteredURL = createFilteredUrl(filters);
+
+    // Populate database with filtered results from API
+    database.init(filteredURL);
 }
 
+// Create a URL to use for filtering in the API
+createFilteredUrl = (filters) => {
+    // Set base url
+    var filteredURL = url;
 
+    // Add API compliant strings using the filter objects passed
+    for (let i = 0; i < filters.length; i++) {
+        switch(filters[i][0]) {
+        case 'name': 
+            filteredURL += `&fname=${filters[i][1]}`;
+            break;
+        case 'type':
+            filteredURL += `&race=${filters[i][1]}`;
+            break;
+        case 'archetype':
+            filteredURL += `&archetype=${filters[i][1]}`;
+            break;
+        case 'format':
+            filteredURL += `&format=${filters[i][1]}`;
+            break;
+        case 'card1':
+            // Add "&type=" only once and build type list using commas
+            if (!filteredURL.includes('&type=')) {
+                filteredURL += `&type=${filters[i][1]}`;
+            }
+            else {
+                filteredURL += `,${filters[i][1]}`
+            }
+            break;
+        }
+    }
+
+    return filteredURL;
+}
+
+// Database class that will pull and save card data from API
+class Database {
+    constructor() {
+        this.results = [];
+    }
+
+    // Initialize list with new results on search
+    init = (filteredURL) => {
+        this.clear();
+
+        // Fetch card data from API
+        fetch(filteredURL)
+            .then((res) => res.json())
+            .then((data) => {
+                try {
+                    for (let i = 0; i < data.data.length; i++) {
+                        this.add(new Card(data.data[i]));
+                    }
+                }
+                catch (error) {
+                    window.confirm('Invalid API address');
+                }
+
+                this.display('gallery');
+            }
+        );
+    }
+
+    // Add onl
+    add = (card) => {  
+        var format = document.getElementById("format");
+        var limit = document.getElementById("limit");
+
+        if (limit.value == "") {
+            this.results.push(card);
+        }
+        else if (card.getBanlistInfo() == null) {
+            if (format.value != "edison" && limit.value == "unlimited") {
+                this.results.push(card);
+            }
+            else if (format.value == "edison") {
+                // No edison banlist support
+            }
+        }
+        else if (card.getBanlistInfo() != null) {
+            if (format.value == "tcg" && card.getBanlistInfo().ban_tcg != null) {
+                if (limit.value == card.getBanlistInfo().ban_tcg.toLowerCase()) {
+                    this.results.push(card);
+                }
+            }
+            else if (format.value == "ocg" && card.getBanlistInfo().ban_ocg != null) {
+                if (limit.value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
+                    this.results.push(card);
+                }
+            }
+
+            else if (format.value == "goat" && card.getBanlistInfo().ban_goat != null) {
+                if (limit.value == card.getBanlistInfo().ban_goat.toLowerCase()) {
+                    this.results.push(card);
+                }
+            }
+        }
+    }
+
+    display = (elementID) => {
+        const info = document.getElementById(elementID);
+        var HTMLString = `<div class="${elementID}">`;
+
+        for (let i = 0; i < this.results.length; i++) {
+            HTMLString += this.results[i].getCardHTML();
+        }
+
+        HTMLString += '</div>';
+        info.innerHTML = HTMLString;
+    }
+
+    // Search through list for card matching the passed ID and return it
+    get = (id) => {
+        for (let i = 0; i < this.results.length; i++) {
+            if (id == this.results[i].getID()) {
+                return this.results[i];
+            }
+        }
+    }
+
+    // Sort list alphabetically based on name
+    sort = (type) => {
+        for (let j = 0; j < this.results.length; j++) {
+            for (let i = 0; i < this.results.length - 1; i++) {
+                if (this.results[i].getName() > this.results[i + 1].getName()) {
+                    var temp = this.results[i];
+                    this.results[i] = this.results[i + 1];
+                    this.results[i + 1] = temp;
+                }
+            }
+        }
+    }
+
+    // Pop all items in list until empty
+    clear = () => {
+        while (this.results.length > 0) {
+            this.results.pop();
+        }
+    }
+
+    save = (filename) => {
+        fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes')
+            .then((res) => res.blob())
+            .then((data) => {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(data);
+                a.download = filename;
+                a.click();
+            }
+            );
+    }
+}
 
 class Card {
     constructor(data) {
@@ -388,7 +445,7 @@ class Card {
     getFormattedDesc = () => {
         // Adjust text for pendulum cards
         var formattedDesc = this.desc.replaceAll(".\n[", ".\n\n[");
-        
+
         return formattedDesc;
     }
 
@@ -404,148 +461,10 @@ class Card {
     }
 }
 
-class Database {
-    constructor() {
-        this.list = [];
-    }
-
-    addItem = (card) => {
-        this.list.push(card);
-    }
-
-    getItem = (id) => {
-        for (let i = 0; i < this.list.length; i++) {
-            if (id == this.list[i].getID()) {
-                return this.list[i];
-            }
-        }
-    }
-
-    sortList = (type) => {
-        for (let j = 0; j < this.list.length; j++) {
-            for (let i = 0; i < this.list.length - 1; i++) {
-                if (this.list[i].getName() > this.list[i + 1].getName()) {
-                    var temp = this.list[i];
-                    this.list[i] = this.list[i + 1];
-                    this.list[i + 1] = temp;
-                }
-            }
-        }
-    }
-
-    clearList = () => {
-        while (this.list.length > 0) {
-            this.list.pop();
-        }
-    }
-
-    filteredUrl = (filters) => {
-        var url = '';
-        
-        for (let i = 0; i < filters.length; i++) {
-            if (filters[i][0] == 'name') {
-                url += `&fname=${filters[i][1]}`;
-            }
-            if (filters[i][0] == 'card1') {
-                if (filters[i][0] == 'card1') {
-                    if (!url.includes('&type=')) {
-                        url += `&type=${filters[i][1]}`;
-                    }
-                    else {
-                        url += `,${filters[i][1]}`
-                    }
-                }
-            }
-            if (filters[i][0] == 'type1') {
-                url += `&race=${filters[i][1]}`
-            }
-            if (filters[i][0] == 'archetype') {
-                url += `&archetype=${filters[i][1]}`
-            }
-            if (filters[i][0] == 'format') {
-                url += `&format=${filters[i][1]}`
-            }
-        }
-
-        console.log(url);
-        return url;
-    }
-
-    searchList = (filters) => {
-        this.clearList();
-
-        fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes' + this.filteredUrl(filters))
-            .then((res) => res.json())
-            .then((data) => {
-                try {
-                    for (let i = 0; i < data.data.length; i++) {
-                        const card = new Card(data.data[i]);
-
-                        if (document.getElementById("limit").value == "") {
-                            this.addItem(card);
-                        }
-                        else if (card.getBanlistInfo() == null) {
-                            if (document.getElementById("format").value != "edison" && document.getElementById("limit").value == "unlimited") {
-                                this.addItem(card);
-                            }
-                            else if (document.getElementById("format").value == "edison") {
-                                // No edison banlist support
-                            }
-                        }
-                        else if (card.getBanlistInfo() != null) {
-                            if (document.getElementById("format") == "tcg" && card.getBanlistInfo().ban_tcg != null) {
-                                if (document.getElementById("limit").value == card.getBanlistInfo().ban_tcg.toLowerCase()) {
-                                    this.addItem(card);
-                                }
-                            }
-                            else if (document.getElementById("format") == "ocg" && card.getBanlistInfo().ban_ocg != null) {
-                                if (document.getElementById("limit").value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
-                                    this.addItem(card);
-                                }
-                            }
-
-                            else if (document.getElementById("format") == "goat" && card.getBanlistInfo().ban_goat != null) {
-                                if (document.getElementById("limit").value == card.getBanlistInfo().ban_goat.toLowerCase()) {
-                                    this.addItem(card);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (error) {
-                    window.confirm('No results found');
-                }
-
-                this.displayList('gallery');
-            }
-            );
-    }
-
-    displayList = (elementID) => {
-        const info = document.getElementById(elementID);
-        var HTMLString = `<div class="${elementID}">`;
-
-        for (let i = 0; i < this.list.length; i++) {
-            HTMLString += this.list[i].getCardHTML();
-        }
-
-        HTMLString += '</div>';
-        info.innerHTML = HTMLString;
-    }
-
-    update = (filename) => {
-        fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php')
-            .then((res) => res.blob())
-            .then((data) => {
-                var a = document.createElement('a');
-                a.href = window.URL.createObjectURL(data);
-                a.download = filename;
-                a.click();
-            }
-            );
-    }
-}
+// Retrieve filter list from file
+var filterData = parseFile('./data/sort.json');
 
 var database = new Database();
-getDropdown();
 search();
+
+

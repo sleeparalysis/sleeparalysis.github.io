@@ -14,47 +14,7 @@ p {
     font-family: inherit;
     font-weight: bold;
     margin: 0;
-    padding-right: 1rem;
-}
-
-#name, #desc, #card1, #card2, #type1, #type2, #archetype, #format, #limit {
-    width: 100%;
-    height: 30px;
-
-    background-color: rgb(240, 240, 240);
-    color: black;
-    border: 0px;
-    border-radius: 5px;
-    outline: none;
-
-    font-size: 13px;
-    font-family: inherit;
-    text-align: left;
-}
-
-#card2:disabled, #type2:disabled, #limit:disabled {
-    background-color: rgb(235, 235, 235);
-    color: rgb(210, 210, 210);
-}
-
-#submit {
-    width: 100%;
-    height: 30px;
-    margin-top: 1rem;
-
-    background-color: rgb(0, 0, 0);
-    border: 0px;
-    border-radius: 5px;
-
-    color: white;
-    font-size: 14px;
-    font-family: inherit;
-    font-weight: bold;
-    padding-right: 1rem;
-}
-
-#submit:active {
-    background-color: rgb(37, 37, 37);
+    padding-right: 1vw;
 }
 
 .container {
@@ -66,7 +26,7 @@ p {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1vw;
     align-content: center;
     overflow: auto;
 }
@@ -83,41 +43,47 @@ p {
     justify-content: center;
 
     background-color: rgba(0, 0, 0, 0.9);
+
+    animation-name: fade;
+    animation-duration: 0.1s;
+}
+
+@keyframes fade {
+    from {opacity: 0}
+    to {opacity: 1}
 }
 
 .modal-content {
     margin: 0;
     display: block;
     width: 100%;
-    max-width: 500px;
+    max-width: 75vw;
 
+    z-index: 2;
 }
 
 .modal-h2, .modal-p {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 650px;
+    width: 35vw;
     color: white;
 }
 
 .modal-h2 {
     margin: 0;
-    padding-bottom: 1rem;
-    font-size: 36px;
+    padding-bottom: 1vw;
+    font-size: 2vw;
     text-align: center;
+    white-space: nowrap;
 }
 
 .modal-p {
-    font-size: 20px;
+    font-size: 1.3vw;
     font-weight: normal;
     text-align: justify;
 }
 
-.info {
-    
-}
-
 .item {
-    width: calc(84vw/10 - 1rem);
+    width: 7vw;
     transition: filter .05s;
 }
 
@@ -136,29 +102,26 @@ p {
 }
 
 .c1 {
-    width: 14vw;
-    padding: 1rem 0rem 1rem 1rem;
+    min-width: 10rem;
+    padding: 1rem 0vw 1rem 1rem;
     position: fixed;
 }
 
 .c2 {
-    width: 86vw;
+    width: 90vw;
     height: 100vh;
-    padding: 1rem;
-    margin-left: 15vw;
+    padding: 1vw;
+    margin-left: 13rem;
 }
 
-.r1 {
-    width: 100%;
+.r1, .r2 {
+    width: 85%;
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
 }
 
 .r2 {
-    width: 100%;
-    margin-bottom: 1rem;
-    display: flex;
     flex-direction: row;
     align-items: flex-end;
     gap: 1rem;
@@ -170,7 +133,7 @@ p {
     display: flex;
     justify-content: center;
     flex-direction: row;
-    gap: 3rem;
+    gap: 1rem;
 }
 
 .w1 {
@@ -187,4 +150,44 @@ p {
 
 .w4 {
     width: 100%;
+}
+
+#name, #desc, #card1, #card2, #type, #archetype, #format, #limit {
+    width: 100%;
+    height: 30px;
+
+    background-color: rgb(240, 240, 240);
+    color: black;
+    border: 0px;
+    border-radius: 5px;
+    outline: none;
+
+    font-size: 13px;
+    font-family: inherit;
+    text-align: left;
+}
+
+
+#card2:disabled, #limit:disabled {
+    background-color: rgb(235, 235, 235);
+    color: rgb(210, 210, 210);
+}
+
+#submit {
+    width: 85%;
+    height: 30px;
+    margin-top: 0.5rem;
+
+    background-color: rgb(0, 0, 0);
+    border: 0px;
+    border-radius: 5px;
+
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+#submit:active {
+    background-color: rgb(37, 37, 37);
 }
