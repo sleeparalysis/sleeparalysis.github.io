@@ -26,15 +26,15 @@
         <div class="c1">
             <form id="f1" onsubmit="search()">
                 <div class="r1">
-                    <p>Name</p>
-                    <input type="textbox" id="name" name="name" value=""/>
+                    <div class="w4">
+                        <input type="textbox" id="name" name="name" value=""/ placeholder="Card Name">
+                    </div>
                 </div>
                 <div class="r2">
                     <div class="w2">
-                        <p>Card</p>
                         <label for="card1"></label>
                         <select id="card1" name="card1" onchange="getDropdown();">
-                            <option value="">All</option>
+                            <option value="">Card Type 1</option>
                             <option value="monster">Monster</option>
                             <option value="spell">Spell</option>
                             <option value="trap">Trap</option>
@@ -43,7 +43,7 @@
                     <div class="w2">
                         <label for="card2"></label>
                         <select id="card2" name="card2">
-                            <option value="">All</option>
+                            <option value="">Card Type 2</option>
                             <option value="normal">Normal</option>
                             <option value="effect">Effect</option>
                             <option value="ritual">Ritual</option>
@@ -60,12 +60,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="r2">
+                <div class="r1">
                     <div class="w4">
-                        <p>Type</p>
                         <label for="type"></label>
                         <select id="type" name="type">
-                            <option value="">All</option>
+                            <option value="">Card Type 3</option>
                             <option value="aqua">Aqua</option>
                             <option value="beast">Beast</option>
                             <option value="beast-warrior">Beast-Warrior</option>
@@ -102,9 +101,8 @@
                     </div>
                 </div>
                 <div class="r1">
-                    <p>Archetype</p>
                     <select name="archetype" id="archetype">
-                        <option value="">All</option>
+                        <option value="">Archetype</option>
                         <option value="-eyes dragon">-Eyes Dragon</option>
                         <option value='"C"'>"C"</option>
                         <option value="@ignister">@Ignister</option>
@@ -651,10 +649,9 @@
                 </div>
                 <div class="r2">
                     <div class="w3">
-                        <p>Format</p>
                         <label for="format"></label>
                         <select name="format" id="format" onchange="getDropdown()">
-                            <option value="">All</option>
+                            <option value="">Format</option>
 						    <option value="tcg">TCG</option>
                             <option value="ocg">OCG</option>
                             <option value="duel links">Duel Links</option>
@@ -666,10 +663,9 @@
                         </select>
                     </div>
                     <div class="w1">
-                        <p>Limit</p>
                         <label for="limit"></label>
                         <select name="limit" id="limit">
-                            <option value="">All</option>
+                            <option value="">Limit</option>
                             <option value="unlimited">3</option>
                             <option value="semi-limited">2</option>
                             <option value="limited">1</option>
@@ -677,8 +673,11 @@
                         </select>
                     </div>
                 </div>
-
-                <input type="button" id="submit" onclick="search()" value="Search"></button>
+                <div class="r1">
+                    <div class="w4">
+                        <input type="button" id="submit" onclick="search()" value="Search"></button>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="c2">

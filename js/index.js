@@ -340,13 +340,6 @@ class Database {
         }
     }
 
-    // Pop all items in list until empty
-    clear = () => {
-        while (this.results.length > 0) {
-            this.results.pop();
-        }
-    }
-
     save = (filename) => {
         fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes')
             .then((res) => res.blob())
@@ -356,7 +349,14 @@ class Database {
                 a.download = filename;
                 a.click();
             }
-            );
+        );
+    }
+
+    // Pop all items in list until empty
+    clear = () => {
+        while (this.results.length > 0) {
+            this.results.pop();
+        }
     }
 }
 
@@ -465,6 +465,7 @@ class Card {
 var filterData = parseFile('./data/sort.json');
 
 var database = new Database();
+getDropdown();
 search();
 
 
