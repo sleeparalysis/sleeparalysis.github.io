@@ -42,11 +42,12 @@ const parseFile = (file) => {
 }
 
 // Update dropdown contents based on other dropdown selections
-const getDropdown = () => {
+const getDropdowns = () => {
     // Input references
     var card1 = document.getElementById("card1");
     var card2 = document.getElementById("card2");
     var type = document.getElementById("type");
+    var attribute = document.getElementById("attribute");
     var format = document.getElementById("format");
     var limit = document.getElementById("limit");
 
@@ -56,6 +57,8 @@ const getDropdown = () => {
         // Set default values
         card2.disabled = false;
         card2.value = '';
+        attribute.disabled = false;
+        attribute = "";
         type.value = '';
 
         // Enable all type filters
@@ -73,6 +76,8 @@ const getDropdown = () => {
         // Set default values
         card2.disabled = true;
         card2.value = '';
+        attribute.disabled = true;
+        attribute = "";
         type.value = '';
 
         // Enable all type filters
@@ -93,6 +98,8 @@ const getDropdown = () => {
         // Set default values
         card2.disabled = true;
         card2.value = '';
+        attribute.disabled = true;
+        attribute = "";
         type.value = '';
 
         // Enable all type filters
@@ -116,7 +123,10 @@ const getDropdown = () => {
         // Set default values
         card2.disabled = true;
         card2.value = '';
+        attribute.disabled = true;
+        attribute = "";
         type.value = '';
+
 
         // Enable all type filters
         for (let i = 0; i < type.options.length; i++) {
@@ -131,6 +141,7 @@ const getDropdown = () => {
     case 'tcg':
     case 'ocg':
     case 'goat':
+    case 'edison':
         limit.disabled = false;
         break;
     default:
@@ -151,6 +162,7 @@ const search = () => {
     var card1 = document.getElementById("card1");
     var card2 = document.getElementById("card2");
     var type = document.getElementById("type");
+    var attribute = document.getElementById("attribute");
     var archetype = document.getElementById("archetype");
     var format = document.getElementById("format");
     var limit = document.getElementById("limit");
@@ -163,6 +175,11 @@ const search = () => {
     // Filter by type
     if (type.value != '') {
         filters.push(['type', type.value]);
+    }
+
+    // Filter by attribute
+    if (attribute.value != '') {
+        filters.push(['attribute', attribute.value]);
     }
 
     // Filter by archetype
@@ -204,11 +221,35 @@ const search = () => {
     filteredURL = createFilteredUrl(filters);
 
     // Populate database with filtered results from API
-    database.init(filteredURL);
+    database.search(filteredURL);
+}
+
+const clearInputs = () => {
+    // Input references
+    var fname = document.getElementById("name");
+    var card1 = document.getElementById("card1");
+    var card2 = document.getElementById("card2");
+    var type = document.getElementById("type");
+    var attribute = document.getElementById("attribute");
+    var archetype = document.getElementById("archetype");
+    var format = document.getElementById("format");
+    var limit = document.getElementById("limit");
+
+    // Reset inputs
+    fname.value = "";
+    card1.value = "";
+    card2.value = "";
+    type.value = "";
+    attribute.value = "";
+    archetype.value = "";
+    format.value = "";
+    limit.value = "";
+
+    getDropdowns();
 }
 
 // Create a URL to use for filtering in the API
-createFilteredUrl = (filters) => {
+const createFilteredUrl = (filters) => {
     // Set base url
     var filteredURL = url;
 
@@ -220,6 +261,9 @@ createFilteredUrl = (filters) => {
             break;
         case 'type':
             filteredURL += `&race=${filters[i][1]}`;
+            break;
+        case 'attribute':
+            filteredURL += `&attribute=${filters[i][1]}`;
             break;
         case 'archetype':
             filteredURL += `&archetype=${filters[i][1]}`;
@@ -242,6 +286,15 @@ createFilteredUrl = (filters) => {
     return filteredURL;
 }
 
+// Check if an edison card is banned and return its deck limit
+const getEdisonBanStatus = (card) => {
+    for(let i = 0; i < edisonData.data.length; i++) {
+        if(card.getName().toLowerCase() == edisonData.data[i].name.toLowerCase()) {
+            return edisonData.data[i].ban_edison;
+        }
+    }
+}
+
 // Database class that will pull and save card data from API
 class Database {
     constructor() {
@@ -249,20 +302,23 @@ class Database {
     }
 
     // Initialize list with new results on search
-    init = (filteredURL) => {
+    search = (filteredURL) => {
         this.clear();
+
+        console.log(filteredURL);
 
         // Fetch card data from API
         fetch(filteredURL)
-            .then((res) => res.json())
+            .then((res) => res.json()) 
             .then((data) => {
                 try {
                     for (let i = 0; i < data.data.length; i++) {
-                        this.add(new Card(data.data[i]));
+                        var card = new Card(data.data[i]);
+                        this.add(card);
                     }
                 }
                 catch (error) {
-                    window.confirm('Invalid API address');
+                    //window.confirm('No results found');
                 }
 
                 this.display('gallery');
@@ -270,46 +326,146 @@ class Database {
         );
     }
 
-    // Add onl
+    
     add = (card) => {  
         var format = document.getElementById("format");
         var limit = document.getElementById("limit");
 
-        if (limit.value == "") {
+        switch(format) {
+        case 'tcg':
+            break;
+        case 'ocg':
+            break;
+        case 'goat':
+            break;
+        case 'edison':
+            break;
+        default:
+            
+        }
+
+        // Add all cards regardless of format or deck limit
+        if (format.value == "" && limit.value == "") {
             this.results.push(card);
         }
-        else if (card.getBanlistInfo() == null) {
-            if (format.value != "edison" && limit.value == "unlimited") {
+
+        // Add cards by TCG format
+        else if (format.value == 'tcg') {
+            // Add all TCG format cards regardless of deck limit
+            if(limit.value == "") {
+                if (card.getBanlistInfo() != null) {
+                    if (card.getBanlistInfo().ban_tcg != null) {
+                        card.setCardHTML(`../img/${card.getBanlistInfo().ban_tcg.toLowerCase()}.png`);
+                    }
+                }
+                
                 this.results.push(card);
             }
-            else if (format.value == "edison") {
-                // No edison banlist support
-            }
-        }
-        else if (card.getBanlistInfo() != null) {
-            if (format.value == "tcg" && card.getBanlistInfo().ban_tcg != null) {
-                if (limit.value == card.getBanlistInfo().ban_tcg.toLowerCase()) {
-                    this.results.push(card);
+
+            // All TCG format cards according to selected deck limit
+            else {
+                if (card.getBanlistInfo() != null) {
+                    if (card.getBanlistInfo().ban_tcg != null && limit.value == card.getBanlistInfo().ban_tcg.toLowerCase()) {
+                        card.setCardHTML(`../img/${card.getBanlistInfo().ban_tcg.toLowerCase()}.png`);
+                        this.results.push(card);
+                    }
                 }
             }
-            else if (format.value == "ocg" && card.getBanlistInfo().ban_ocg != null) {
-                if (limit.value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
-                    this.results.push(card);
+            
+            // Add all unlimited TCG format cards
+            if(limit.value == "unlimited" && card.getBanlistInfo() == null) {
+                this.results.push(card);
+            }
+        }
+
+        // Add cards by OCG format
+        else if (format.value == 'ocg') {
+            // Add all OCG format cards regardless of deck limit
+            if(limit.value == "") {
+                if (card.getBanlistInfo() != null) {
+                    if (card.getBanlistInfo().ban_ocg != null) {
+                        card.setCardHTML(`../img/${card.getBanlistInfo().ban_ocg.toLowerCase()}.png`);
+                    }
+                }
+                
+                this.results.push(card);
+            }
+
+            // All OCG format cards according to selected deck limit
+            else {
+                if (card.getBanlistInfo() != null) {
+                    if (card.getBanlistInfo().ban_ocg != null && limit.value == card.getBanlistInfo().ban_ocg.toLowerCase()) {
+                        card.setCardHTML(`../img/${card.getBanlistInfo().ban_ocg.toLowerCase()}.png`);
+                        this.results.push(card);
+                    }
+                }
+            }
+            
+            // Add all unlimited OCG format cards
+            if(limit.value == "unlimited" && card.getBanlistInfo() == null) {
+                this.results.push(card);
+            }
+        }
+
+        // Add cards by goat format
+        else if (format.value == 'goat') {
+            // Add all goat format cards regardless of deck limit
+            if(limit.value == "") {
+                if (card.getBanlistInfo() != null) {
+                    if (card.getBanlistInfo().ban_goat != null) {
+                        card.setCardHTML(`../img/${card.getBanlistInfo().ban_goat.toLowerCase()}.png`);
+                    }
+                }
+                
+                this.results.push(card);
+            }
+
+            // All goat format cards according to selected deck limit
+            else {
+                if (card.getBanlistInfo() != null) {
+                    if (card.getBanlistInfo().ban_goat != null && limit.value == card.getBanlistInfo().ban_goat.toLowerCase()) {
+                        card.setCardHTML(`../img/${card.getBanlistInfo().ban_goat.toLowerCase()}.png`);
+                        this.results.push(card);
+                    }
+                }
+            }
+            
+            // Add all unlimited goat format cards
+            if(limit.value == "unlimited" && card.getBanlistInfo() == null) {
+                this.results.push(card);
+            }
+        }
+
+        // Add cards by edison format
+        else if (format.value == 'edison') {
+            if(limit.value == "") {
+                if (getEdisonBanStatus(card) != null) {
+                    card.setCardHTML(`../img/${getEdisonBanStatus(card).toLowerCase()}.png`);
+                }
+                this.results.push(card);
+            }
+
+            else {
+                if (getEdisonBanStatus(card) != null) {
+                    if (limit.value == getEdisonBanStatus(card).toLowerCase()) {
+                        card.setCardHTML(`../img/${getEdisonBanStatus(card).toLowerCase()}.png`);
+                        this.results.push(card);
+                    }
                 }
             }
 
-            else if (format.value == "goat" && card.getBanlistInfo().ban_goat != null) {
-                if (limit.value == card.getBanlistInfo().ban_goat.toLowerCase()) {
-                    this.results.push(card);
-                }
+            if(limit.value == "unlimited" && getEdisonBanStatus(card) == null) {
+                this.results.push(card);
             }
         }
     }
 
+    // Contruct HTML string to inject into an HTML element
     display = (elementID) => {
         const info = document.getElementById(elementID);
         var HTMLString = `<div class="${elementID}">`;
 
+        // Add all HMTL strings stored in each card
         for (let i = 0; i < this.results.length; i++) {
             HTMLString += this.results[i].getCardHTML();
         }
@@ -340,6 +496,7 @@ class Database {
         }
     }
 
+    // Save a copy of the Ygoprodeck API card info JSON
     save = (filename) => {
         fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes')
             .then((res) => res.blob())
@@ -360,6 +517,7 @@ class Database {
     }
 }
 
+// Card class that will be used to save card information from the Ygoprodeck API
 class Card {
     constructor(data) {
         this.id = data.id;
@@ -400,9 +558,14 @@ class Card {
         this.question_def = data.misc_info[0].question_def;
         this.local_images = [{ "local": `../img/${this.id}.jpg`, "local_small": `../img/small/${this.id}.jpg` }];
         this.github_images = [{ "github": `https://raw.githubusercontent.com/sleeparalysis/Yugioh-Cards/main/${this.id}.jpg` }];
-        this.ban_edison = "";
+        this.cardHTML = `
+            <div class="g1">
+            <img id="icon" class="icon" src="../img/blank.png" loading='lazy'/>
+            <img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>
+            </div>`;
     }
 
+    // Variable getters
     getID = () => { return this.id; }
     getName = () => { return this.name; }
     getType = () => { return this.type; }
@@ -441,31 +604,32 @@ class Card {
     getHasEffect = () => { return this.has_effect; }
     getQuestionAtk = () => { return this.question_atk; }
     getQuestionDef = () => { return this.question_def; }
+    getCardHTML = () => { return this.cardHTML; }
 
+    // Fix spacing issue when displaying pendulum card descriptions
     getFormattedDesc = () => {
-        // Adjust text for pendulum cards
         var formattedDesc = this.desc.replaceAll(".\n[", ".\n\n[");
-
         return formattedDesc;
     }
 
-    // Card html code
-    getCardHTML = () => {
-        return this.cardHTML =
-            `<img id="${this.getID()}" 
-                class="item"
-                src="${this.getCardImages()[0].image_url}" 
-                loading='lazy' 
-                onclick="view(${this.getID()});"
-            />`;
+    setCardHTML =(url) => { 
+        this.cardHTML = `
+        <div class="g1">
+        <img id="icon" class="icon" src="${url}" loading='lazy'/>
+        <img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>
+        </div>`;
     }
 }
 
 // Retrieve filter list from file
-var filterData = parseFile('./data/sort.json');
+const filterData = parseFile('./data/sort.json');
+const edisonData = parseFile('../data/edison.json');
 
+// Initialize dropdown access on start
+getDropdowns();
+
+// Create a new database
 var database = new Database();
-getDropdown();
+
+// Search and display all cards available
 search();
-
-

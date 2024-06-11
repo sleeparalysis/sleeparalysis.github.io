@@ -28,7 +28,7 @@
                 <div class="r2">
                     <div class="w2">
                         <label for="card1"></label>
-                        <select id="card1" name="card1" onchange="getDropdown();">
+                        <select id="card1" name="card1" onchange="getDropdowns();">
                             <option value="">Card</option>
                             <option value="monster">Monster</option>
                             <option value="spell">Spell</option>
@@ -55,8 +55,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="r1">
-                    <div class="w4">
+                <div class="r2">
+                    <div class="w2">
                         <label for="type"></label>
                         <select id="type" name="type">
                             <option value="">Type</option>
@@ -92,6 +92,19 @@
                             <option value="quick-play">Quick-Play</option>
                             <option value="ritual">Ritual</option>
                             <option value="counter">Counter</option>
+                        </select>
+                    </div>
+                    <div class="w2">
+                        <label for="attribute"></label>
+                        <select id="attribute" name="attribute">
+                            <option value="">Attribute</option>
+                            <option value="wind">Wind</option>
+                            <option value="water">Water</option>
+                            <option value="fire">Fire</option>
+                            <option value="earth">Earth</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="divine">Divine</option>
                         </select>
                     </div>
                 </div>
@@ -643,9 +656,9 @@
                     </select>
                 </div>
                 <div class="r2">
-                    <div class="w3">
+                    <div class="w2">
                         <label for="format"></label>
-                        <select name="format" id="format" onchange="getDropdown()">
+                        <select name="format" id="format" onchange="getDropdowns()">
                             <option value="">Format</option>
 						    <option value="tcg">TCG</option>
                             <option value="ocg">OCG</option>
@@ -657,7 +670,7 @@
                             <option value="ocg goat">OCG GOAT</option>
                         </select>
                     </div>
-                    <div class="w1">
+                    <div class="w2">
                         <label for="limit"></label>
                         <select name="limit" id="limit">
                             <option value="">Limit</option>
@@ -668,9 +681,12 @@
                         </select>
                     </div>
                 </div>
-                <div class="r1">
-                    <div class="w4">
+                <div class="r2">
+                    <div class="w3">
                         <input type="button" id="submit" onclick="search()" value="Search"></button>
+                    </div>
+                    <div class="w1">
+                        <input type="button" id="clear" onclick="clearInputs()" value="Clear"></button>
                     </div>
                 </div>
             </form>
