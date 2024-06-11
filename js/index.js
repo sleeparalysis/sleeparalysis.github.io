@@ -5,11 +5,11 @@ const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes';
 const triggerNav = () => {
     var c1 = document.getElementById("c1");
 
-    if(c1.style.bottom == `50px` || c1.style.bottom == '') {
-        c1.style.bottom = `-270px`;
+    if(c1.style.bottom == `-270px` || c1.style.bottom == '') {
+        c1.style.bottom = `50px`;
     }
     else {
-        c1.style.bottom = `50px`;
+        c1.style.bottom = `-270px`;
     }
 }
 

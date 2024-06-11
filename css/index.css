@@ -212,7 +212,7 @@ select:invalid, select option[value=""] {
         width: 100%;
         padding: 0.5rem 0.5rem 0 0.5rem;
         left: 0px;
-        bottom: 50px;
+        bottom: -270px;
     }
 
     .c2 {
