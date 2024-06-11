@@ -438,6 +438,7 @@ class Database {
 
         // Add cards by edison format
         else if (format.value == 'edison') {
+            // Add all edison format cards regardless of deck limit
             if(limit.value == "") {
                 if (getEdisonBanStatus(card) != null) {
                     card.setCardHTML(`../img/${getEdisonBanStatus(card).toLowerCase()}.png`);
@@ -445,6 +446,7 @@ class Database {
                 this.results.push(card);
             }
 
+             // All edison format cards according to selected deck limit
             else {
                 if (getEdisonBanStatus(card) != null) {
                     if (limit.value == getEdisonBanStatus(card).toLowerCase()) {
@@ -454,6 +456,7 @@ class Database {
                 }
             }
 
+            // Add all unlimited edison format cards
             if(limit.value == "unlimited" && getEdisonBanStatus(card) == null) {
                 this.results.push(card);
             }

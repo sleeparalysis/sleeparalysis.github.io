@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/index.js" defer></script>
     <title>Yugioh</title>
 </head>
@@ -19,10 +20,10 @@
     </div>
     <div class="container">
         <div class="c1">
-            <form id="f1" onsubmit="search()">
+            <form id="f1" onkeydown="return event.keyCode != 13;">
                 <div class="r1">
                     <div class="w4">
-                        <input type="textbox" id="name" name="name" value=""/ placeholder="Name">
+                        <input type="textbox" id="name" name="name" value="" placeholder="Name">
                     </div>
                 </div>
                 <div class="r2">
@@ -384,7 +385,7 @@
                         <option value="kozmo">Kozmo</option>
                         <option value="krawler">Krawler</option>
                         <option value="kuriboh">Kuriboh</option>
-						<option value="">Labrynth</option>
+						<option value="labyrinth">Labrynth</option>
                         <option value="">Labyrinth Wall</option>
                         <option value="">Lady of Lament</option>
                         <option value="">Laval</option>
