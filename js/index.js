@@ -3,13 +3,14 @@ const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes';
 
 // Close navigation element
 const triggerNav = () => {
+    var x = window.matchMedia("(max-width: 600px)")
     var c1 = document.getElementById("c1");
 
-    if(c1.style.bottom == `-270px` || c1.style.bottom == '') {
+    if(c1.style.bottom == `-500px` || c1.style.bottom == '') {
         c1.style.bottom = `50px`;
     }
     else {
-        c1.style.bottom = `-270px`;
+        c1.style.bottom = `-500px`;
     }
 }
 
@@ -44,14 +45,7 @@ const view = (id) => {
     }
 }
 
-// Request response from JSON file and return parsed JSON data
-const parseFile = (file) => {
-    var request = new XMLHttpRequest();
-    request.open("GET", file, false);
-    request.send(null);
-    var data = JSON.parse(request.responseText);
-    return data;
-}
+
 
 // Update dropdown contents based on other dropdown selections
 const getDropdowns = () => {
@@ -62,16 +56,17 @@ const getDropdowns = () => {
     var attribute = document.getElementById("attribute");
     var format = document.getElementById("format");
     var limit = document.getElementById("limit");
+    var sort = document.getElementById("sort");
 
     // Update dropdowns based on card type
     switch (card1.value) {
     case 'monster':
         // Set default values
         card2.disabled = false;
-        card2.value = '';
         attribute.disabled = false;
         attribute = "";
         type.value = '';
+        sort.value = '';
 
         // Enable all type filters
         for (let i = 0; i < type.options.length; i++) {
@@ -83,14 +78,34 @@ const getDropdowns = () => {
             type.options[i].style.display = "none";
         }
 
+        // Enable all sorting filters
+        for (let i = 0; i < sort.options.length; i++) {
+            sort.options[i].style.display = "block";
+        }
+
+        // Disable monster sorting filters
+        for (let i = 5; i < sort.options.length; i++) {
+            sort.options[i].style.display = "none";
+        }
+
+        if(card2.value == 'link') {
+            sort.options[6].style.display = "block";
+            sort.options[7].style.display = "block";
+        }
+        else if(card2.value != 'link' && card2.value != "") {
+            sort.options[5].style.display = "block";
+            sort.options[7].style.display = "block";
+            sort.options[8].style.display = "block";
+        }
+
         break;
     case 'spell':
         // Set default values
         card2.disabled = true;
-        card2.value = '';
         attribute.disabled = true;
         attribute = "";
         type.value = '';
+        sort.value = '';
 
         // Enable all type filters
         for (let i = 0; i < type.options.length; i++) {
@@ -104,15 +119,20 @@ const getDropdowns = () => {
 
         // Disable counter option
         type.options[32].style.display = "none";
+        
+        // Disable monster sorting filters
+        for (let i = 5; i < sort.options.length; i++) {
+            sort.options[i].style.display = "none";
+        }
 
         break;
     case 'trap':
         // Set default values
         card2.disabled = true;
-        card2.value = '';
         attribute.disabled = true;
         attribute = "";
         type.value = '';
+        sort.value = '';
 
         // Enable all type filters
         for (let i = 0; i < type.options.length; i++) {
@@ -130,14 +150,19 @@ const getDropdowns = () => {
         type.options[30].style.display = "none";
         type.options[31].style.display = "none";
 
+        // Disable monster sorting filters
+        for (let i = 5; i < sort.options.length; i++) {
+            sort.options[i].style.display = "none";
+        }
+
         break;
     default:
         // Set default values
         card2.disabled = true;
-        card2.value = '';
         attribute.disabled = true;
         attribute = "";
         type.value = '';
+        sort.value = '';
 
 
         // Enable all type filters
@@ -145,8 +170,15 @@ const getDropdowns = () => {
             type.options[i].style.display = "block";
         }
 
+        // Disable monster sorting filters
+        for (let i = 5; i < sort.options.length; i++) {
+            sort.options[i].style.display = "none";
+        }
+
         break;
     }
+
+    
 
     // Update limit dropdown based on format
     switch (format.value) {
@@ -161,6 +193,30 @@ const getDropdowns = () => {
         limit.value = '';
         break;
     }
+}
+
+const clearInputs = () => {
+    // Input references
+    var fname = document.getElementById("name");
+    var card1 = document.getElementById("card1");
+    var card2 = document.getElementById("card2");
+    var type = document.getElementById("type");
+    var attribute = document.getElementById("attribute");
+    var archetype = document.getElementById("archetype");
+    var format = document.getElementById("format");
+    var limit = document.getElementById("limit");
+
+    // Reset inputs
+    fname.value = "";
+    card1.value = "";
+    card2.value = "";
+    type.value = "";
+    attribute.value = "";
+    archetype.value = "";
+    format.value = "";
+    limit.value = "";
+
+    getDropdowns();
 }
 
 // Search 
@@ -236,28 +292,18 @@ const search = () => {
     database.search(filteredURL);
 }
 
-const clearInputs = () => {
-    // Input references
-    var fname = document.getElementById("name");
-    var card1 = document.getElementById("card1");
-    var card2 = document.getElementById("card2");
-    var type = document.getElementById("type");
-    var attribute = document.getElementById("attribute");
-    var archetype = document.getElementById("archetype");
-    var format = document.getElementById("format");
-    var limit = document.getElementById("limit");
+const sortResults = () => {
+    var sortBy = document.getElementById("sort").value;
+    database.sort(sortBy);
+}
 
-    // Reset inputs
-    fname.value = "";
-    card1.value = "";
-    card2.value = "";
-    type.value = "";
-    attribute.value = "";
-    archetype.value = "";
-    format.value = "";
-    limit.value = "";
-
-    getDropdowns();
+// Request response from JSON file and return parsed JSON data
+const parseFile = (file) => {
+    var request = new XMLHttpRequest();
+    request.open("GET", file, false);
+    request.send(null);
+    var data = JSON.parse(request.responseText);
+    return data;
 }
 
 // Create a URL to use for filtering in the API
@@ -498,17 +544,101 @@ class Database {
         }
     }
 
-    // Sort list alphabetically based on name
+    // Sort list alphabetically based on given sort type
     sort = (type) => {
-        for (let j = 0; j < this.results.length; j++) {
-            for (let i = 0; i < this.results.length - 1; i++) {
-                if (this.results[i].getName() > this.results[i + 1].getName()) {
-                    var temp = this.results[i];
-                    this.results[i] = this.results[i + 1];
-                    this.results[i + 1] = temp;
+        console.log('Sort!');
+        switch(type) {
+        case 'a-z':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getName() > this.results[i + 1].getName()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
                 }
             }
+            break;
+        case 'views':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getViews() < this.results[i + 1].getViews()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 'oldest':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getTCGDate() > this.results[i + 1].getTCGDate()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 'newest':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getTCGDate() < this.results[i + 1].getTCGDate()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 'level':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getLevel() < this.results[i + 1].getLevel()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 'link':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getLinkVal() < this.results[i + 1].getLinkVal()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 'atk':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getAttack() < this.results[i + 1].getAttack()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 'def':
+            for (let j = 0; j < this.results.length; j++) {
+                for (let i = 0; i < this.results.length - 1; i++) {
+                    if (this.results[i].getDefense() < this.results[i + 1].getDefense()) {
+                        var temp = this.results[i];
+                        this.results[i] = this.results[i + 1];
+                        this.results[i + 1] = temp;
+                    }
+                }
+            }
+            break;
         }
+        
+        this.display("gallery");
     }
 
     // Save a copy of the Ygoprodeck API card info JSON

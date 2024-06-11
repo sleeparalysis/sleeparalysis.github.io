@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(250, 250, 250);
 }
 
 input {
@@ -16,7 +16,7 @@ select, select option {
     color: black;
 }
 
-select:invalid, select option[value=""] {
+option:first-child, select option[value=""] {
     color:gray;
 }
 
@@ -38,7 +38,7 @@ select:invalid, select option[value=""] {
     width: 100%;
     height: 100%;
     position: fixed;
-    z-index: 3;
+    z-index: 4;
 
     display: none;
     flex-direction: row;
@@ -65,7 +65,7 @@ select:invalid, select option[value=""] {
     box-sizing: border-box;
     display: block;
     object-fit: contain;
-    z-index: 2;
+    z-index: 3;
 }
 
 .icon {
@@ -143,16 +143,18 @@ select:invalid, select option[value=""] {
     margin: 0;
 }
 
-#name, #desc, #card1, #card2, #type, #attribute, #archetype, #format, #limit, #submit, #clear {
+#name, #card1, #card2, #type, #attribute, #archetype, #sort, #format, #limit, #submit, #clear {
     width: 100%;
-
-    background-color: rgb(240, 240, 240);
-    color: black;
-    border: 0px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(236, 236, 236);
     border-radius: 5px;
-    outline: none;
-
+    outline:none;
     font-size: 13px;
+}
+
+#name:focus, #card1:focus, #card2:focus, #type:focus, #attribute:focus, #archetype:focus, #sort:focus, #format:focus, #limit:focus {
+    outline: 2px solid blue;
+    outline-offset: 1px;
 }
 
 #submit {
@@ -188,11 +190,13 @@ select:invalid, select option[value=""] {
     .nav {
         width: 100%;
         height: 50px;
-        background-color: #ffffff;
         position: fixed;
         left: 0px;
         bottom: 0px;  
         z-index: 3;
+        
+        background-color: #ffffff;
+        box-shadow: 0px 0px 5px rgba(200, 200, 200, 0.5);
 
         display: flex;
         align-items: center;
@@ -210,14 +214,14 @@ select:invalid, select option[value=""] {
     
     .c1 {
         width: 100%;
-        padding: 0.5rem 0.5rem 0 0.5rem;
+        padding: 1rem 1rem 0 1rem;
         left: 0px;
-        bottom: -270px;
+        bottom: -500px;
+        box-shadow: 0px 0px 5px rgba(200, 200, 200, 0.5);
+
     }
 
     .c2 {
-        width: 100%;
-        padding: 1vw;
         position:fixed;
         bottom: 50px;
         top:0;
@@ -225,11 +229,11 @@ select:invalid, select option[value=""] {
     }
 
     .r1, .r2 {
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
     }
 
     .r2 {
-        gap: 0.5rem;
+        gap: 1rem;
     }
 
     .l1 {
@@ -239,12 +243,13 @@ select:invalid, select option[value=""] {
         margin: 6px 0;
     }
 
-    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #format, #limit{
-        height: 40px;
+    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #sort, #format, #limit{
+        height: 50px;
     }
 
     #submit, #clear {
         height: 60px;
+        margin-bottom: 0;
     }
 
   }
@@ -255,13 +260,9 @@ select:invalid, select option[value=""] {
     .container {
         flex-direction: row;
     }
-
-    .nav {
-        display: none;
-    }
     
     .item {
-        width: 7.75vw;
+        width: 8.53vw;
         transition: filter .05s;
     }     
     
@@ -274,12 +275,17 @@ select:invalid, select option[value=""] {
     }
     
     .c1 {
-        width: 14rem;
-        padding: 1rem 0vw 1rem 1rem;
+        width: 16rem;
+        height:100%;
+        padding: 1rem;
+        left: 0px;
+        top: 0;
+        box-shadow: 1px 0px 5px rgba(200, 200, 200, 0.5);
+
     }
 
     .c2 {
-        margin-left: 15rem;
+        margin-left: 17rem;
         padding: 1vw 1vw 1vw 0;
     }
 
@@ -291,7 +297,7 @@ select:invalid, select option[value=""] {
         gap: 1rem;
     }
 
-    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #format, #limit, #submit, #clear {
+    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #sort, #format, #limit, #submit, #clear {
         height: 30px;
     }
 }
