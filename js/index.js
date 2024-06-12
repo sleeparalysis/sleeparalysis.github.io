@@ -545,7 +545,7 @@ class Database {
         case 'az-asc':
             for (let a = 0; a < this.results.length; a++) {
                 for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getName() < this.results[b].getName()) {
+                    if (this.results[a].getName() > this.results[b].getName()) {
                         var temp = this.results[a];
                         this.results[a] = this.results[b];
                         this.results[b] = temp;
@@ -556,7 +556,7 @@ class Database {
         case 'az-desc':
             for (let a = 0; a < this.results.length; a++) {
                 for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getName() > this.results[b].getName()) {
+                    if (this.results[a].getName() < this.results[b].getName()) {
                         var temp = this.results[a];
                         this.results[a] = this.results[b];
                         this.results[b] = temp;
