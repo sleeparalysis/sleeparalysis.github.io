@@ -3,7 +3,6 @@ const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes';
 
 // Close navigation element
 const triggerNav = () => {
-    var x = window.matchMedia("(max-width: 600px)")
     var c1 = document.getElementById("c1");
 
     if(c1.style.bottom == `-500px` || c1.style.bottom == '') {
@@ -12,6 +11,11 @@ const triggerNav = () => {
     else {
         c1.style.bottom = `-500px`;
     }
+}
+
+const closeNav = () => {
+    var c1 = document.getElementById("c1");
+    c1.style.bottom = `-500px`;
 }
 
 // Display modal and populate with selected card information
@@ -297,8 +301,8 @@ const search = () => {
     filteredURL = createFilteredUrl(filters);
 
     // Close search navigation on mobile
-    triggerNav();
-    
+    closeNav();
+
     // Populate database with filtered results from API
     database.search(filteredURL);
 }
