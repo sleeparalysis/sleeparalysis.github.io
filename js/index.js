@@ -300,6 +300,12 @@ const search = () => {
     database.search(filteredURL);
 }
 
+const randomArchetype = () => {
+    var archetype = document.getElementById("archetype");
+    var rand = Math.floor(Math.random() * archetype.options.length);
+    archetype.value = archetype.options[rand].value;
+}
+
 const sortResults = () => {
     var sortBy = document.getElementById("sort").value;
     database.sort(sortBy);
@@ -864,12 +870,10 @@ class Card {
 const filterData = parseFile('./data/sort.json');
 const edisonData = parseFile('../data/edison.json');
 
-// Initialize dropdown access on start
-getDropdowns();
-
-
 // Create a new database
 var database = new Database();
 
 // Search and display all cards available
+getDropdowns();
+randomArchetype();
 search();
