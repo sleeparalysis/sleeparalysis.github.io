@@ -296,6 +296,9 @@ const search = () => {
     filters = filters.concat(tempfilters);
     filteredURL = createFilteredUrl(filters);
 
+    // Close search navigation on mobile
+    triggerNav();
+    
     // Populate database with filtered results from API
     database.search(filteredURL);
 }
