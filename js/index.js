@@ -84,18 +84,26 @@ const getDropdowns = () => {
         }
 
         // Disable monster sorting filters
-        for (let i = 5; i < sort.options.length; i++) {
+        for (let i = 9; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
+        // Enable link sorting filters
         if(card2.value == 'link') {
-            sort.options[6].style.display = "block";
-            sort.options[7].style.display = "block";
+            sort.options[9].style.display = "block";
+            sort.options[10].style.display = "block";
+            sort.options[11].style.display = "block";
+            sort.options[12].style.display = "block";
         }
+
+        // Enable non-link sorting filters
         else if(card2.value != 'link' && card2.value != "") {
-            sort.options[5].style.display = "block";
             sort.options[7].style.display = "block";
             sort.options[8].style.display = "block";
+            sort.options[11].style.display = "block";
+            sort.options[12].style.display = "block";
+            sort.options[13].style.display = "block";
+            sort.options[14].style.display = "block";
         }
 
         break;
@@ -121,7 +129,7 @@ const getDropdowns = () => {
         type.options[32].style.display = "none";
         
         // Disable monster sorting filters
-        for (let i = 5; i < sort.options.length; i++) {
+        for (let i = 9; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -151,7 +159,7 @@ const getDropdowns = () => {
         type.options[31].style.display = "none";
 
         // Disable monster sorting filters
-        for (let i = 5; i < sort.options.length; i++) {
+        for (let i = 9; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -171,7 +179,7 @@ const getDropdowns = () => {
         }
 
         // Disable monster sorting filters
-        for (let i = 5; i < sort.options.length; i++) {
+        for (let i = 9; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -378,7 +386,7 @@ class Database {
                 catch (error) {
                     //window.confirm('No results found');
                 }
-
+                sortResults();
                 this.display('gallery');
             }
         );
@@ -521,20 +529,6 @@ class Database {
         }
     }
 
-    // Contruct HTML string to inject into an HTML element
-    display = (elementID) => {
-        const info = document.getElementById(elementID);
-        var HTMLString = `<div class="${elementID}">`;
-
-        // Add all HMTL strings stored in each card
-        for (let i = 0; i < this.results.length; i++) {
-            HTMLString += this.results[i].getCardHTML();
-        }
-
-        HTMLString += '</div>';
-        info.innerHTML = HTMLString;
-    }
-
     // Search through list for card matching the passed ID and return it
     get = (id) => {
         for (let i = 0; i < this.results.length; i++) {
@@ -548,99 +542,199 @@ class Database {
     sort = (type) => {
         console.log('Sort!');
         switch(type) {
-        case 'a-z':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getName() > this.results[i + 1].getName()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'az-asc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getName() < this.results[b].getName()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'views':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getViews() < this.results[i + 1].getViews()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'az-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getName() > this.results[b].getName()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'oldest':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getTCGDate() > this.results[i + 1].getTCGDate()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'views-asc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getViews() > this.results[b].getViews()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'newest':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getTCGDate() < this.results[i + 1].getTCGDate()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'views-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getViews() < this.results[b].getViews()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'level':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getLevel() < this.results[i + 1].getLevel()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'tcg-asc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getTCGDate() > this.results[b].getTCGDate()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'link':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getLinkVal() < this.results[i + 1].getLinkVal()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'tcg-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getTCGDate() < this.results[b].getTCGDate()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'atk':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getAttack() < this.results[i + 1].getAttack()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'ocg-asc':
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getOCGDate() > this.results[b].getOCGDate()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
+                    }
+                }
+                break;
+        case 'ocg-desc':
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getOCGDate() < this.results[b].getOCGDate()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
+                    }
+                }
+                break;    
+        case 'level-asc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getLevel() > this.results[b].getLevel()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
-        case 'def':
-            for (let j = 0; j < this.results.length; j++) {
-                for (let i = 0; i < this.results.length - 1; i++) {
-                    if (this.results[i].getDefense() < this.results[i + 1].getDefense()) {
-                        var temp = this.results[i];
-                        this.results[i] = this.results[i + 1];
-                        this.results[i + 1] = temp;
+        case 'level-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getLevel() < this.results[b].getLevel()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
+                    }
+                }
+            }
+            break;
+        case 'link-asc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getLinkVal() > this.results[b].getLinkVal()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
+                    }
+                }
+            }
+            break;    
+        case 'link-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getLinkVal() < this.results[b].getLinkVal()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
+                    }
+                }
+            }
+            break;
+        case 'atk-asc':
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getAttack() > this.results[b].getAttack()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
+                    }
+                }
+                break;
+        case 'atk-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getAttack() < this.results[b].getAttack()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
+                    }
+                }
+            }
+            break;
+        case 'def-asc':
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getDefense() > this.results[b].getDefense()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
+                    }
+                }
+                break;
+        case 'def-desc':
+            for (let a = 0; a < this.results.length; a++) {
+                for (let b = a + 1; b < this.results.length; b++) {
+                    if (this.results[a].getDefense() < this.results[b].getDefense()) {
+                        var temp = this.results[a];
+                        this.results[a] = this.results[b];
+                        this.results[b] = temp;
                     }
                 }
             }
             break;
         }
-        
-        this.display("gallery");
     }
 
+    // Contruct HTML string to inject into an HTML element
+    display = (elementID) => {
+        const info = document.getElementById(elementID);
+        var HTMLString = `<div class="${elementID}">`;
+
+        // Add all HMTL strings stored in each card
+        for (let i = 0; i < this.results.length; i++) {
+            HTMLString += this.results[i].getCardHTML();
+        }
+
+        HTMLString += '</div>';
+        info.innerHTML = HTMLString;
+    }
+    
     // Save a copy of the Ygoprodeck API card info JSON
     save = (filename) => {
         fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?misc=yes')
@@ -772,6 +866,7 @@ const edisonData = parseFile('../data/edison.json');
 
 // Initialize dropdown access on start
 getDropdowns();
+
 
 // Create a new database
 var database = new Database();
