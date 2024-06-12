@@ -74,7 +74,7 @@ const getDropdowns = () => {
         }
 
         // Disable last 7 type filters
-        for (let i = 26; i < type.options.length; i++) {
+        for (let i = 27; i < type.options.length; i++) {
             type.options[i].style.display = "none";
         }
 
@@ -84,7 +84,7 @@ const getDropdowns = () => {
         }
 
         // Disable monster sorting filters
-        for (let i = 9; i < sort.options.length; i++) {
+        for (let i = 7; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -121,15 +121,15 @@ const getDropdowns = () => {
         }
 
         // Disable first 25 options
-        for (let i = 1; i < type.options.length - 7; i++) {
+        for (let i = 2; i < type.options.length - 7; i++) {
             type.options[i].style.display = "none";
         }
 
         // Disable counter option
-        type.options[32].style.display = "none";
+        type.options[33].style.display = "none";
         
         // Disable monster sorting filters
-        for (let i = 9; i < sort.options.length; i++) {
+        for (let i = 7; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -148,18 +148,18 @@ const getDropdowns = () => {
         }
 
         // Disable first 25 options
-        for (let i = 1; i < type.options.length - 7; i++) {
+        for (let i = 2; i < type.options.length - 7; i++) {
             type.options[i].style.display = "none";
         }
 
         // Disable spell options
-        type.options[27].style.display = "none";
         type.options[28].style.display = "none";
-        type.options[30].style.display = "none";
+        type.options[29].style.display = "none";
         type.options[31].style.display = "none";
+        type.options[32].style.display = "none";
 
         // Disable monster sorting filters
-        for (let i = 9; i < sort.options.length; i++) {
+        for (let i = 7; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -179,7 +179,7 @@ const getDropdowns = () => {
         }
 
         // Disable monster sorting filters
-        for (let i = 9; i < sort.options.length; i++) {
+        for (let i = 7; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 

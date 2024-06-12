@@ -16,7 +16,7 @@ select, select option {
     color: black;
 }
 
-option:first-child, select option[value=""] {
+option:first-child {
     color:gray;
 }
 
