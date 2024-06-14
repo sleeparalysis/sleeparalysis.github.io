@@ -33,123 +33,8 @@
                         <input type="text" id="name" name="name" value="" placeholder="Name">
                     </div>
                 </div>
-                <div class="r2">
-                    <div class="w2">
-                        <label for="card1"></label>
-                        <select id="card1" name="card1" onchange="getDropdowns();">
-                            <option value="" disabled selected>Card</option>
-                            <option value="">All</option>
-                            <option value="monster">Monster</option>
-                            <option value="spell">Spell</option>
-                            <option value="trap">Trap</option>
-                        </select>
-                    </div>
-                    <div class="w2">
-                        <label for="card2"></label>
-                        <select id="card2" name="card2" onchange="getDropdowns()">
-                            <option value="" disabled selected>Summon</option>
-                            <option value="">All</option>
-                            <option value="normal">Normal</option>
-                            <option value="effect">Effect</option>
-                            <option value="ritual">Ritual</option>
-                            <option value="fusion">Fusion</option>
-                            <option value="synchro">Synchro</option>
-                            <option value="xyz">XYZ</option>
-                            <option value="link">Link</option>
-                            <option value="pendulum">Pendulum</option>
-                            <option value="tuner">Tuner</option>
-                            <option value="gemini">Gemini</option>
-                            <option value="spirit">Spirit</option>
-                            <option value="union">Union</option>
-                            <option value="toon">Toon</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="r2">
-                    <div class="w2">
-                        <label for="type"></label>
-                        <select id="type" name="type">
-                            <option value="" disabled selected>Type</option>
-                            <option value="">All</option>
-                            <option value="aqua">Aqua</option>
-                            <option value="beast">Beast</option>
-                            <option value="beast-warrior">Beast-Warrior</option>
-                            <option value="creator-god">Creator-God</option>
-                            <option value="cyberse">Cyberse</option>
-                            <option value="dinoaur">Dinosaur</option>
-                            <option value="divine-beast">Divine-Beast</option>
-                            <option value="dragon">Dragon</option>
-                            <option value="fairy">Fairy</option>
-                            <option value="fiend">Fiend</option>
-                            <option value="fish">Fish</option>
-                            <option value="insect">Insect</option>
-                            <option value="machine">Machine</option>
-                            <option value="plant">Plant</option>
-                            <option value="psychic">Psychic</option>
-                            <option value="pyro">Pyro</option>
-                            <option value="reptile">Reptile</option>
-                            <option value="rock">Rock</option>
-                            <option value="sea serpent">Sea Serpent</option>
-                            <option value="spellcaster">Spellcaster</option>
-                            <option value="thunder">Thunder</option>
-                            <option value="warrior">Warrior</option>
-                            <option value="winged beast">Winged Beast</option>
-                            <option value="wyrm">Wyrm</option>
-                            <option value="zombie">Zombie</option>
-                            <option value="normal">Normal</option>
-                            <option value="field">Field</option>
-                            <option value="equip">Equip</option>
-                            <option value="continuous">Continuous</option>
-                            <option value="quick-play">Quick-Play</option>
-                            <option value="ritual">Ritual</option>
-                            <option value="counter">Counter</option>
-                        </select>
-                    </div>
-                    <div class="w2">
-                        <label for="attribute"></label>
-                        <select id="attribute" name="attribute">
-                            <option value="" disabled selected>Attribute</option>
-                            <option value="">All</option>
-                            <option value="wind">Wind</option>
-                            <option value="water">Water</option>
-                            <option value="fire">Fire</option>
-                            <option value="earth">Earth</option>
-                            <option value="light">Light</option>
-                            <option value="dark">Dark</option>
-                            <option value="divine">Divine</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="r2">
-                    <div class="w2">
-                        <label for="format"></label>
-                        <select name="format" id="format" onchange="getDropdowns()">
-                            <option value="" disabled selected>Format</option>
-                            <option value="">All</option>
-						    <option value="tcg">TCG</option>
-                            <option value="ocg">OCG</option>
-                            <option value="duel links">Duel Links</option>
-                            <option value="speed duel">Speed Duel</option>
-						    <option value="common charity">Common Charity</option>
-                            <option value="edison">Edison</option>
-                            <option value="goat">GOAT</option>
-                            <option value="ocg goat">OCG GOAT</option>
-                        </select>
-                    </div>
-                    <div class="w2">
-                        <label for="limit"></label>
-                        <select name="limit" id="limit">
-                            <option value="" disabled selected>Limit</option>
-                            <option value="">All</option>
-                            <option value="unlimited">3</option>
-                            <option value="semi-limited">2</option>
-                            <option value="limited">1</option>
-                            <option value="banned">0</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="r2">
-                    <div class="w2">
+                <div class="r1">
+                    <div class="w4">
                         <select name="archetype" id="archetype">
                             <option value="" disabled selected>Archetype</option>
                             <option value="">All</option>
@@ -697,26 +582,144 @@
                             <option value="zoodiac">Zoodiac</option>
                         </select>
                     </div>
+                </div>
+                <div class="r2">
+                    <div class="w2">
+                        <label for="card1"></label>
+                        <select id="card1" name="card1" onchange="getDropdowns();">
+                            <option value="" disabled selected>Card</option>
+                            <option value="">All</option>
+                            <option value="monster">Monster</option>
+                            <option value="spell">Spell</option>
+                            <option value="trap">Trap</option>
+                        </select>
+                    </div>
+                    <div class="w2">
+                        <label for="card2"></label>
+                        <select id="card2" name="card2" onchange="getDropdowns()">
+                            <option value="" disabled selected>Summon</option>
+                            <option value="">All</option>
+                            <option value="normal">Normal</option>
+                            <option value="effect">Effect</option>
+                            <option value="ritual">Ritual</option>
+                            <option value="fusion">Fusion</option>
+                            <option value="synchro">Synchro</option>
+                            <option value="xyz">XYZ</option>
+                            <option value="link">Link</option>
+                            <option value="pendulum">Pendulum</option>
+                            <option value="tuner">Tuner</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="spirit">Spirit</option>
+                            <option value="union">Union</option>
+                            <option value="toon">Toon</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="r2">
+                    <div class="w2">
+                        <label for="type"></label>
+                        <select id="type" name="type">
+                            <option value="" disabled selected>Type</option>
+                            <option value="">All</option>
+                            <option value="aqua">Aqua</option>
+                            <option value="beast">Beast</option>
+                            <option value="beast-warrior">Beast-Warrior</option>
+                            <option value="creator-god">Creator-God</option>
+                            <option value="cyberse">Cyberse</option>
+                            <option value="dinoaur">Dinosaur</option>
+                            <option value="divine-beast">Divine-Beast</option>
+                            <option value="dragon">Dragon</option>
+                            <option value="fairy">Fairy</option>
+                            <option value="fiend">Fiend</option>
+                            <option value="fish">Fish</option>
+                            <option value="insect">Insect</option>
+                            <option value="machine">Machine</option>
+                            <option value="plant">Plant</option>
+                            <option value="psychic">Psychic</option>
+                            <option value="pyro">Pyro</option>
+                            <option value="reptile">Reptile</option>
+                            <option value="rock">Rock</option>
+                            <option value="sea serpent">Sea Serpent</option>
+                            <option value="spellcaster">Spellcaster</option>
+                            <option value="thunder">Thunder</option>
+                            <option value="warrior">Warrior</option>
+                            <option value="winged beast">Winged Beast</option>
+                            <option value="wyrm">Wyrm</option>
+                            <option value="zombie">Zombie</option>
+                            <option value="normal">Normal</option>
+                            <option value="field">Field</option>
+                            <option value="equip">Equip</option>
+                            <option value="continuous">Continuous</option>
+                            <option value="quick-play">Quick-Play</option>
+                            <option value="ritual">Ritual</option>
+                            <option value="counter">Counter</option>
+                        </select>
+                    </div>
+                    <div class="w2">
+                        <label for="attribute"></label>
+                        <select id="attribute" name="attribute">
+                            <option value="" disabled selected>Attribute</option>
+                            <option value="">All</option>
+                            <option value="wind">Wind</option>
+                            <option value="water">Water</option>
+                            <option value="fire">Fire</option>
+                            <option value="earth">Earth</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="divine">Divine</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="r2">
+                    <div class="w2">
+                        <label for="format"></label>
+                        <select name="format" id="format" onchange="getDropdowns()">
+                            <option value="" disabled selected>Format</option>
+                            <option value="">All</option>
+						    <option value="tcg">TCG</option>
+                            <option value="ocg">OCG</option>
+                            <option value="duel links">Duel Links</option>
+                            <option value="speed duel">Speed Duel</option>
+						    <option value="common charity">Common Charity</option>
+                            <option value="edison">Edison</option>
+                            <option value="goat">GOAT</option>
+                            <option value="ocg goat">OCG GOAT</option>
+                        </select>
+                    </div>
+                    <div class="w2">
+                        <label for="limit"></label>
+                        <select name="limit" id="limit">
+                            <option value="" disabled selected>Limit</option>
+                            <option value="">All</option>
+                            <option value="unlimited">3</option>
+                            <option value="semi-limited">2</option>
+                            <option value="limited">1</option>
+                            <option value="banned">0</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="r2">
+                    
                     <div class="w2">
                         <label for="sort"></label>
                         <select name="sort" id="sort">
                             <option value="" disabled selected>Sort</option>
-                            <option value="az-asc">A-Z ￪</option>
-                            <option value="az-desc">A-Z ￬</option>
-                            <option value="views-asc">Views ￪</option>
-                            <option value="views-desc">Views ￬</option>
-                            <!--<option value="tcg-asc">Release ￪</option>
-                            <option value="tcg-desc">Release ￬</option>-->
-                            <option value="ocg-asc">Release ￪</option>
-                            <option value="ocg-desc">Release ￬</option>
-                            <option value="level-asc">Level ￪</option>
-                            <option value="level-desc">Level ￬</option>
-                            <option value="link-asc">Link ￪</option>
-                            <option value="link-desc">Link ￬</option>
-                            <option value="atk-asc">Attack ￪</option>
-                            <option value="atk-desc">Attack ￬</option>
-                            <option value="def-asc">Def ￪</option>
-                            <option value="def-desc">Def ￬</option>
+                            <option value="az">A-Z</option>
+                            <option value="views">Views</option>
+                            <!--<option value="tcg">Release</option>-->
+                            <option value="ocg">Release</option>
+                            <option value="level">Level</option>
+                            <option value="link">Link</option>
+                            <option value="atk">Attack</option>
+                            <option value="def">Def</option>
+                        </select>
+                    </div>
+                    <div class="w2">
+                        <label for="order"></label>
+                        <select name="order" id="order">
+                            <option value="" disabled selected>Order</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
                         </select>
                     </div>
                 </div>

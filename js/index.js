@@ -67,6 +67,7 @@ const getDropdowns = () => {
     case 'monster':
         // Set default values
         card2.disabled = false;
+        type.disabled = false;
         attribute.disabled = false;
         attribute = "";
         type.value = '';
@@ -88,32 +89,28 @@ const getDropdowns = () => {
         }
 
         // Disable monster sorting filters
-        for (let i = 7; i < sort.options.length; i++) {
+        for (let i = 4; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
         // Enable link sorting filters
         if(card2.value == 'link') {
-            sort.options[9].style.display = "block";
-            sort.options[10].style.display = "block";
-            sort.options[11].style.display = "block";
-            sort.options[12].style.display = "block";
+            sort.options[5].style.display = "block";
+            sort.options[6].style.display = "block";
         }
 
         // Enable non-link sorting filters
         else if(card2.value != 'link' && card2.value != "") {
+            sort.options[4].style.display = "block";
+            sort.options[6].style.display = "block";
             sort.options[7].style.display = "block";
-            sort.options[8].style.display = "block";
-            sort.options[11].style.display = "block";
-            sort.options[12].style.display = "block";
-            sort.options[13].style.display = "block";
-            sort.options[14].style.display = "block";
         }
 
         break;
     case 'spell':
         // Set default values
         card2.disabled = true;
+        type.disabled = false;
         attribute.disabled = true;
         attribute = "";
         type.value = '';
@@ -133,7 +130,7 @@ const getDropdowns = () => {
         type.options[33].style.display = "none";
         
         // Disable monster sorting filters
-        for (let i = 7; i < sort.options.length; i++) {
+        for (let i = 4; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -141,6 +138,7 @@ const getDropdowns = () => {
     case 'trap':
         // Set default values
         card2.disabled = true;
+        type.disabled = false;
         attribute.disabled = true;
         attribute = "";
         type.value = '';
@@ -163,7 +161,7 @@ const getDropdowns = () => {
         type.options[32].style.display = "none";
 
         // Disable monster sorting filters
-        for (let i = 7; i < sort.options.length; i++) {
+        for (let i = 4; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
@@ -171,6 +169,7 @@ const getDropdowns = () => {
     default:
         // Set default values
         card2.disabled = true;
+        type.disabled = true;
         attribute.disabled = true;
         attribute = "";
         type.value = '';
@@ -183,14 +182,12 @@ const getDropdowns = () => {
         }
 
         // Disable monster sorting filters
-        for (let i = 7; i < sort.options.length; i++) {
+        for (let i = 4; i < sort.options.length; i++) {
             sort.options[i].style.display = "none";
         }
 
         break;
     }
-
-    
 
     // Update limit dropdown based on format
     switch (format.value) {
@@ -217,6 +214,8 @@ const clearInputs = () => {
     var archetype = document.getElementById("archetype");
     var format = document.getElementById("format");
     var limit = document.getElementById("limit");
+    var sort = document.getElementById("sort");
+    var order = document.getElementById("order");
 
     // Reset inputs
     fname.value = "";
@@ -227,6 +226,8 @@ const clearInputs = () => {
     archetype.value = "";
     format.value = "";
     limit.value = "";
+    sort.value = "";
+    order.value = "";
 
     getDropdowns();
 }
@@ -314,8 +315,10 @@ const randomArchetype = () => {
 }
 
 const sortResults = () => {
-    var sortBy = document.getElementById("sort").value;
-    database.sort(sortBy);
+    var sort = document.getElementById("sort").value;
+    var order = document.getElementById("order").value;
+
+    database.sort(sort, order);
 }
 
 // Request response from JSON file and return parsed JSON data
@@ -395,11 +398,18 @@ class Database {
                         var card = new Card(data.data[i]);
                         this.add(card);
                     }
+
+                    if(this.results.length != 0) {
+                        sortResults();
+                    }
+                    else {
+                        window.confirm('No results found');
+                    }
                 }
                 catch (error) {
-                    //window.confirm('No results found');
+                    window.confirm('No results found');
                 }
-                sortResults();
+                
                 this.display('gallery');
             }
         );
@@ -552,76 +562,89 @@ class Database {
     }
 
     // Sort list alphabetically based on given sort type
-    sort = (type) => {
+    sort = (type, direction) => {
         console.log('Sort!');
         switch(type) {
-        case 'az-asc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getName() > this.results[b].getName()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+        case 'az':
+            if(direction == 'asc') {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getName() > this.results[b].getName()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
-            break;
-        case 'az-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getName() < this.results[b].getName()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getName() < this.results[b].getName()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+            
             break;
-        case 'views-asc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getViews() > this.results[b].getViews()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+        case 'views':
+            if(direction == "asc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getViews() > this.results[b].getViews()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
-            break;
-        case 'views-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getViews() < this.results[b].getViews()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getViews() < this.results[b].getViews()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+
             break;
-        case 'tcg-asc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getTCGDate() > this.results[b].getTCGDate()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+        case 'tcg':
+            if(direction == "asc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getTCGDate() > this.results[b].getTCGDate()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
-            break;
-        case 'tcg-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getTCGDate() < this.results[b].getTCGDate()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getTCGDate() < this.results[b].getTCGDate()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+
+            
             break;
-        case 'ocg-asc':
+        case 'ocg':
+            if(direction == "asc") {
                 for (let a = 0; a < this.results.length; a++) {
                     for (let b = a + 1; b < this.results.length; b++) {
                         if (this.results[a].getOCGDate() > this.results[b].getOCGDate()) {
@@ -631,8 +654,9 @@ class Database {
                         }
                     }
                 }
-                break;
-        case 'ocg-desc':
+            }
+
+            else if(direction == "desc") {
                 for (let a = 0; a < this.results.length; a++) {
                     for (let b = a + 1; b < this.results.length; b++) {
                         if (this.results[a].getOCGDate() < this.results[b].getOCGDate()) {
@@ -642,52 +666,63 @@ class Database {
                         }
                     }
                 }
-                break;    
-        case 'level-asc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getLevel() > this.results[b].getLevel()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
-                    }
-                }
             }
+             
             break;
-        case 'level-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getLevel() < this.results[b].getLevel()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+        case 'level':
+            if(direction == "asc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getLevel() > this.results[b].getLevel()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getLevel() < this.results[b].getLevel()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
+                    }
+                }
+            }
+            
             break;
-        case 'link-asc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getLinkVal() > this.results[b].getLinkVal()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+        case 'link':
+            if(direction == "asc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getLinkVal() > this.results[b].getLinkVal()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getLinkVal() < this.results[b].getLinkVal()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
+                    }
+                }
+            }
+            
             break;    
-        case 'link-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getLinkVal() < this.results[b].getLinkVal()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
-                    }
-                }
-            }
-            break;
-        case 'atk-asc':
+        case 'atk':
+            if(direction == "asc") {
                 for (let a = 0; a < this.results.length; a++) {
                     for (let b = a + 1; b < this.results.length; b++) {
                         if (this.results[a].getAttack() > this.results[b].getAttack()) {
@@ -697,19 +732,23 @@ class Database {
                         }
                     }
                 }
-                break;
-        case 'atk-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getAttack() < this.results[b].getAttack()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+            }
+
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getAttack() < this.results[b].getAttack()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+                
             break;
         case 'def-asc':
+            if(direction == "asc") {
                 for (let a = 0; a < this.results.length; a++) {
                     for (let b = a + 1; b < this.results.length; b++) {
                         if (this.results[a].getDefense() > this.results[b].getDefense()) {
@@ -719,17 +758,20 @@ class Database {
                         }
                     }
                 }
-                break;
-        case 'def-desc':
-            for (let a = 0; a < this.results.length; a++) {
-                for (let b = a + 1; b < this.results.length; b++) {
-                    if (this.results[a].getDefense() < this.results[b].getDefense()) {
-                        var temp = this.results[a];
-                        this.results[a] = this.results[b];
-                        this.results[b] = temp;
+            }
+
+            else if(direction == "desc") {
+                for (let a = 0; a < this.results.length; a++) {
+                    for (let b = a + 1; b < this.results.length; b++) {
+                        if (this.results[a].getDefense() < this.results[b].getDefense()) {
+                            var temp = this.results[a];
+                            this.results[a] = this.results[b];
+                            this.results[b] = temp;
+                        }
                     }
                 }
             }
+            
             break;
         }
     }
@@ -812,8 +854,8 @@ class Card {
         this.github_images = [{ "github": `https://raw.githubusercontent.com/sleeparalysis/Yugioh-Cards/main/${this.id}.jpg` }];
         this.cardHTML = `
             <div class="g1">
-            <img id="icon" class="icon" src="../img/blank.png" loading='lazy'/>
-            <img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>
+                <img id="icon" class="icon" src="../img/blank.png" loading='lazy'/>
+                <img id="${this.getID()}" class="item" src="${this.getCardImages()[0].image_url}" loading='lazy' onclick="view(${this.getID()});"/>
             </div>`;
     }
 
@@ -882,5 +924,5 @@ var database = new Database();
 
 // Search and display all cards available
 getDropdowns();
-randomArchetype();
+//randomArchetype();
 search();

@@ -141,9 +141,10 @@ option:first-child {
 
 .g1 {
     margin: 0;
+    display: flex;
 }
 
-#name, #card1, #card2, #type, #attribute, #archetype, #sort, #format, #limit, #submit, #clear {
+#name, #card1, #card2, #type, #attribute, #archetype, #sort, #order, #format, #limit, #submit, #clear {
     width: 100%;
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(236, 236, 236);
@@ -172,7 +173,7 @@ option:first-child {
 }
 
 
-#card2:disabled, #attribute:disabled, #limit:disabled {
+#card2:disabled, #type:disabled, #attribute:disabled, #limit:disabled {
     background-color: rgb(235, 235, 235);
     color: rgb(210, 210, 210);
 }
@@ -243,7 +244,7 @@ option:first-child {
         margin: 6px 0;
     }
 
-    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #sort, #format, #limit{
+    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #sort, #order, #format, #limit{
         height: 50px;
     }
 
@@ -268,10 +269,7 @@ option:first-child {
     
     .icon {
         margin: 0 0 0 6vw;
-        float:left;
-        position: absolute;
         width:1.75vw;
-        z-index: 1;
     }
     
     .c1 {
@@ -297,7 +295,7 @@ option:first-child {
         gap: 1rem;
     }
 
-    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #sort, #format, #limit, #submit, #clear {
+    #name, #desc, #card1, #card2, #type, #attribute, #archetype, #sort, #order, #format, #limit, #submit, #clear {
         height: 30px;
     }
 }
