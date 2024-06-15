@@ -309,7 +309,7 @@ const search = () => {
 }
 
 // Search 
-const staples = () => {
+const searchStaples = () => {
     // Close search navigation on mobile
     closeNav();
 
@@ -939,5 +939,5 @@ getDropdowns();
 //search();
 
 // Search for only staples
-staples();
+searchStaples();
 
