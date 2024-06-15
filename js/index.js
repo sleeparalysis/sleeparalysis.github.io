@@ -309,7 +309,7 @@ const search = () => {
 }
 
 // Search 
-const searchStaples = () => {
+const staples = () => {
     // Close search navigation on mobile
     closeNav();
 
@@ -933,5 +933,11 @@ var database = new Database();
 
 // Search and display all cards available
 getDropdowns();
+
+// Search for a random archetype
 //randomArchetype();
-searchStaples();
+//search();
+
+// Search for only staples
+staples();
+
