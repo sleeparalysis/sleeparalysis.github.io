@@ -308,6 +308,15 @@ const search = () => {
     database.search(filteredURL);
 }
 
+// Search 
+const searchStaples = () => {
+    // Close search navigation on mobile
+    closeNav();
+
+    // Populate database with filtered results from API
+    database.search(url + "&staple=yes");
+}
+
 const randomArchetype = () => {
     var archetype = document.getElementById("archetype");
     var rand = Math.floor(Math.random() * archetype.options.length);
@@ -925,4 +934,4 @@ var database = new Database();
 // Search and display all cards available
 getDropdowns();
 //randomArchetype();
-search();
+searchStaples();
